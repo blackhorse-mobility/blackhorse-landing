@@ -12,6 +12,10 @@ const config: Config = {
         obsidian: "#1b1d21", // Dark navy/charcoal as per requirement
         champagne: "#d4af37", // Gold/cyan-300 accent
       },
+      fontFamily: {
+        display: ["var(--font-aeonik-pro)"],
+        body: ["var(--font-manrope)"],
+      }
     },
   },
   plugins: [],
