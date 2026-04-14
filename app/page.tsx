@@ -1,7 +1,7 @@
 import InteractiveHero from "@/components/InteractiveHero";
 import CorporateCapabilities from "@/components/CorporateCapabilities";
 import CorporateSteps from "@/components/CorporateSteps";
-
+import BuiltFor from "@/components/BuiltFor";
 
 export default function Home() {
   return (
@@ -9,6 +9,7 @@ export default function Home() {
       <InteractiveHero />
       <CorporateCapabilities />
       <CorporateSteps />
+      <BuiltFor />
     </main>
   );
 }
