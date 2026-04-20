@@ -3,6 +3,11 @@
 import React, { useRef } from "react";
 import { Manrope } from "next/font/google";
 import { motion, useScroll, useTransform } from "framer-motion";
+import { BookingManagementAnimation } from "./animations/BookingManagementAnimation";
+import { OperationalDashboardAnimation } from "./animations/OperationalDashboardAnimation";
+import { EarningsAndPayoutsAnimation } from "./animations/EarningsAndPayoutsAnimation";
+import { FleetManagementAnimation } from "./animations/FleetManagementAnimation";
+import { ReportingAndInsightsAnimation } from "./animations/ReportingAndInsightsAnimation";
 
 const manrope = Manrope({
   subsets: ["latin"],
@@ -108,7 +113,12 @@ export default function RentalSteps() {
                   transition={{ duration: 0.8, ease: "easeOut", delay: 0.1 }}
                   className={`w-full md:w-[55%] ${isEven ? "md:mr-[-1rem] lg:mr-[-2rem]" : "md:ml-[-1rem] lg:ml-[-2rem]"}`}
                 >
-                  <div className="w-full aspect-[4/3] sm:aspect-[16/10] rounded-[32px] border-[8px] border-gray-100 bg-white shadow-sm overflow-hidden flex items-center justify-center transition-transform hover:scale-[1.01] duration-500">
+                  <div className="w-full aspect-[4/3] sm:aspect-[16/10] rounded-[32px] border-[8px] border-gray-100 bg-white shadow-[0_4px_20px_rgba(0,0,0,0.04)] overflow-hidden flex flex-col items-center justify-center transition-transform hover:scale-[1.01] duration-500 relative">
+                    {step.title === "Operational Dashboard" && <OperationalDashboardAnimation />}
+                    {step.title === "Booking Management" && <BookingManagementAnimation />}
+                    {step.title === "Earnings & Payouts" && <EarningsAndPayoutsAnimation />}
+                    {step.title === "Fleet Controls" && <FleetManagementAnimation />}
+                    {step.title === "Reporting & Insights" && <ReportingAndInsightsAnimation />}
                   </div>
                 </motion.div>
               </div>

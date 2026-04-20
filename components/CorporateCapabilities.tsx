@@ -3,6 +3,11 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Manrope } from "next/font/google";
+import VerifiedFleetsMockup from "./mockups/VerifiedFleetsMockup";
+import SmartBookingMockup from "./mockups/SmartBookingMockup";
+import ClearPricingMockup from "./mockups/ClearPricingMockup";
+import UnifiedBillingMockup from "./mockups/UnifiedBillingMockup";
+import LiveTrackingMockup from "./mockups/LiveTrackingMockup";
 
 const manrope = Manrope({
   subsets: ["latin"],
@@ -15,6 +20,7 @@ interface Feature {
   title: string;
   description: string;
   imageColor: string; // Placeholder for actual images
+  mockup?: React.ReactNode; 
 }
 
 const features: Feature[] = [
@@ -24,6 +30,7 @@ const features: Feature[] = [
     description:
       "Work with vetted, corporate-grade vehicles and professional drivers you can trust.",
     imageColor: "from-gray-200 to-gray-300",
+    mockup: <VerifiedFleetsMockup />,
   },
   {
     id: "booking",
@@ -31,6 +38,7 @@ const features: Feature[] = [
     description:
       "Instantly book or schedule rides in advance with a seamless, user-friendly interface.",
     imageColor: "from-gray-300 to-gray-400",
+    mockup: <SmartBookingMockup />,
   },
   {
     id: "pricing",
@@ -38,6 +46,7 @@ const features: Feature[] = [
     description:
       "No hidden fees. Know exactly what you'll pay before you confirm your ride.",
     imageColor: "from-gray-400 to-gray-500",
+    mockup: <ClearPricingMockup />,
   },
   {
     id: "billing",
@@ -45,6 +54,7 @@ const features: Feature[] = [
     description:
       "Keep all your corporate travel expenses in one centralized, easy-to-manage invoice.",
     imageColor: "from-gray-500 to-gray-600",
+    mockup: <UnifiedBillingMockup />,
   },
   {
     id: "tracking",
@@ -52,6 +62,7 @@ const features: Feature[] = [
     description:
       "Monitor all rides in real-time to ensure the safety and punctuality of your team.",
     imageColor: "from-gray-600 to-gray-700",
+    mockup: <LiveTrackingMockup />,
   },
 ];
 
@@ -145,18 +156,26 @@ export default function CorporateCapabilities() {
           </div>
 
           {/* Image Display */}
-          <div className="flex items-center justify-center">
-            <div className="relative w-full aspect-square max-w-[500px] overflow-hidden bg-gray-50 rounded-sm">
+          <div className="flex items-center justify-center h-full">
+            <div className="relative w-full aspect-auto md:aspect-square lg:aspect-[4/3] h-[400px] md:h-full max-h-[600px] overflow-hidden bg-[#F8F9FB] rounded-[24px] shadow-sm border border-gray-100/60 flex items-start justify-start relative">
               <AnimatePresence mode="popLayout">
                 <motion.div
                   key={activeIndex}
-                  initial={{ opacity: 0, scale: 0.98 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 1.02 }}
-                  transition={{ duration: 0.5, ease: "easeInOut" }}
-                  className={`absolute inset-0 bg-gradient-to-br ${features[activeIndex].imageColor}`}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 15 }}
+                  transition={{ duration: 0.5, ease: "easeOut" }}
+                  className={`absolute inset-0 bg-gradient-to-br flex justify-start items-start`}
                 >
-                  {/* Placeholder for actual image */}
+                  {features[activeIndex].mockup ? (
+                    <div className="absolute inset-0 w-full h-full pointer-events-auto">
+                      {features[activeIndex].mockup}
+                    </div>
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center">
+                      <span className="text-gray-400 font-medium tracking-wide">Coming Soon</span>
+                    </div>
+                  )}
                 </motion.div>
               </AnimatePresence>
             </div>

@@ -4,6 +4,8 @@ import React, { useState, useEffect } from "react";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { Manrope } from "next/font/google";
 import Image from "next/image";
+import { DashboardPreview } from "./DashboardPreview";
+import CorporateDashboardMockup from "./mockups/CorporateDashboardMockup";
 
 const manrope = Manrope({
   subsets: ["latin"],
@@ -81,49 +83,7 @@ export default function InteractiveHero({ viewMode, setViewMode, onPrimaryAction
       />
 
 
-      <nav className="relative z-20 flex w-full items-center justify-between px-6 py-6 md:px-12">
-        <div className="flex items-center">
-          <Image 
-            src="/assets/Primary/BH_Horizontal_DarkBlue.png" 
-            alt="Blackhorse Logo" 
-            width={160} 
-            height={40} 
-            className="h-6 sm:h-7 md:h-8 w-auto object-contain" 
-            priority
-          />
-        </div>
-
-
-        <div className="hidden flex-1 items-center justify-center space-x-10 md:flex">
-          {currentContent.navCenter.map((link) => (
-            <motion.a
-              key={link}
-              href="#"
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="text-[15px] font-medium tracking-wide text-[#111] hover:text-[#5DCBFE] transition-colors"
-            >
-              {link}
-            </motion.a>
-          ))}
-        </div>
-
-
-        <div className="flex items-center">
-          {currentContent.navRight ? (
-            <motion.a
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              href="#"
-              className="hidden text-[15px] font-medium tracking-wide text-[#111] hover:text-[#5DCBFE] transition-colors md:block"
-            >
-              {currentContent.navRight}
-            </motion.a>
-          ) : (
-            <div className="w-[120px]" />
-          )}
-        </div>
-      </nav>
+      
 
 
       <div className="relative z-10 mx-auto flex max-w-5xl flex-col items-center px-6 pt-24 text-center md:pt-16">
@@ -205,7 +165,7 @@ export default function InteractiveHero({ viewMode, setViewMode, onPrimaryAction
 
 
       <div className="relative mt-8 flex justify-center w-full px-6 md:px-12 translate-y-[20%]">
-        <div className="w-full max-w-[1400px] h-[400px] rounded-t-[40px] border-[8px] border-gray-100 bg-white shadow-sm" />
+        {viewMode === "corporate" ? <CorporateDashboardMockup /> : <DashboardPreview />}
       </div>
     </section>
   );

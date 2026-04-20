@@ -26,12 +26,12 @@ const Navbar: React.FC = () => {
 
   return (
     <nav
-      className={`fixed w-full z-50 transition-all duration-500 ${scrolled ? "nav-blur py-4" : "bg-transparent py-8"}`}
+      className={`fixed w-full z-50 transition-all duration-500 ${scrolled ? "bg-white/80 backdrop-blur-lg shadow-sm py-4 border-b border-gray-100" : "bg-transparent py-8"}`}
     >
       <div className="max-w-7xl mx-auto px-6 lg:px-12 flex items-center justify-between">
         {/* Logo */}
         <a href="#" className="relative z-50 group">
-          <span className="text-xl font-display font-medium tracking-tight text-white group-hover:text-cyan-300 transition-colors duration-300">
+          <span className="text-xl font-display font-bold tracking-tight text-gray-900 group-hover:text-cyan-500 transition-colors duration-300">
             BLACKHORSE
           </span>
         </a>
@@ -42,7 +42,14 @@ const Navbar: React.FC = () => {
             <a
               key={link.label}
               href={link.href}
-              className="text-[11px] font-semibold uppercase tracking-widest-xl text-gray-400 hover:text-white transition-colors duration-300"
+              onClick={(e) => {
+                e.preventDefault();
+                const target = document.querySelector(link.href);
+                if (target) {
+                  target.scrollIntoView({ behavior: "smooth" });
+                }
+              }}
+              className="text-[11px] font-semibold uppercase tracking-widest-xl text-gray-500 hover:text-black transition-colors duration-300"
             >
               {link.label}
             </a>
@@ -53,7 +60,7 @@ const Navbar: React.FC = () => {
         <div className="flex items-center gap-6">
           <a
             href="#"
-            className="hidden md:block text-[11px] font-semibold uppercase tracking-widest-xl text-white hover:text-cyan-300 transition-colors"
+            className="hidden md:block text-[11px] font-semibold uppercase tracking-widest-xl text-gray-900 hover:text-cyan-500 transition-colors"
           >
             Sign In
           </a>
@@ -66,10 +73,10 @@ const Navbar: React.FC = () => {
 
           {/* Mobile Toggle */}
           <button
-            className="md:hidden text-white relative z-50"
+            className="md:hidden text-gray-900 relative z-50 hover:text-cyan-500 transition-colors"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           >
-            {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            {mobileMenuOpen ? <X size={24} className="text-white" /> : <Menu size={24} />}
           </button>
         </div>
       </div>
@@ -83,8 +90,15 @@ const Navbar: React.FC = () => {
             <a
               key={link.label}
               href={link.href}
-              className="text-2xl font-display text-white hover:text-cyan-300 transition-colors"
-              onClick={() => setMobileMenuOpen(false)}
+              className="text-2xl font-display text-white hover:text-cyan-500 transition-colors"
+              onClick={(e) => {
+                e.preventDefault();
+                setMobileMenuOpen(false);
+                const target = document.querySelector(link.href);
+                if (target) {
+                  target.scrollIntoView({ behavior: "smooth" });
+                }
+              }}
             >
               {link.label}
             </a>

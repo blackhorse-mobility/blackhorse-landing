@@ -18,12 +18,12 @@ export default function Home() {
 
   return (
     <main className="w-full min-h-screen bg-white">
-      <InteractiveHero 
-        viewMode={viewMode} 
-        setViewMode={setViewMode} 
+      <InteractiveHero
+        viewMode={viewMode}
+        setViewMode={setViewMode}
         onPrimaryAction={() => setIsDrawerOpen(true)}
       />
-      
+
       {viewMode === "corporate" && (
         <>
           <CorporateCapabilities />
@@ -43,10 +43,10 @@ export default function Home() {
         </>
       )}
 
-      <RegistrationDrawer 
-        isOpen={isDrawerOpen} 
-        onClose={() => setIsDrawerOpen(false)} 
-        initialMode={viewMode} 
+      <RegistrationDrawer
+        isOpen={isDrawerOpen}
+        onClose={() => setIsDrawerOpen(false)}
+        initialMode={viewMode}
       />
     </main>
   );

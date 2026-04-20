@@ -3,6 +3,11 @@
 import React from "react";
 import { Manrope } from "next/font/google";
 import { motion } from "framer-motion";
+import { VerifiedClientsCarousel } from "./animations/VerifiedClientsCarousel";
+import { ClearEarningsAnimation } from "./animations/ClearEarningsAnimation";
+import { SteadyDemandAnimation } from "./animations/SteadyDemandAnimation";
+import { LiveOperationsAnimation } from "./animations/LiveOperationsAnimation";
+import { FullControlAnimation } from "./animations/FullControl";
 
 const manrope = Manrope({
   subsets: ["latin"],
@@ -68,7 +73,19 @@ export default function FleetCapabilities() {
               className={`flex flex-col ${feature.span}`}
             >
 
-              <div className="w-full h-[220px] sm:h-[240px] md:h-[260px] lg:h-[280px] xl:h-[300px] rounded-[16px] bg-[#F8F8F8] mb-6 shadow-[inset_0_0_2px_rgba(0,0,0,0.02)] transition-transform hover:scale-[1.01] duration-500 ease-out"></div>
+              <div className="w-full h-[220px] sm:h-[240px] md:h-[260px] lg:h-[280px] xl:h-[300px] rounded-[16px] bg-[#F8F8F8] mb-6 shadow-[inset_0_0_2px_rgba(0,0,0,0.02)] transition-transform hover:scale-[1.01] duration-500 ease-out overflow-hidden relative flex flex-col justify-center">
+                {feature.title === "Verified Clients" ? (
+                  <VerifiedClientsCarousel />
+                ) : feature.title === "Steady Demand" ? (
+                  <SteadyDemandAnimation />
+                ) : feature.title === "Clear Earnings" ? (
+                  <ClearEarningsAnimation />
+                ) : feature.title === "Live Operations" ? (
+                  <LiveOperationsAnimation />
+                ) : feature.title === "Full Control" ? (
+                  <FullControlAnimation />
+                ) : null}
+              </div>
 
               <h3 className="text-[20px] md:text-[22px] font-medium text-black mb-3.5">
                 {feature.title}

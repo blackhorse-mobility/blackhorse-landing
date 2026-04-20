@@ -1,7 +1,8 @@
-"use client";
+﻿"use client";
 import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { Linkedin, Instagram, Twitter, Facebook } from "lucide-react";
 import {
   buttonVariants,
   headingVariants,
@@ -70,9 +71,9 @@ const Footer = () => {
               whileInView="visible"
               custom={1}
               viewport={{ once: true }}
-              className=" text-sm ds text-white font-light hover:text-cyan-200"
+              className=" text-sm ds text-white font-light transition-colors hover:text-cyan-300"
             >
-              Home ↗
+              Home 
             </motion.span>{" "}
           </Link>
           <Link href="#business" className="text-black">
@@ -82,9 +83,9 @@ const Footer = () => {
               whileInView="visible"
               custom={3}
               viewport={{ once: true }}
-              className="text-sm ds text-white font-light hover:text-cyan-200"
+              className="text-sm ds text-white font-light transition-colors hover:text-cyan-300"
             >
-              Businesses ↗
+              Businesses 
             </motion.span>{" "}
           </Link>
           <Link href="#transport-partners" className="text-black">
@@ -94,7 +95,7 @@ const Footer = () => {
               whileInView="visible"
               custom={5}
               viewport={{ once: true }}
-              className="text-sm ds text-white font-light hover:text-cyan-200"
+              className="text-sm ds text-white font-light transition-colors hover:text-cyan-300"
             >
               Transport Partners
             </motion.span>{" "}
@@ -106,7 +107,7 @@ const Footer = () => {
               whileInView="visible"
               custom={7}
               viewport={{ once: true }}
-              className="text-sm ds text-white font-light hover:text-cyan-200"
+              className="text-sm ds text-white font-light transition-colors hover:text-cyan-300"
             >
               Pricing & Billing
             </motion.span>{" "}
@@ -133,7 +134,7 @@ const Footer = () => {
               whileInView="visible"
               custom={1}
               viewport={{ once: true }}
-              className=" text-sm ds text-white font-light hover:text-cyan-200"
+              className=" text-sm ds text-white font-light transition-colors hover:text-cyan-300"
             >
               info@joltride.com
             </motion.span>{" "}
@@ -145,7 +146,7 @@ const Footer = () => {
               whileInView="visible"
               custom={3}
               viewport={{ once: true }}
-              className=" text-sm ds text-white font-light hover:text-cyan-200"
+              className=" text-sm ds text-white font-light transition-colors hover:text-cyan-300"
             >
               (+233) 50 908 1558
             </motion.span>{" "}
@@ -163,7 +164,7 @@ const Footer = () => {
           custom={1}
           viewport={{ once: true }}
         >
-          <span className="text-sm ds text-white font-light hover:text-cyan-200 ">
+          <span className="text-sm ds text-white font-light transition-colors hover:text-cyan-300 ">
             © {new Date().getFullYear()} Powered by Dimax Digital Ltd.
           </span>
         </motion.div>
@@ -176,9 +177,9 @@ const Footer = () => {
               whileInView="visible"
               custom={2}
               viewport={{ once: true }}
-              className="text-sm ds text-white font-light hover:text-cyan-200"
+              className="text-sm ds text-white font-light transition-colors hover:text-cyan-300"
             >
-              Linkedin ↗
+              <Linkedin size={18} /> 
             </motion.span>{" "}
           </Link>
           <Link href="" className="text-text-cyan-950 ">
@@ -188,9 +189,9 @@ const Footer = () => {
               whileInView="visible"
               custom={3}
               viewport={{ once: true }}
-              className="text-sm ds text-white font-light hover:text-cyan-200"
+              className="text-sm ds text-white font-light transition-colors hover:text-cyan-300"
             >
-              Instagram ↗
+              <Instagram size={18} />
             </motion.span>{" "}
           </Link>
           <Link href="" className="text-text-cyan-950 ">
@@ -200,9 +201,9 @@ const Footer = () => {
               whileInView="visible"
               custom={4}
               viewport={{ once: true }}
-              className="text-sm ds text-white font-light hover:text-cyan-200"
+              className="text-sm ds text-white font-light transition-colors hover:text-cyan-300"
             >
-              Twitter ↗
+              <Twitter size={18} />
             </motion.span>{" "}
           </Link>
           <Link href="" className="text-text-cyan-950 ">
@@ -212,9 +213,9 @@ const Footer = () => {
               whileInView="visible"
               custom={5}
               viewport={{ once: true }}
-              className="text-sm ds text-white font-light hover:text-cyan-200"
+              className="text-sm ds text-white font-light transition-colors hover:text-cyan-300"
             >
-              Facebook ↗
+              <Facebook size={18} />
             </motion.span>{" "}
           </Link>
           <Link href="" className="text-text-cyan-950 ">
@@ -224,9 +225,9 @@ const Footer = () => {
               whileInView="visible"
               custom={5}
               viewport={{ once: true }}
-              className="text-sm ds text-white font-light hover:text-cyan-2000"
+              className="text-sm ds text-white font-light transition-colors hover:text-cyan-300"
             >
-              TikTok ↗
+               
             </motion.span>{" "}
           </Link>
         </div>
