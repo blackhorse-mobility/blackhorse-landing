@@ -35,28 +35,28 @@ export function ReportingAndInsightsAnimation() {
   if (!isMounted) return null;
 
   return (
-    <div className="absolute right-0 bottom-0 top-6 left-6 bg-[#F9FBFC] rounded-tl-[16px] shadow-[0_-4px_12px_rgba(0,0,0,0.02)] border-t border-l border-[#F0F0F0] flex flex-col pointer-events-none overflow-hidden origin-bottom-right">
+    <div className="absolute pt-3 sm:pt-6 pl-3 sm:pl-6 pr-2 sm:pr-4 pb-2 sm:pb-4 right-0 bottom-0 top-3 sm:top-6 left-3 sm:left-6 bg-[#F9FBFC] rounded-tl-[12px] sm:rounded-tl-[16px] shadow-[0_-4px_12px_rgba(0,0,0,0.02)] border-t border-l border-[#F0F0F0] flex flex-col pointer-events-none overflow-hidden origin-bottom-right">
       {/* Header */}
-      <div className="flex items-center justify-between px-5 pt-5 pb-4 border-b border-gray-200/60 bg-white shrink-0">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between px-3 sm:px-5 pt-2 sm:pt-5 pb-2 sm:pb-4 border-b border-gray-200/60 bg-white shrink-0 gap-2 sm:gap-0">
         <div className="flex flex-col gap-0.5">
-          <h2 className="text-[16px] font-bold text-gray-900 leading-none">Performance & Analytics</h2>
-          <span className="text-[10px] text-gray-500">Fleet wide metrics and insights</span>
+          <h2 className="text-[14px] sm:text-[16px] font-bold text-gray-900 leading-none">Performance & Analytics</h2>
+          <span className="text-[9px] sm:text-[10px] text-gray-500">Fleet wide metrics and insights</span>
         </div>
-        <div className="flex gap-2">
-          <div className="bg-gray-100 rounded-md px-3 py-1.5 text-[10px] font-medium text-gray-600 bg-opacity-70">This Month</div>
-          <div className="bg-[#056272] text-white rounded-md px-3 py-1.5 text-[10px] font-medium shadow-sm">Export Report</div>
+        <div className="flex gap-2 shrink-0">
+          <div className="bg-gray-100 rounded-md px-2 sm:px-3 py-1 sm:py-1.5 text-[9px] sm:text-[10px] font-medium text-gray-600 bg-opacity-70">This Month</div>
+          <div className="bg-[#056272] text-white rounded-md px-2 sm:px-3 py-1 sm:py-1.5 text-[9px] sm:text-[10px] font-medium shadow-sm">Export Report</div>
         </div>
       </div>
 
-      <div className="flex flex-col p-4 w-full h-full gap-4 overflow-hidden relative">
+      <div className="flex flex-col p-2 sm:p-4 w-full h-full gap-3 sm:gap-4 overflow-hidden relative">
         {/* Top KPIs */}
-        <div className="grid grid-cols-3 gap-3 shrink-0">
+        <div className="grid grid-[repeat(auto-fit,minmax(100px,1fr))] sm:grid-cols-3 gap-2 sm:gap-3 shrink-0">
           {[
             { title: "Total Revenue", val: "GH₵ 142k", up: "+12%" },
             { title: "Total Trips", val: "1,240", up: "+8%" },
             { title: "Active Vehicles", val: "18 / 24", up: "+2%" }
           ].map((stat, i) => (
-            <div key={i} className="bg-white border border-gray-100/80 rounded-[10px] p-3 shadow-[0_1px_2px_rgba(0,0,0,0.02)] h-[75px] relative overflow-hidden flex flex-col justify-between">
+            <div key={i} className="bg-white border border-gray-100/80 rounded-[10px] p-2 sm:p-3 shadow-[0_1px_2px_rgba(0,0,0,0.02)] h-[65px] sm:h-[75px] relative overflow-hidden flex flex-col justify-between">
               <span className="text-[9px] text-[#64748B] font-bold uppercase tracking-wider">{stat.title}</span>
               <AnimatePresence mode="popLayout">
                 {isLoading ? (
@@ -75,10 +75,10 @@ export function ReportingAndInsightsAnimation() {
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: i * 0.1, duration: 0.4 }}
-                    className="flex justify-between items-end pb-1"
+                    className="flex justify-between items-end pb-0 sm:pb-1"
                   >
-                    <span className="text-[18px] font-bold text-gray-800 tracking-tight leading-none">{stat.val}</span>
-                    <span className="text-[10px] text-emerald-500 font-semibold bg-emerald-50 px-1.5 py-0.5 rounded">{stat.up}</span>
+                    <span className="text-[14px] sm:text-[18px] font-bold text-gray-800 tracking-tight leading-none">{stat.val}</span>
+                    <span className="text-[9px] sm:text-[10px] text-emerald-500 font-semibold bg-emerald-50 px-1 sm:px-1.5 py-0.5 rounded">{stat.up}</span>
                   </motion.div>
                 )}
               </AnimatePresence>

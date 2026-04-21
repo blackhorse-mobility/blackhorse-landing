@@ -97,9 +97,9 @@ export default function BuiltFor() {
   ];
 
   return (
-    <section className="relative w-full bg-white py-16 md:py-24 font-display">
+    <section id="corporate-customers" className="relative w-full bg-white py-16 md:py-24 font-display">
       <div className="mx-auto w-full max-w-7xl px-6 md:px-12 flex flex-col gap-8 md:gap-16">
-        {/* Header */}
+
         <div className="flex w-full items-end justify-between">
           <h2 className="text-[40px] sm:text-[48px] md:text-[56px] lg:text-[72px] font-medium leading-[1.1] tracking-tight text-[#D1D5DB]">
             Built for
@@ -125,7 +125,7 @@ export default function BuiltFor() {
           </div>
         </div>
 
-        {/* Carousel */}
+
         <div className="relative w-full h-[450px] md:h-[500px] lg:h-[600px] flex gap-3 md:gap-4 overflow-hidden">
           {renderedItems.map((item, index) => {
             const isActive = index === 0;
@@ -135,11 +135,10 @@ export default function BuiltFor() {
                 key={item.id}
                 layout
                 onClick={() => handleDotClick(index)}
-                className={`relative h-full overflow-hidden shrink-0 cursor-pointer ${
-                  isActive
+                className={`relative h-full overflow-hidden shrink-0 cursor-pointer ${isActive
                     ? "flex-1 rounded-[24px]"
                     : "w-16 sm:w-20 md:w-24 rounded-[9999px] max-sm:hidden"
-                }`}
+                  }`}
                 transition={{
                   type: "spring",
                   stiffness: 300,
@@ -147,7 +146,7 @@ export default function BuiltFor() {
                   mass: 0.8,
                 }}
               >
-                {/* Background Image */}
+
                 <motion.img
                   layout="position"
                   src={item.image}
@@ -155,7 +154,6 @@ export default function BuiltFor() {
                   className="absolute inset-0 h-full w-full object-cover"
                 />
 
-                {/* Dark Gradient Overlay for Active Item */}
                 <AnimatePresence>
                   {isActive && (
                     <motion.div

@@ -170,19 +170,19 @@ export function BookingManagementAnimation() {
   };
 
   return (
-    <div className="absolute right-0 bottom-0 top-6 left-6 bg-[#FAFAFA] rounded-tl-[16px] shadow-[0_-4px_12px_rgba(0,0,0,0.02)] border-t border-l border-[#F0F0F0] flex flex-col pointer-events-none p-[1px] overflow-hidden origin-bottom-right">
+    <div className="absolute pt-3 sm:pt-6 pl-3 sm:pl-6 pr-2 sm:pr-4 pb-2 sm:pb-4 right-0 bottom-0 top-3 sm:top-6 left-3 sm:left-6 bg-[#FAFAFA] rounded-tl-[12px] sm:rounded-tl-[16px] shadow-[0_-4px_12px_rgba(0,0,0,0.02)] border-t border-l border-[#F0F0F0] flex flex-col pointer-events-none overflow-hidden origin-bottom-right">
       
       
-      <div className="flex bg-white border-b border-gray-200 text-[10px] font-bold text-gray-500 uppercase tracking-wider">
-        <div className="flex-none w-[36px] flex items-center justify-center border-r border-gray-200 py-3">#</div>
-        <div className="flex-1 min-w-[120px] max-w-[160px] flex items-center border-r border-gray-200 px-3 py-3">Reference</div>
-        <div className="flex-1 min-w-[90px] max-w-[110px] flex items-center border-r border-gray-200 px-3 py-3">Status</div>
-        <div className="flex-1 min-w-[100px] flex items-center border-r border-gray-200 px-3 py-3">Pickup</div>
-        <div className="flex-1 min-w-[100px] flex items-center border-r border-gray-200 px-3 py-3">Dropoff</div>
-        <div className="flex-1 min-w-[90px] flex items-center border-r border-gray-200 px-3 py-3">Client</div>
-        <div className="flex-1 min-w-[110px] flex items-center border-r border-gray-200 px-3 py-3">Company</div>
-        <div className="flex-1 min-w-[100px] flex items-center border-r border-gray-200 px-3 py-3">Date</div>
-        <div className="flex-none w-[70px] flex items-center px-3 py-3 text-right">Dur.</div>
+      <div className="flex bg-white border-b border-gray-200 text-[9px] sm:text-[10px] font-bold text-gray-500 uppercase tracking-wider overflow-x-auto">
+        <div className="flex-none w-[32px] sm:w-[36px] flex items-center justify-center border-r border-gray-200 py-2 sm:py-3 shrink-0">#</div>
+        <div className="flex-1 min-w-[100px] sm:min-w-[120px] max-w-[140px] sm:max-w-[160px] flex items-center border-r border-gray-200 px-2 sm:px-3 py-2 sm:py-3">Reference</div>
+        <div className="flex-1 min-w-[75px] sm:min-w-[90px] max-w-[100px] sm:max-w-[110px] flex items-center border-r border-gray-200 px-2 sm:px-3 py-2 sm:py-3">Status</div>
+        <div className="hidden sm:flex flex-1 min-w-[100px] flex items-center border-r border-gray-200 px-3 py-3">Pickup</div>
+        <div className="hidden sm:flex flex-1 min-w-[100px] flex items-center border-r border-gray-200 px-3 py-3">Dropoff</div>
+        <div className="hidden md:flex flex-1 min-w-[90px] flex items-center border-r border-gray-200 px-3 py-3">Client</div>
+        <div className="hidden lg:flex flex-1 min-w-[110px] flex items-center border-r border-gray-200 px-3 py-3">Company</div>
+        <div className="hidden md:flex flex-1 min-w-[100px] flex items-center border-r border-gray-200 px-3 py-3">Date</div>
+        <div className="flex-none w-[60px] sm:w-[70px] flex items-center px-2 sm:px-3 py-2 sm:py-3 text-right">Dur.</div>
       </div>
 
      
@@ -190,36 +190,38 @@ export function BookingManagementAnimation() {
         {rows.map((row, idx) => (
           <motion.div 
             key={`${row.ref}-${idx}`}
-            className={`flex text-[12px] font-medium text-gray-800 transition-colors cursor-pointer border-b border-gray-100 ${activeIndex === idx ? "bg-blue-50/50" : "hover:bg-gray-50"}`}
+            className={`flex text-[11px] sm:text-[12px] font-medium text-gray-800 transition-colors cursor-pointer border-b border-gray-100 ${activeIndex === idx ? "bg-blue-50/50" : "hover:bg-gray-50"}`}
             layout
           >
-            <div className="flex-none w-[36px] flex items-center justify-center border-r border-gray-100 py-3 text-gray-400">{idx + 1}</div>
-            <div className="flex-1 min-w-[120px] max-w-[160px] flex items-center border-r border-gray-100 px-3 py-3 text-blue-600">{row.ref}</div>
-            <div className="flex-1 min-w-[90px] max-w-[110px] flex items-center border-r border-gray-100 px-3 py-3 relative">
-              <span className={`px-2 py-0.5 rounded-[4px] border uppercase text-[9px] tracking-wide font-bold inline-flex items-center ${getStatusStyle(row.status)}`}>
-                {row.status === "PENDING" && <span className="w-1.5 h-1.5 rounded-full bg-amber-500 mr-1.5 animate-pulse"></span>}
-                {row.status === "ACCEPTED" && <span className="w-1.5 h-1.5 rounded-full bg-blue-500 mr-1.5"></span>}
+            <div className="flex-none w-[32px] sm:w-[36px] flex items-center justify-center border-r border-gray-100 py-2 sm:py-3 text-gray-400 text-[9px] sm:text-[11px] shrink-0">{idx + 1}</div>
+            <div className="flex-1 min-w-[100px] sm:min-w-[120px] max-w-[140px] sm:max-w-[160px] flex items-center border-r border-gray-100 px-2 sm:px-3 py-2 sm:py-3 text-blue-600 text-[10px] sm:text-[12px]">{row.ref}</div>
+            <div className="flex-1 min-w-[75px] sm:min-w-[90px] max-w-[100px] sm:max-w-[110px] flex items-center border-r border-gray-100 px-2 sm:px-3 py-2 sm:py-3 relative">
+              <span className={`px-1.5 sm:px-2 py-0.5 rounded-[3px] sm:rounded-[4px] border uppercase text-[7px] sm:text-[9px] tracking-wide font-bold inline-flex items-center whitespace-nowrap ${getStatusStyle(row.status)}`}>
+                {row.status === "PENDING" && <span className="w-1 h-1 sm:w-1.5 sm:h-1.5 rounded-full bg-amber-500 mr-1 animate-pulse"></span>}
+                {row.status === "ACCEPTED" && <span className="w-1 h-1 sm:w-1.5 sm:h-1.5 rounded-full bg-blue-500 mr-1"></span>}
                 {row.status}
               </span>
             </div>
-            <div className="flex-1 min-w-[100px] flex items-center border-r border-gray-100 px-3 py-3 truncate">{row.pickup}</div>
-            <div className="flex-1 min-w-[100px] flex items-center border-r border-gray-100 px-3 py-3 truncate">{row.dropoff}</div>
-            <div className="flex-1 min-w-[90px] flex items-center border-r border-gray-100 px-3 py-3 truncate">
+            <div className="hidden sm:flex flex-1 min-w-[100px] flex items-center border-r border-gray-100 px-3 py-3 truncate text-[11px]">{row.pickup}</div>
+            <div className="hidden sm:flex flex-1 min-w-[100px] flex items-center border-r border-gray-100 px-3 py-3 truncate text-[11px]">{row.dropoff}</div>
+            <div className="hidden md:flex flex-1 min-w-[90px] flex items-center border-r border-gray-100 px-3 py-3 truncate">
                <div className="flex items-center gap-1.5">
-                 <div className="w-[18px] h-[18px] rounded-full bg-gray-200 shrink-0"></div>
-                 <span className="truncate">{row.client}</span>
+                 <div className="w-4 h-4 rounded-full bg-gray-200 shrink-0"></div>
+                 <span className="truncate text-[10px]">{row.client}</span>
                </div>
             </div>
-            <div className="flex-1 min-w-[110px] flex items-center border-r border-gray-100 px-3 py-3 truncate">
+            <div className="hidden lg:flex flex-1 min-w-[110px] flex items-center border-r border-gray-100 px-3 py-3 truncate">
               {row.company !== "New Co Ltd" && (
-                <span className="bg-gray-100 text-gray-700 px-1.5 py-0.5 rounded text-[10px] mr-1.5 truncate">
+                <span className="bg-gray-100 text-gray-700 px-1.5 py-0.5 rounded text-[9px] mr-1.5 truncate">
                   {row.company}
                 </span>
               )}
-              {row.company === "New Co Ltd" && <span className="truncate">{row.company}</span>}
+              {row.company === "New Co Ltd" && <span className="truncate text-[10px]">{row.company}</span>}
             </div>
-            <div className="flex-1 min-w-[100px] flex items-center border-r border-gray-100 px-3 py-3 truncate text-gray-500 text-[11px]">{row.date}</div>
-            <div className="flex-none w-[70px] flex items-center justify-end px-3 py-3 text-gray-500 text-[11px]">{row.duration}</div>
+            <div className="hidden md:flex flex-1 min-w-[100px] flex items-center border-r border-gray-100 px-3 py-3 truncate text-[10px]">
+              <span className="text-gray-500 truncate">{row.date}</span>
+            </div>
+            <div className="flex-none w-[60px] sm:w-[70px] flex items-center justify-end px-2 sm:px-3 py-2 sm:py-3 text-gray-500 text-[11px]">{row.duration}</div>
           </motion.div>
         ))}
 

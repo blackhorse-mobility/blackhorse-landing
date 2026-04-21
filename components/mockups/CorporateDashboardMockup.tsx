@@ -21,90 +21,61 @@ import {
 
 export default function CorporateDashboardMockup() {
   return (
-    <div className="w-full max-w-[1400px] h-[500px] md:h-[600px] rounded-t-[24px] md:rounded-t-[40px] border-[6px] md:border-[8px] border-gray-100 bg-[#F8F9FB] shadow-xl flex flex-col font-body overflow-hidden text-[10px] sm:text-xs">
+    <div className="w-full max-w-[1400px] h-[300px] sm:h-[380px] md:h-[500px] lg:h-[600px] rounded-t-[16px] sm:rounded-t-[24px] md:rounded-t-[40px] border-[4px] sm:border-[6px] md:border-[8px] border-gray-100 bg-[#F8F9FB] shadow-xl flex flex-col font-body overflow-hidden text-[9px] sm:text-[10px] md:text-xs">
 
       {/* Top Navbar */}
-      <div className="h-14 bg-white/90 border-b border-gray-100 flex items-center px-6 shrink-0 justify-between backdrop-blur-md relative z-10 w-full">
-        <div className="flex items-center gap-3">
+      <div className="h-10 sm:h-14 bg-white/90 border-b border-gray-100 flex items-center px-3 sm:px-6 shrink-0 justify-between backdrop-blur-md relative z-10 w-full">
+        <div className="flex items-center gap-2 sm:gap-3">
           <img 
             src="/assets/Icon-dp/BH_icon_Main.png" 
             alt="Blackhorse Logo" 
-            className="w-8 h-8 object-contain"
+            className="w-6 sm:w-8 h-6 sm:h-8 object-contain"
           />
-          <span className="font-display font-medium tracking-wide text-[15px] text-gray-900 hidden sm:block">Blackhorse Corporate</span>
+          <span className="font-display font-medium tracking-wide text-xs sm:text-[15px] text-gray-900 hidden sm:block">Blackhorse Corporate</span>
         </div>
 
-        {/* Nav Links - Center */}
-        <div className="hidden 2xl:flex items-center gap-2">
-          <div className="flex items-center gap-1.5 px-4 py-1.5 text-[#41C1FD] bg-white border border-gray-100 shadow-sm rounded-lg font-medium">
-            <Home size={14} />
-            <span>Home</span>
-          </div>
-          <div className="flex items-center gap-1.5 px-3 py-1.5 text-gray-500 rounded hover:bg-gray-50">
-            <FileText size={14} />
-            <span>Booking</span>
-          </div>
-          <div className="flex items-center gap-1.5 px-3 py-1.5 text-gray-500 rounded hover:bg-gray-50">
-            <CarFront size={14} />
-            <span>Fleet</span>
-          </div>
-          <div className="flex items-center gap-1.5 px-3 py-1.5 text-gray-500 rounded hover:bg-gray-50">
-            <Calendar size={14} />
-            <span>Schedule</span>
-          </div>
-          <div className="flex items-center gap-1.5 px-3 py-1.5 text-gray-500 rounded hover:bg-gray-50">
-            <Map size={14} />
-            <span>Tracking</span>
-          </div>
-          <div className="flex items-center gap-1.5 px-3 py-1.5 text-gray-500 rounded hover:bg-gray-50">
-            <CreditCard size={14} />
-            <span>Payments</span>
-          </div>
-        </div>
-
-        {/* Right Section */}
-        <div className="flex items-center gap-4">
+        {/* Right Section - Minimal on mobile */}
+        <div className="flex items-center gap-2 sm:gap-4">
           <div className="relative">
-            <Bell size={16} className="text-gray-600" />
-            <span className="absolute -top-1 -right-1 w-3.5 h-3.5 bg-red-500 rounded-full text-[8px] text-white flex items-center justify-center border border-white">9</span>
+            <Bell size={14} className="sm:w-4 sm:h-4 text-gray-600" />
+            <span className="absolute -top-1 -right-1 w-2.5 h-2.5 sm:w-3.5 sm:h-3.5 bg-red-500 rounded-full text-[6px] sm:text-[8px] text-white flex items-center justify-center border border-white">9</span>
           </div>
-          <div className="h-6 w-px bg-gray-200 hidden sm:block"></div>
-          <div className="flex items-center gap-2">
+          <div className="w-6 h-px bg-gray-200 hidden sm:block"></div>
+          <div className="flex items-center gap-1.5 sm:gap-2">
             <div className="hidden sm:flex flex-col items-end">
-              <span className="font-medium text-gray-900 text-[11px] leading-tight">New Co Ltd</span>
-              <span className="text-gray-400 text-[9px] uppercase tracking-wider">SUPER_ADMIN</span>
+              <span className="font-medium text-gray-900 text-[9px] sm:text-[11px] leading-tight">New Co Ltd</span>
+              <span className="text-gray-400 text-[7px] sm:text-[9px] uppercase tracking-wider">SUPER_ADMIN</span>
             </div>
-            <div className="w-8 h-8 bg-black rounded-full text-white flex items-center justify-center font-bold text-sm relative">
+            <div className="w-6 h-6 sm:w-8 sm:h-8 bg-black rounded-full text-white flex items-center justify-center font-bold text-xs sm:text-sm relative">
               S
-              <span className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-green-500 border-2 border-white rounded-full"></span>
+              <span className="absolute bottom-0 right-0 w-2 h-2 sm:w-2.5 sm:h-2.5 bg-green-500 border-2 border-white rounded-full"></span>
             </div>
-            <ChevronDown size={14} className="text-gray-400" />
           </div>
         </div>
       </div>
 
       {/* Main Content Area */}
-      <div className="flex-1 overflow-x-auto overflow-y-auto p-4 sm:p-6 custom-scrollbar bg-white">
-        <div className="min-w-[850px] relative h-full flex flex-col gap-6">
+      <div className="flex-1 overflow-x-hidden overflow-y-auto p-2 sm:p-4 md:p-6 custom-scrollbar bg-white">
+        <div className="w-full relative h-full flex flex-col gap-3 sm:gap-6">
           
-          {/* Top Cards Row */}
-          <div className="grid grid-cols-4 gap-4">
+          {/* Top Cards Row - Responsive Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-4">
             {/* Greeting Card */}
             <motion.div 
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1, duration: 0.5 }}
-              className="col-span-1 rounded-xl overflow-hidden relative text-white p-5 flex flex-col justify-end min-h-[140px] shadow-sm"
+              className="col-span-1 rounded-lg sm:rounded-xl overflow-hidden relative text-white p-3 sm:p-5 flex flex-col justify-end min-h-[100px] sm:min-h-[140px] shadow-sm"
               style={{
                 background: 'linear-gradient(135deg, #41C1FD 0%, #06b6d4 100%)'
               }}
             >
-              <div className="absolute top-4 left-4">
-                <User size={20} className="text-white/80" />
+              <div className="absolute top-2 sm:top-4 left-2 sm:left-4">
+                <User size={16} className="sm:w-5 sm:h-5 text-white/80" />
               </div>
               <div className="relative z-10 mt-auto">
-                <p className="text-[11px] font-medium text-white/80 mb-0.5">Good afternoon,</p>
-                <h2 className="text-base sm:text-lg font-display font-semibold tracking-wide">Auriga Corporate</h2>
+                <p className="text-[9px] sm:text-[11px] font-medium text-white/80 mb-0.5">Good afternoon,</p>
+                <h2 className="text-xs sm:text-base font-display font-semibold tracking-wide">Auriga Corporate</h2>
               </div>
               
               {/* Shimmer effect */}
@@ -116,13 +87,13 @@ export default function CorporateDashboardMockup() {
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2, duration: 0.5 }}
-              className="col-span-1 bg-white border border-gray-100 rounded-xl p-5 shadow-sm flex flex-col justify-between"
+              className="col-span-1 bg-white border border-gray-100 rounded-lg sm:rounded-xl p-3 sm:p-5 shadow-sm flex flex-col justify-between"
             >
-              <div className="flex items-center gap-2 mb-4">
-                <Scan size={16} className="text-gray-800" />
-                <span className="font-medium text-gray-900 text-xs text-[13px]">Ongoing Trips</span>
+              <div className="flex items-center gap-2 mb-3">
+                <Scan size={14} className="sm:w-4 sm:h-4 text-gray-800" />
+                <span className="font-medium text-gray-900 text-[11px] sm:text-[13px]">Ongoing Trips</span>
               </div>
-              <p className="text-2xl font-light text-gray-900 font-display">2</p>
+              <p className="text-lg sm:text-2xl font-light text-gray-900 font-display">2</p>
             </motion.div>
 
             {/* Stat Card 2 */}
@@ -130,13 +101,13 @@ export default function CorporateDashboardMockup() {
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3, duration: 0.5 }}
-              className="col-span-1 bg-white border border-gray-100 rounded-xl p-5 shadow-sm flex flex-col justify-between"
+              className="col-span-1 bg-white border border-gray-100 rounded-lg sm:rounded-xl p-3 sm:p-5 shadow-sm flex flex-col justify-between"
             >
-              <div className="flex items-center gap-2 mb-4">
-                <Car size={16} className="text-gray-800" />
-                <span className="font-medium text-gray-900 text-xs text-[13px]">Scheduled Trips</span>
+              <div className="flex items-center gap-2 mb-3">
+                <Car size={14} className="sm:w-4 sm:h-4 text-gray-800" />
+                <span className="font-medium text-gray-900 text-[11px] sm:text-[13px]">Scheduled Trips</span>
               </div>
-              <p className="text-2xl font-light text-gray-900 font-display">0</p>
+              <p className="text-lg sm:text-2xl font-light text-gray-900 font-display">0</p>
             </motion.div>
 
             {/* Stat Card 3 */}
@@ -144,32 +115,32 @@ export default function CorporateDashboardMockup() {
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4, duration: 0.5 }}
-              className="col-span-1 bg-white border border-gray-100 rounded-xl p-5 shadow-sm flex flex-col justify-between"
+              className="col-span-1 bg-white border border-gray-100 rounded-lg sm:rounded-xl p-3 sm:p-5 shadow-sm flex flex-col justify-between"
             >
-              <div className="flex items-center gap-2 mb-4">
-                <Wallet size={16} className="text-gray-800" />
-                <span className="font-medium text-gray-900 text-xs text-[13px]">Wallet Balance</span>
+              <div className="flex items-center gap-2 mb-3">
+                <Wallet size={14} className="sm:w-4 sm:h-4 text-gray-800" />
+                <span className="font-medium text-gray-900 text-[11px] sm:text-[13px]">Wallet Balance</span>
               </div>
-              <p className="text-xl font-light text-gray-900 font-display">GHS 33,640.01</p>
+              <p className="text-sm sm:text-xl font-light text-gray-900 font-display">GHS 33,640</p>
             </motion.div>
           </div>
 
-          {/* Action Buttons Row */}
+          {/* Action Buttons Row - Hide on mobile */}
           <motion.div 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.5, duration: 0.5 }}
-            className="flex items-center gap-3"
+            className="hidden sm:flex items-center gap-2 md:gap-3"
           >
-            <button className="bg-[#41C1FD] text-white px-4 py-2.5 rounded-lg flex items-center gap-2 font-medium text-xs hover:bg-cyan-600 transition-colors shadow-sm">
+            <button className="bg-[#41C1FD] text-white px-3 md:px-4 py-2 md:py-2.5 rounded-lg flex items-center gap-2 font-medium text-xs hover:bg-cyan-600 transition-colors shadow-sm">
               <Plus size={14} />
               New Booking
             </button>
-            <button className="bg-white border border-gray-200 text-gray-700 px-4 py-2.5 rounded-lg flex items-center gap-2 font-medium text-xs hover:bg-gray-50 transition-colors">
+            <button className="bg-white border border-gray-200 text-gray-700 px-3 md:px-4 py-2 md:py-2.5 rounded-lg flex items-center gap-2 font-medium text-xs hover:bg-gray-50 transition-colors">
               <Wallet size={14} className="text-gray-500" />
               Fund Wallet
             </button>
-            <button className="bg-white border border-gray-200 text-gray-700 px-4 py-2.5 rounded-lg flex items-center gap-2 font-medium text-xs hover:bg-gray-50 transition-colors">
+            <button className="bg-white border border-gray-200 text-gray-700 px-3 md:px-4 py-2 md:py-2.5 rounded-lg flex items-center gap-2 font-medium text-xs hover:bg-gray-50 transition-colors">
               <FileText size={14} className="text-gray-500" />
               View Invoices
             </button>
@@ -253,14 +224,6 @@ export default function CorporateDashboardMockup() {
               </div>
             </div>
           </motion.div>
-
-          {/* Floating Feedback button */}
-          <div className="fixed bottom-6 left-1/2 transform -translate-x-1/2 z-50">
-            <button className="bg-[#0F172A] text-white px-4 py-2.5 rounded-full font-medium text-[11px] flex items-center gap-2 shadow-xl hover:bg-black transition-colors hover:scale-105 active:scale-95 duration-200">
-              <MessageSquare size={13} className="text-white/80" />
-              Feedback
-            </button>
-          </div>
 
         </div>
 

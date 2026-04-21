@@ -52,11 +52,11 @@ export default function RentalSteps() {
   });
 
   return (
-    <section ref={containerRef} className="relative w-full bg-white font-display py-24 md:py-32 overflow-hidden">
+    <section id="fleet-features" ref={containerRef} className="relative w-full bg-white font-display py-24 md:py-32 overflow-hidden">
       <div className="mx-auto w-full max-w-[1280px] px-6 md:px-16">
-        {/* Header section */}
+
         <div className="mb-24 md:mb-36 text-left flex flex-col max-w-4xl">
-          <motion.h2 
+          <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-10%" }}
@@ -76,18 +76,18 @@ export default function RentalSteps() {
           </motion.p>
         </div>
 
-        {/* Zig-zag steps */}
+
         <div className="flex flex-col gap-24 md:gap-32">
           {steps.map((step, index) => {
             const isEven = index % 2 === 0;
 
             return (
-              <div 
+              <div
                 key={step.num}
                 className={`flex flex-col ${isEven ? "md:flex-row" : "md:flex-row-reverse"} items-center justify-between gap-12 md:gap-16`}
               >
-                {/* Text Content */}
-                <motion.div 
+
+                <motion.div
                   initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-20%" }}
@@ -105,8 +105,8 @@ export default function RentalSteps() {
                   </p>
                 </motion.div>
 
-                {/* Image Placeholder Frame */}
-                <motion.div 
+
+                <motion.div
                   initial={{ opacity: 0, scale: 0.95, y: 20 }}
                   whileInView={{ opacity: 1, scale: 1, y: 0 }}
                   viewport={{ once: true, margin: "-20%" }}

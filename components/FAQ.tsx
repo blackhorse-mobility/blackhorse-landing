@@ -67,7 +67,7 @@ export default function FAQ({ viewMode }: FAQProps) {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
-    <section className="w-full bg-white px-6 py-24 md:py-32 md:px-16 flex flex-col font-display selection:bg-cyan-200">
+    <section id={`${viewMode}-faqs`} className="w-full bg-white px-6 py-24 md:py-32 md:px-16 flex flex-col font-display selection:bg-cyan-200">
       <div className="mx-auto w-full max-w-[1280px] flex flex-col lg:flex-row gap-16 lg:gap-24">
         
         {/* Left Column - Heading */}

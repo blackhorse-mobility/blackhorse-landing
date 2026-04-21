@@ -22,7 +22,7 @@ export default function RentalCTA() {
         transition={{ duration: 0.6, ease: "easeOut" }}
         className="relative w-full max-w-[1240px] bg-[#050505] rounded-[28px] md:rounded-[36px] overflow-hidden flex flex-col md:flex-row shadow-[0_20px_40px_rgb(0,0,0,0.1)]"
       >
-        {/* Content Side */}
+
         <div className="relative z-10 flex flex-col items-start justify-center p-10 md:p-16 lg:px-20 lg:py-24 lg:w-2/3">
           <h2 className="text-white text-[32px] sm:text-[40px] md:text-[52px] font-medium leading-[1.1] tracking-tight mb-5">
             Turn your fleet into a revenue engine
@@ -36,7 +36,7 @@ export default function RentalCTA() {
           </button>
         </div>
 
-        {/* Abstract Graphic Side */}
+
         <div className="absolute right-0 bottom-0 pointer-events-none md:w-3/5 lg:w-[500px] h-full flex justify-end items-end">
           <Image
             width={200}

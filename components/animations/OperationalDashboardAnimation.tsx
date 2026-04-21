@@ -41,9 +41,9 @@ export function OperationalDashboardAnimation() {
   }, []);
 
   return (
-    <div className={`absolute right-0 bottom-0 top-6 left-6 bg-[#F9FBFC] rounded-tl-[16px] shadow-[0_-4px_12px_rgba(0,0,0,0.02)] border-t border-l border-[#F0F0F0] flex flex-col pointer-events-none p-4 sm:p-5 ${manrope.className} text-left overflow-hidden origin-bottom-right`}>
+    <div className={`absolute pt-3 sm:pt-6 pl-3 sm:pl-6 pr-2 sm:pr-4 pb-2 sm:pb-4 right-0 bottom-0 top-3 sm:top-6 left-3 sm:left-6 bg-[#F9FBFC] rounded-tl-[12px] sm:rounded-tl-[16px] shadow-[0_-4px_12px_rgba(0,0,0,0.02)] border-t border-l border-[#F0F0F0] flex flex-col pointer-events-none ${manrope.className} text-left overflow-hidden origin-bottom-right`}>
       
-      <div className="grid grid-cols-2 gap-3 mb-4 shrink-0">
+      <div className="grid grid-cols-1 xs:grid-cols-2 gap-2 sm:gap-3 mb-3 sm:mb-4 shrink-0">
         <div className="bg-white rounded-[10px] border border-[#E5E7EB] p-3 flex flex-col justify-center shadow-[0_1px_2px_rgba(0,0,0,0.02)]">
             <div className="flex items-center gap-2 mb-1.5">
                 <div className="w-6 h-6 rounded-md bg-[#60A5FA] text-white flex items-center justify-center shrink-0">

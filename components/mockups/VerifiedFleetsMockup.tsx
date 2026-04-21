@@ -237,13 +237,6 @@ export default function VerifiedFleetsMockup() {
 
           </div>
 
-          <div className="fixed bottom-6 left-1/2 transform -translate-x-1/2 z-50">
-            <button className="bg-[#0A1020] text-white px-5 py-2.5 rounded-full font-medium text-[12px] flex items-center gap-2 shadow-xl hover:bg-black transition-colors font-display tracking-wide">
-              <MessageSquare size={14} className="text-white/80" />
-              Feedback
-            </button>
-          </div>
-
         </div>
 
       <style dangerouslySetInnerHTML={{ __html: `

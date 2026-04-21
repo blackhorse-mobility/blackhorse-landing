@@ -45,7 +45,7 @@ const features = [
 
 export default function FleetCapabilities() {
   return (
-    <section className="min-h-screen w-full bg-white px-6 py-20 md:py-32 md:px-16 flex flex-col font-display selection:bg-cyan-200">
+    <section id="fleet-benefits" className="min-h-screen w-full bg-white px-6 py-20 md:py-32 md:px-16 flex flex-col font-display selection:bg-cyan-200">
       <div className="mx-auto max-w-[1280px] w-full">
 
         <div className="mb-20 md:mb-28 flex items-stretch">

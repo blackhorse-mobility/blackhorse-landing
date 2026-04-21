@@ -8,11 +8,11 @@ export function LiveOperationsAnimation() {
 
   return (
     <div
-      className="absolute inset-0 flex items-center justify-center p-6 bg-[#F8F8F8] overflow-hidden"
+      className="absolute inset-0 flex items-center justify-center p-3 sm:p-6 bg-[#F8F8F8] overflow-hidden"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <div className="relative w-full h-full max-w-[360px] bg-[#E8EAE6] rounded-[16px] shadow-[0_4px_24px_rgba(0,0,0,0.06)] border border-[#DFE2E0] overflow-hidden flex flex-col pointer-events-none">
+      <div className="relative w-full h-full max-w-[360px] bg-[#E8EAE6] rounded-[12px] sm:rounded-[16px] shadow-[0_4px_24px_rgba(0,0,0,0.06)] border border-[#DFE2E0] overflow-hidden flex flex-col pointer-events-none">
         
         <div className="absolute inset-0 bg-[#EFE9E1] overflow-hidden">
           <svg className="absolute inset-0 w-full h-full" viewBox="0 0 360 220" preserveAspectRatio="xMidYMid slice">
@@ -135,12 +135,13 @@ export function LiveOperationsAnimation() {
         </div>
 
        
-        <div className="absolute top-4 left-4 right-4 flex justify-between">
-          <div className="bg-white/90 backdrop-blur-[2px] px-3 py-1.5 rounded-lg shadow-sm font-semibold text-[11px] text-black border border-white/50 tracking-wide uppercase flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse shadow-sm"></span>
-            Driver En-route
+        <div className="absolute top-3 sm:top-4 left-3 sm:left-4 right-3 sm:right-4 flex justify-between gap-2">
+          <div className="bg-white/90 backdrop-blur-[2px] px-2 sm:px-3 py-1 sm:py-1.5 rounded-lg shadow-sm font-semibold text-[9px] sm:text-[11px] text-black border border-white/50 tracking-wide uppercase flex items-center gap-1.5 flex-shrink">
+            <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse shadow-sm"></span>
+            <span>Driver</span>
+            <span className="hidden sm:inline">En-route</span>
           </div>
-          <div className="bg-white/90 backdrop-blur-[2px] px-2.5 py-1.5 rounded-lg shadow-sm font-semibold text-[12px] text-gray-600 border border-white/50 tracking-wide">
+          <div className="bg-white/90 backdrop-blur-[2px] px-2 sm:px-2.5 py-1 sm:py-1.5 rounded-lg shadow-sm font-semibold text-[9px] sm:text-[12px] text-gray-600 border border-white/50 tracking-wide">
             ETA: {isHovered ? "2 min" : "15 min"}
           </div>
         </div>

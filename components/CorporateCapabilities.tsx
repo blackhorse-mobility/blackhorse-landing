@@ -79,7 +79,7 @@ export default function CorporateCapabilities() {
   }, [activeIndex]);
 
   return (
-    <section className="min-h-screen w-full bg-white px-6 py-20 md:px-16 flex flex-col justify-center font-display selection:bg-cyan-200">
+    <section id="corporate-features" className="min-h-screen w-full bg-white px-6 py-20 md:px-16 flex flex-col justify-center font-display selection:bg-cyan-200">
       <div className="mx-auto max-w-7xl w-full">
         {/* Header Section */}
         <div className="mb-20 flex">

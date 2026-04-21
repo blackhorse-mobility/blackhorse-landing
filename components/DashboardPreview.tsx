@@ -12,7 +12,7 @@ const manrope = Manrope({
 
 export function DashboardPreview() {
   return (
-    <div className={`w-full max-w-[1400px] h-[500px] md:h-[600px] rounded-t-[24px] md:rounded-t-[40px] border-[6px] md:border-[8px] border-gray-100 bg-white shadow-xl overflow-hidden flex ${manrope.className}`}>
+    <div className={`w-full max-w-[1400px] h-[300px] sm:h-[380px] md:h-[500px] lg:h-[600px] rounded-t-[16px] sm:rounded-t-[24px] md:rounded-t-[40px] border-[4px] sm:border-[6px] md:border-[8px] border-gray-100 bg-white shadow-xl overflow-hidden flex ${manrope.className}`}>
       
       {/* Sidebar (Shadcn/Docs style) */}
       <div className="w-[240px] sm:w-[260px] md:w-[280px] shrink-0 border-r border-[#E5E7EB] bg-[#FAFAFA] flex flex-col hidden sm:flex">
@@ -91,63 +91,63 @@ export function DashboardPreview() {
       {/* Main Content Area */}
       <div className="flex-1 bg-[#F9FBFC] flex flex-col h-full overflow-hidden relative">
         {/* Top Navbar */}
-        <div className="h-[73px] bg-white border-b border-[#E5E7EB] px-6 sm:px-8 flex items-center justify-between shrink-0">
-          <div className="flex items-center gap-3 text-[14px] font-medium text-[#6B7280]">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="3" x2="9" y2="21"></line></svg>
+        <div className="h-10 sm:h-14 md:h-[73px] bg-white border-b border-[#E5E7EB] px-3 sm:px-6 md:px-8 flex items-center justify-between shrink-0">
+          <div className="flex items-center gap-2 sm:gap-3 text-[11px] sm:text-[12px] md:text-[14px] font-medium text-[#6B7280]">
+            <svg width="14" height="14" className="sm:w-4 sm:h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="3" x2="9" y2="21"></line></svg>
             <span>General</span>
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            <svg width="12" height="12" className="sm:w-3.5 sm:h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
             <span className="text-[#111827]">Overview</span>
           </div>
           
-          <div className="flex items-center gap-4">
-            <div className="w-8 h-8 rounded-full bg-white border border-[#E5E7EB] flex items-center justify-center text-[#6B7280] relative">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
-              <span className="absolute top-1.5 right-2 w-1.5 h-1.5 bg-rose-500 rounded-full"></span>
+          <div className="flex items-center gap-2 sm:gap-4">
+            <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-white border border-[#E5E7EB] flex items-center justify-center text-[#6B7280] relative">
+              <svg width="14" height="14" className="sm:w-4 sm:h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+              <span className="absolute top-1 right-1.5 sm:top-1.5 sm:right-2 w-1 h-1 sm:w-1.5 sm:h-1.5 bg-rose-500 rounded-full"></span>
             </div>
-            <button className="bg-[#41C1FD] hover:bg-[#25b6f9] text-white px-4 py-2 rounded-md font-semibold text-[13px] transition-colors shadow-sm border border-[#2fa8e7]">
+            <button className="hidden sm:block bg-[#41C1FD] hover:bg-[#25b6f9] text-white px-3 md:px-4 py-1.5 md:py-2 rounded-md font-semibold text-[11px] md:text-[13px] transition-colors shadow-sm border border-[#2fa8e7]">
               + Add New Vehicle
             </button>
           </div>
         </div>
 
         {/* Main Dashboard Scrollable */}
-        <div className="flex-1 overflow-y-auto p-6 sm:p-8">
+        <div className="flex-1 overflow-y-auto p-2 sm:p-4 md:p-6 md:p-8">
           
           {/* Top Summary Cards */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-5 mb-6 md:mb-8">
-            <div className="bg-white rounded-[12px] border border-[#E5E7EB] p-4 flex items-center gap-4 shadow-[0_1px_2px_rgba(0,0,0,0.02)]">
-               <div className="w-[46px] h-[46px] rounded-[10px] bg-[#41C1FD] text-white flex items-center justify-center shrink-0">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-4 md:gap-5 mb-4 sm:mb-6 md:mb-8">
+            <div className="bg-white rounded-lg sm:rounded-[12px] border border-[#E5E7EB] p-2 sm:p-4 flex items-center gap-2 sm:gap-4 shadow-[0_1px_2px_rgba(0,0,0,0.02)]">
+               <div className="w-9 h-9 sm:w-[46px] sm:h-[46px] rounded-lg sm:rounded-[10px] bg-[#41C1FD] text-white flex items-center justify-center shrink-0">
+                  <svg width="18" height="18" className="sm:w-6 sm:h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
                </div>
                <div>
-                  <div className="text-[12px] font-medium text-[#6B7280]">Total Fleet</div>
-                  <div className="text-[22px] font-semibold text-[#111827] leading-tight mt-0.5">3</div>
+                  <div className="text-[10px] sm:text-[12px] font-medium text-[#6B7280]">Total Fleet</div>
+                  <div className="text-base sm:text-[22px] font-semibold text-[#111827] leading-tight mt-0.5">3</div>
                </div>
             </div>
             
-            <div className="bg-white rounded-[12px] border border-[#E5E7EB] p-4 flex items-center gap-4 shadow-[0_1px_2px_rgba(0,0,0,0.02)]">
-               <div className="w-[46px] h-[46px] rounded-[10px] bg-[#60A5FA] text-white flex items-center justify-center shrink-0">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"></path><circle cx="7" cy="17" r="2"></circle><path d="M9 17h6"></path><circle cx="17" cy="17" r="2"></circle></svg>
+            <div className="bg-white rounded-lg sm:rounded-[12px] border border-[#E5E7EB] p-2 sm:p-4 flex items-center gap-2 sm:gap-4 shadow-[0_1px_2px_rgba(0,0,0,0.02)]">
+               <div className="w-9 h-9 sm:w-[46px] sm:h-[46px] rounded-lg sm:rounded-[10px] bg-[#60A5FA] text-white flex items-center justify-center shrink-0">
+                  <svg width="18" height="18" className="sm:w-6 sm:h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"></path><circle cx="7" cy="17" r="2"></circle><path d="M9 17h6"></path><circle cx="17" cy="17" r="2"></circle></svg>
                </div>
                <div>
-                  <div className="text-[12px] font-medium text-[#6B7280]">Active Trips</div>
-                  <div className="text-[22px] font-semibold text-[#111827] leading-tight mt-0.5">1</div>
+                  <div className="text-[10px] sm:text-[12px] font-medium text-[#6B7280]">Active Trips</div>
+                  <div className="text-base sm:text-[22px] font-semibold text-[#111827] leading-tight mt-0.5">1</div>
                </div>
             </div>
 
-            <div className="bg-white rounded-[12px] border border-[#E5E7EB] p-4 flex items-center gap-4 shadow-[0_1px_2px_rgba(0,0,0,0.02)]">
-               <div className="w-[46px] h-[46px] rounded-[10px] bg-[#94A3B8] text-white flex items-center justify-center shrink-0">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg>
+            <div className="bg-white rounded-lg sm:rounded-[12px] border border-[#E5E7EB] p-2 sm:p-4 flex items-center gap-2 sm:gap-4 shadow-[0_1px_2px_rgba(0,0,0,0.02)]">
+               <div className="w-9 h-9 sm:w-[46px] sm:h-[46px] rounded-lg sm:rounded-[10px] bg-[#94A3B8] text-white flex items-center justify-center shrink-0">
+                  <svg width="18" height="18" className="sm:w-6 sm:h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg>
                </div>
                <div>
-                  <div className="text-[12px] font-medium text-[#6B7280]">Idle Vehicles</div>
-                  <div className="text-[22px] font-semibold text-[#111827] leading-tight mt-0.5">2</div>
+                  <div className="text-[10px] sm:text-[12px] font-medium text-[#6B7280]">Idle Vehicles</div>
+                  <div className="text-base sm:text-[22px] font-semibold text-[#111827] leading-tight mt-0.5">2</div>
                </div>
             </div>
 
-            <div className="bg-white rounded-[12px] border border-[#E5E7EB] p-4 flex items-center gap-4 shadow-[0_1px_2px_rgba(0,0,0,0.02)]">
-               <div className="w-[46px] h-[46px] rounded-[10px] bg-[#38BDF8] text-white flex items-center justify-center shrink-0">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"></rect><path d="M12 12h.01"></path><path d="M17 12h.01"></path><path d="M7 12h.01"></path></svg>
+            <div className="bg-white rounded-lg sm:rounded-[12px] border border-[#E5E7EB] p-2 sm:p-4 flex items-center gap-2 sm:gap-4 shadow-[0_1px_2px_rgba(0,0,0,0.02)]">
+               <div className="w-9 h-9 sm:w-[46px] sm:h-[46px] rounded-lg sm:rounded-[10px] bg-[#38BDF8] text-white flex items-center justify-center shrink-0">
+                  <svg width="18" height="18" className="sm:w-6 sm:h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"></rect><path d="M12 12h.01"></path><path d="M17 12h.01"></path><path d="M7 12h.01"></path></svg>
                </div>
                <div>
                   <div className="text-[12px] font-medium text-[#6B7280]">Wallet Balance</div>

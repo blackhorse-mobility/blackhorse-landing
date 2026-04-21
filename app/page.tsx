@@ -11,43 +11,48 @@ import RentalSteps from "@/components/RentalSteps";
 import FAQ from "@/components/FAQ";
 import CorporateCTA from "@/components/CorporateCTA";
 import RentalCTA from "@/components/RentalCTA";
+import Footer from "@/components/Footer";
 
 export default function Home() {
   const [viewMode, setViewMode] = useState<ViewMode>("fleet");
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   return (
-    <main className="w-full min-h-screen bg-white">
-      <InteractiveHero
-        viewMode={viewMode}
-        setViewMode={setViewMode}
-        onPrimaryAction={() => setIsDrawerOpen(true)}
-      />
+    <div className="relative w-full">
+      <main className="w-full min-h-screen bg-white relative z-10 shadow-[0_10px_30px_rgba(0,0,0,0.5)]">
+        <InteractiveHero
+          viewMode={viewMode}
+          setViewMode={setViewMode}
+          onPrimaryAction={() => setIsDrawerOpen(true)}
+        />
 
-      {viewMode === "corporate" && (
-        <>
-          <CorporateCapabilities />
-          <CorporateSteps />
-          <BuiltFor />
-          <FAQ viewMode="corporate" />
-          <CorporateCTA />
-        </>
-      )}
+        {viewMode === "corporate" && (
+          <>
+            <CorporateCapabilities />
+            <CorporateSteps />
+            <BuiltFor />
+            <FAQ viewMode="corporate" />
+            <CorporateCTA />
+          </>
+        )}
 
-      {viewMode === "fleet" && (
-        <>
-          <FleetCapabilities />
-          <RentalSteps />
-          <FAQ viewMode="fleet" />
-          <RentalCTA />
-        </>
-      )}
+        {viewMode === "fleet" && (
+          <>
+            <FleetCapabilities />
+            <RentalSteps />
+            <FAQ viewMode="fleet" />
+            <RentalCTA />
+          </>
+        )}
 
-      <RegistrationDrawer
-        isOpen={isDrawerOpen}
-        onClose={() => setIsDrawerOpen(false)}
-        initialMode={viewMode}
-      />
-    </main>
+        <RegistrationDrawer
+          isOpen={isDrawerOpen}
+          onClose={() => setIsDrawerOpen(false)}
+          initialMode={viewMode}
+        />
+      </main>
+      
+      <Footer />
+    </div>
   );
 }

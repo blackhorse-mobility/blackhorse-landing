@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Manrope } from "next/font/google";
 import Image from "next/image";
 import { ChevronsUpDown } from "lucide-react";
+import { useHubSpotTracking } from "@/hooks/useHubSpotTracking";
 
 const manrope = Manrope({
   subsets: ["latin"],
@@ -24,14 +25,27 @@ export default function RegistrationDrawer({
   initialMode,
 }: RegistrationDrawerProps) {
   const [internalMode, setInternalMode] = useState<DrawerMode>(initialMode);
-
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
+  const [submitSuccess, setSubmitSuccess] = useState(false);
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "",
+    company: "",
+    industry: "",
+  });
+  const { onClickButton, onFormInteraction, onSignup, onCustomEvent } = useHubSpotTracking();
 
   useEffect(() => {
     if (isOpen) {
       setInternalMode(initialMode);
+      onFormInteraction("registration", "focus", {
+        mode: initialMode,
+      });
     }
-  }, [isOpen, initialMode]);
-
+  }, [isOpen, initialMode, onFormInteraction]);
 
   useEffect(() => {
     if (isOpen) {
@@ -45,6 +59,99 @@ export default function RegistrationDrawer({
   }, [isOpen]);
 
   const isCorporate = internalMode === "corporate";
+
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleModeChange = (newMode: DrawerMode) => {
+    onCustomEvent("registration_mode_changed", {
+      from_mode: internalMode,
+      to_mode: newMode,
+    });
+    setInternalMode(newMode);
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setSubmitError(null);
+    setSubmitSuccess(false);
+
+    try {
+      onFormInteraction("registration", "submit", {
+        mode: internalMode,
+        fields_filled: Object.values(formData).filter((v) => v).length,
+      });
+
+      // Submit to HubSpot CRM via API route
+      const response = await fetch("/api/hubspot/submit-form", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          firstName: formData.firstName,
+          lastName: formData.lastName,
+          email: formData.email,
+          phone: formData.phone,
+          company: formData.company,
+          industry: formData.industry,
+          registrationType: internalMode,
+        }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || "Failed to submit form");
+      }
+
+      const result = await response.json();
+
+      // Track successful signup
+      if (formData.email) {
+        onSignup(formData.email, "registration", {
+          registration_type: internalMode,
+          company: formData.company,
+          first_name: formData.firstName,
+          last_name: formData.lastName,
+          phone: formData.phone,
+          hubspot_contact_id: result.contactId,
+        });
+      }
+
+      // Show success state
+      setSubmitSuccess(true);
+
+      // Reset form after 2 seconds and close
+      setTimeout(() => {
+        setFormData({
+          firstName: "",
+          lastName: "",
+          email: "",
+          phone: "",
+          company: "",
+          industry: "",
+        });
+        setSubmitSuccess(false);
+        onClose();
+      }, 2000);
+    } catch (error) {
+      const errorMessage =
+        error instanceof Error ? error.message : "Unknown error occurred";
+      setSubmitError(errorMessage);
+
+      onFormInteraction("registration", "error", {
+        error_message: errorMessage,
+        mode: internalMode,
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <AnimatePresence>
@@ -122,24 +229,26 @@ export default function RegistrationDrawer({
                 </div>
 
 
-                <div className="flex items-center rounded-[24px] bg-gray-50 border border-gray-100 p-1 mb-10 w-fit self-start shadow-sm">
+                <div className="flex items-center rounded-[24px] bg-gray-50 border border-gray-100 p-1 mb-10 w-fit self-start shadow-sm max-w-full overflow-x-auto no-scrollbar">
                   <button
-                    onClick={() => setInternalMode("fleet")}
-                    className={`px-4 sm:px-5 py-2 sm:py-2.5 rounded-[20px] text-[11px] sm:text-[13px] font-medium transition-all ${!isCorporate
+                    onClick={() => handleModeChange("fleet")}
+                    className={`px-4 sm:px-5 py-2 sm:py-2.5 rounded-[20px] text-[11px] sm:text-[13px] font-medium transition-all whitespace-nowrap ${!isCorporate
                       ? "bg-[#0A1020] text-white shadow-md"
                       : "text-gray-500 hover:text-black"
                       }`}
                   >
-                    Fleet Owners & Rental Companies
+                    <span className="relative z-10">Fleet Owners</span>
+                    <span className="relative z-10 hidden sm:inline">&nbsp;& Rental</span>
                   </button>
                   <button
-                    onClick={() => setInternalMode("corporate")}
-                    className={`px-4 sm:px-5 py-2 sm:py-2.5 rounded-[20px] text-[11px] sm:text-[13px] font-medium transition-all ${isCorporate
+                    onClick={() => handleModeChange("corporate")}
+                    className={`px-4 sm:px-5 py-2 sm:py-2.5 rounded-[20px] text-[11px] sm:text-[13px] font-medium transition-all whitespace-nowrap ${isCorporate
                       ? "bg-[#0A1020] text-white shadow-md"
                       : "text-gray-500 hover:text-black"
                       }`}
                   >
-                    Corporate Businesses
+                    <span className="relative z-10">Corporate</span>
+                    <span className="relative z-10 hidden sm:inline">&nbsp;Businesses</span>
                   </button>
                 </div>
 
@@ -151,7 +260,7 @@ export default function RegistrationDrawer({
                 </p>
 
 
-                <form className="flex flex-col gap-6 w-full" onSubmit={(e) => e.preventDefault()}>
+                <form className="flex flex-col gap-6 w-full" onSubmit={handleSubmit}>
 
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
@@ -159,6 +268,10 @@ export default function RegistrationDrawer({
                       <label className={`text-[14.5px] text-gray-900 font-medium ${manrope.className}`}>First Name</label>
                       <input
                         type="text"
+                        name="firstName"
+                        value={formData.firstName}
+                        onChange={handleInputChange}
+                        onFocus={() => onFormInteraction("registration", "focus", { field: "firstName" })}
                         placeholder="John"
                         className={`w-full px-4 py-3.5 rounded-xl border border-gray-200 focus:outline-none focus:border-gray-400 focus:ring-1 focus:ring-gray-400 transition-colors text-[15px] placeholder-gray-400 ${manrope.className}`}
                       />
@@ -167,6 +280,10 @@ export default function RegistrationDrawer({
                       <label className={`text-[14.5px] text-gray-900 font-medium ${manrope.className}`}>Last Name</label>
                       <input
                         type="text"
+                        name="lastName"
+                        value={formData.lastName}
+                        onChange={handleInputChange}
+                        onFocus={() => onFormInteraction("registration", "focus", { field: "lastName" })}
                         placeholder="Doe"
                         className={`w-full px-4 py-3.5 rounded-xl border border-gray-200 focus:outline-none focus:border-gray-400 focus:ring-1 focus:ring-gray-400 transition-colors text-[15px] placeholder-gray-400 ${manrope.className}`}
                       />
@@ -179,7 +296,12 @@ export default function RegistrationDrawer({
                       <label className={`text-[14.5px] text-gray-900 font-medium ${manrope.className}`}>Work E-mail</label>
                       <input
                         type="email"
+                        name="email"
+                        value={formData.email}
+                        onChange={handleInputChange}
+                        onFocus={() => onFormInteraction("registration", "focus", { field: "email" })}
                         placeholder="johndoe@acme.inc"
+                        required
                         className={`w-full px-4 py-3.5 rounded-xl border border-gray-200 focus:outline-none focus:border-gray-400 focus:ring-1 focus:ring-gray-400 transition-colors text-[15px] placeholder-gray-400 ${manrope.className}`}
                       />
                     </div>
@@ -187,6 +309,10 @@ export default function RegistrationDrawer({
                       <label className={`text-[14.5px] text-gray-900 font-medium ${manrope.className}`}>Phone Number</label>
                       <input
                         type="tel"
+                        name="phone"
+                        value={formData.phone}
+                        onChange={handleInputChange}
+                        onFocus={() => onFormInteraction("registration", "focus", { field: "phone" })}
                         placeholder="02498761234"
                         className={`w-full px-4 py-3.5 rounded-xl border border-gray-200 focus:outline-none focus:border-gray-400 focus:ring-1 focus:ring-gray-400 transition-colors text-[15px] placeholder-gray-400 ${manrope.className}`}
                       />
@@ -201,6 +327,10 @@ export default function RegistrationDrawer({
                       </label>
                       <input
                         type="text"
+                        name="company"
+                        value={formData.company}
+                        onChange={handleInputChange}
+                        onFocus={() => onFormInteraction("registration", "focus", { field: "company" })}
                         placeholder="Acme Inc."
                         className={`w-full px-4 py-3.5 rounded-xl border border-gray-200 focus:outline-none focus:border-gray-400 focus:ring-1 focus:ring-gray-400 transition-colors text-[15px] placeholder-gray-400 ${manrope.className}`}
                       />
@@ -212,6 +342,10 @@ export default function RegistrationDrawer({
                       {isCorporate ? (
                         <div className="relative">
                           <select
+                            name="industry"
+                            value={formData.industry}
+                            onChange={handleInputChange}
+                            onFocus={() => onFormInteraction("registration", "focus", { field: "industry" })}
                             defaultValue=""
                             className={`w-full px-4 py-3.5 rounded-xl border border-gray-200 focus:outline-none focus:border-gray-400 focus:ring-1 focus:ring-gray-400 transition-colors text-[15px] appearance-none bg-white cursor-pointer ${manrope.className} text-gray-800`}
                           >
@@ -230,6 +364,10 @@ export default function RegistrationDrawer({
                       ) : (
                         <input
                           type="text"
+                          name="industry"
+                          value={formData.industry}
+                          onChange={handleInputChange}
+                          onFocus={() => onFormInteraction("registration", "focus", { field: "location" })}
                           placeholder="City, region, etc."
                           className={`w-full px-4 py-3.5 rounded-xl border border-gray-200 focus:outline-none focus:border-gray-400 focus:ring-1 focus:ring-gray-400 transition-colors text-[15px] placeholder-gray-400 ${manrope.className}`}
                         />
@@ -238,12 +376,61 @@ export default function RegistrationDrawer({
                   </div>
 
 
-                  <div className="mt-6 mb-8">
+                  <div className="mt-6 mb-8 space-y-3">
+                    {/* Error Message */}
+                    {submitError && (
+                      <motion.div
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="p-3 rounded-lg bg-red-50 border border-red-200"
+                      >
+                        <p className="text-[13px] text-red-700 font-medium">
+                          {submitError}
+                        </p>
+                      </motion.div>
+                    )}
+
+                    {/* Success Message */}
+                    {submitSuccess && (
+                      <motion.div
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="p-3 rounded-lg bg-green-50 border border-green-200"
+                      >
+                        <p className="text-[13px] text-green-700 font-medium">
+                          Registration successful! Redirecting...
+                        </p>
+                      </motion.div>
+                    )}
+
+                    {/* Submit Button */}
                     <button
                       type="submit"
-                      className="w-[200px] bg-[#0A1020] text-white py-[18px] rounded-xl font-medium text-[16px] transition-transform active:scale-[0.98] hover:bg-black shadow-[0_4px_12px_rgba(0,0,0,0.1)]"
+                      disabled={isSubmitting || submitSuccess}
+                      onClick={() =>
+                        onClickButton(
+                          `registration_submit_${internalMode}`,
+                          "registration-drawer"
+                        )
+                      }
+                      className={`w-full px-8 py-[18px] rounded-xl font-medium text-[16px] transition-all shadow-[0_4px_12px_rgba(0,0,0,0.1)] ${
+                        isSubmitting || submitSuccess
+                          ? "bg-gray-400 cursor-not-allowed"
+                          : "bg-[#0A1020] text-white hover:bg-black active:scale-[0.98]"
+                      }`}
                     >
-                      {isCorporate ? "Create account" : "Register"}
+                      {isSubmitting ? (
+                        <span className="flex items-center justify-center gap-2">
+                          <span className="w-4 h-4 rounded-full border-2 border-gray-300 border-t-white animate-spin" />
+                          Submitting...
+                        </span>
+                      ) : submitSuccess ? (
+                        "✓ Registered"
+                      ) : isCorporate ? (
+                        "Create account"
+                      ) : (
+                        "Register"
+                      )}
                     </button>
                   </div>
                 </form>

@@ -67,10 +67,10 @@ export default function LiveTrackingMockup() {
          </div>
 
          {/* Left Side Overlays (Search + Trip Card) */}
-         <div className="absolute top-6 left-6 md:top-8 md:left-8 z-20 flex flex-col gap-4 w-[380px]">
+         <div className="absolute top-4 left-4 right-4 sm:right-auto sm:top-6 sm:left-6 md:top-8 md:left-8 z-20 flex flex-col gap-4 sm:w-[380px] max-h-[calc(100%-80px)] sm:max-h-none overflow-y-auto no-scrollbar pointer-events-none">
             
             {/* Search and Toggle Bar */}
-            <div className="flex flex-col bg-white p-3 rounded-2xl shadow-[0_8px_30px_rgba(0,0,0,0.08)] border border-gray-100 gap-3">
+            <div className="flex flex-col bg-white p-2.5 sm:p-3 rounded-2xl shadow-[0_8px_30px_rgba(0,0,0,0.08)] border border-gray-100 gap-2 sm:gap-3 pointer-events-auto shrink-0">
                <div className="relative">
                   <Search size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"/>
                   <input type="text" placeholder="Search track ID or location..." className="w-full bg-gray-50/80 border border-gray-100 rounded-xl pl-11 pr-4 py-3 text-[14px] focus:outline-none focus:ring-1 focus:ring-[#0A0B3B] placeholder:text-gray-400 font-medium" />
@@ -85,34 +85,34 @@ export default function LiveTrackingMockup() {
                </div>
             </div>
 
-            {/* Trip Detals Card */}
-            <div className="bg-white rounded-2xl shadow-[0_12px_40px_rgba(0,0,0,0.1)] border border-gray-100 overflow-hidden flex flex-col">
+            {/* Trip Details Card */}
+            <div className="bg-white rounded-2xl shadow-[0_12px_40px_rgba(0,0,0,0.1)] border border-gray-100 overflow-hidden flex flex-col pointer-events-auto shrink-0">
               {/* Header */}
-              <div className="px-6 py-4 border-b border-gray-100">
-                <h2 className="text-[22px] font-display font-medium text-gray-900 tracking-tight">BK260417OKK</h2>
+              <div className="px-4 sm:px-6 py-3 sm:py-4 border-b border-gray-100">
+                <h2 className="text-[20px] sm:text-[22px] font-display font-medium text-gray-900 tracking-tight">BK260417OKK</h2>
               </div>
 
               {/* Driver Info */}
-              <div className="p-6 border-b border-gray-100 flex items-center justify-between bg-white">
-                <div className="flex gap-4 items-center">
-                    <div className="w-12 h-12 rounded-full overflow-hidden shrink-0 shadow-sm border border-gray-100">
+              <div className="p-4 sm:p-6 flex items-center justify-between bg-white">
+                <div className="flex gap-3 sm:gap-4 items-center">
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full overflow-hidden shrink-0 shadow-sm border border-gray-100">
                       <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&q=80&w=150&h=150" alt="Driver" className="w-full h-full object-cover"/>
                     </div>
                     <div>
-                      <p className="font-semibold text-gray-900 text-[15px]">Dominic Sepenu</p>
-                      <p className="text-gray-500 text-[13px] flex items-center gap-1.5 mt-0.5">
-                          <span className="w-2 h-2 rounded-full bg-green-500 shadow-[0_0_0_2px_rgba(34,197,94,0.2)]"></span>
+                      <p className="font-semibold text-gray-900 text-[14px] sm:text-[15px]">Dominic Sepenu</p>
+                      <p className="text-gray-500 text-[11px] sm:text-[13px] flex items-center gap-1.5 mt-0.5">
+                          <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-green-500 shadow-[0_0_0_2px_rgba(34,197,94,0.2)]"></span>
                           Prado • GR 3443-16
                       </p>
                     </div>
                 </div>
-                <button className="w-10 h-10 rounded-full bg-emerald-50 text-emerald-600 flex flex-col items-center justify-center hover:bg-emerald-100 transition-colors shadow-sm">
-                    <Phone size={18} fill="currentColor" />
+                <button className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-emerald-50 text-emerald-600 flex flex-col items-center justify-center hover:bg-emerald-100 transition-colors shadow-sm shrink-0">
+                    <Phone size={16} className="sm:w-[18px] sm:h-[18px]" fill="currentColor" />
                 </button>
               </div>
 
               {/* Timeline */}
-              <div className="px-6 py-7 bg-white">
+              <div className="px-4 sm:px-6 py-5 sm:py-7 bg-white border-t border-gray-100">
                 <div className="flex gap-5">
                     <div className="flex flex-col items-center mt-1.5">
                       <div className="w-4 h-4 rounded-full bg-[#41C1FD] shadow-[0_0_0_4px_rgba(65,193,253,0.15)] flex shrink-0"></div>
@@ -133,13 +133,13 @@ export default function LiveTrackingMockup() {
               </div>
               
               {/* ETA / Action */}
-              <div className="p-6 border-t border-gray-100 bg-gray-50/50 flex justify-between items-center">
+              <div className="p-4 sm:p-6 border-t border-gray-100 bg-gray-50/50 flex justify-between items-center sm:flex-row gap-3">
                 <div>
-                    <p className="text-gray-500 text-[12px] font-medium mb-0.5">Estimated Arrival</p>
-                    <p className="text-[#41C1FD] font-display font-medium text-3xl leading-none tracking-tight">14 <span className="text-[15px] font-normal tracking-normal text-[#41C1FD]">mins</span></p>
+                    <p className="text-gray-500 text-[11px] sm:text-[12px] font-medium mb-0.5">Estimated Arrival</p>
+                    <p className="text-[#41C1FD] font-display font-medium text-2xl sm:text-3xl leading-none tracking-tight">14 <span className="text-[13px] sm:text-[15px] font-normal tracking-normal text-[#41C1FD]">mins</span></p>
                 </div>
-                <button className="bg-[#0A0B3B] text-white px-6 py-3 rounded-xl text-[14px] font-medium flex items-center gap-2 hover:bg-[#121350] transition-colors shadow-md">
-                    <MessageCircle size={18} />
+                <button className="bg-[#0A0B3B] shrink-0 text-white px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl text-[13px] sm:text-[14px] font-medium flex items-center justify-center gap-2 hover:bg-[#121350] transition-colors shadow-md">
+                    <MessageCircle size={16} className="sm:w-[18px] sm:h-[18px]"/>
                     Message
                 </button>
               </div>

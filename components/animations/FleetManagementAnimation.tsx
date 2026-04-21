@@ -97,7 +97,7 @@ export function FleetManagementAnimation() {
   if (!isMounted) return null;
 
   return (
-    <div className="absolute right-0 bottom-0 top-6 left-6 bg-[#FAFAFA] rounded-tl-[16px] shadow-[0_-4px_12px_rgba(0,0,0,0.02)] border-t border-l border-[#F0F0F0] flex flex-col pointer-events-none overflow-hidden origin-bottom-right">
+    <div className="absolute pt-3 sm:pt-6 pl-3 sm:pl-6 pr-2 sm:pr-4 pb-2 sm:pb-4 right-0 bottom-0 top-3 sm:top-6 left-3 sm:left-6 bg-[#FAFAFA] rounded-tl-[12px] sm:rounded-tl-[16px] shadow-[0_-4px_12px_rgba(0,0,0,0.02)] border-t border-l border-[#F0F0F0] flex flex-col pointer-events-none overflow-hidden origin-bottom-right">
       <AnimatePresence mode="wait">
         {viewState === "table" ? (
           <motion.div
@@ -106,7 +106,7 @@ export function FleetManagementAnimation() {
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -20 }}
             transition={{ duration: 0.3 }}
-            className="flex flex-col w-full h-full p-4"
+            className="flex flex-col w-full h-full p-2 sm:p-4"
           >
             {/* Table Header area */}
             <div className="flex items-center justify-between mb-4 mt-2">

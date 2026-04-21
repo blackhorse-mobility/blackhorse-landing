@@ -109,11 +109,11 @@ export function SteadyDemandAnimation() {
 
   return (
     <div 
-      className="absolute inset-0 flex flex-col items-center justify-center p-6 pointer-events-auto"
+      className="absolute inset-0 flex flex-col items-center justify-center p-3 sm:p-6 pointer-events-auto"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <div className="relative w-full max-w-[360px] h-[190px]">
+      <div className="relative w-full max-w-[320px] sm:max-w-[360px] h-[170px] sm:h-[190px]">
         {trips.map((trip, idx) => {
           const isFront = idx === 0;
           const zIndex = 30 - idx;
@@ -132,39 +132,39 @@ export function SteadyDemandAnimation() {
               }}
               transition={{ type: "spring", bounce: 0.2, duration: 1.0 }}
               style={{ zIndex }}
-              className="absolute top-0 left-0 right-0 h-full bg-white rounded-[16px] shadow-[0_4px_24px_rgba(0,0,0,0.06)] border border-[#F0F0F0] p-5 flex flex-col"
+              className="absolute top-0 left-0 right-0 h-full bg-white rounded-[14px] sm:rounded-[16px] shadow-[0_4px_24px_rgba(0,0,0,0.06)] border border-[#F0F0F0] p-3 sm:p-5 flex flex-col"
             >
               <div className="flex items-center justify-between w-full mb-1">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-[#0F222B] rounded-[10px] flex items-center justify-center shrink-0">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+                  <div className="w-8 h-8 sm:w-10 sm:h-10 bg-[#0F222B] rounded-[8px] sm:rounded-[10px] flex items-center justify-center shrink-0">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="sm:w-[18px] sm:h-[18px]">
                       <path d="M12 2L14.4 9.6L22 12L14.4 14.4L12 22L9.6 14.4L2 12L9.6 9.6L12 2Z" fill="white"/>
                     </svg>
                   </div>
-                  <span className="font-semibold text-[15px] -ml-1 text-black">{trip.company}</span>
+                  <span className="font-semibold text-[13px] sm:text-[15px] -ml-1 text-black truncate">{trip.company}</span>
                 </div>
 
                 <motion.div
                   layout
-                  className={`px-2.5 py-1 rounded-[6px] text-[10px] font-bold uppercase tracking-wider border transition-colors duration-300 ${isFront ? getStatusStyles() : "bg-[#F0FDF4] text-[#16A34A] border-[#BBF7D0]"}`}
+                  className={`px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-[5px] sm:rounded-[6px] text-[9px] sm:text-[10px] font-bold uppercase tracking-wider border transition-colors duration-300 ${isFront ? getStatusStyles() : "bg-[#F0FDF4] text-[#16A34A] border-[#BBF7D0]"}`}
                 >
                   {displayStatus}
                 </motion.div>
               </div>
 
              
-              <div className="flex items-center gap-3 w-full justify-end mb-5">
-                <span className="px-2 py-0.5 border border-gray-200 rounded-[6px] text-[11px] font-medium text-gray-700 bg-white">
+              <div className="flex items-center gap-2 sm:gap-3 w-full justify-end mb-3 sm:mb-5">
+                <span className="px-1.5 sm:px-2 py-0.5 border border-gray-200 rounded-[5px] sm:rounded-[6px] text-[9px] sm:text-[11px] font-medium text-gray-700 bg-white whitespace-nowrap">
                   {trip.tag}
                 </span>
-                <div className="flex items-center gap-1 text-black font-medium text-[11px]">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                <div className="flex items-center gap-1 text-black font-medium text-[9px] sm:text-[11px] shrink-0">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" className="sm:w-[14px] sm:h-[14px]">
                     <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
                     <circle cx="9" cy="7" r="4"></circle>
                     <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
                     <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
                   </svg>
-                  <span className="mt-[1px]">{trip.pax} passengers</span>
+                  <span className="mt-[1px]">{trip.pax}</span>
                 </div>
               </div>
 
@@ -172,8 +172,8 @@ export function SteadyDemandAnimation() {
               <div className="flex items-center justify-between relative w-full mb-1">
                 {/* Left Box (Origin) */}
                 <div className="flex flex-col text-left w-[30%] shrink-0">
-                  <span className="text-[14px] font-semibold text-black">{trip.originTime}</span>
-                  <span className="text-[12px] text-[#A1A1AA] mt-1 leading-[1.3] font-medium">
+                  <span className="text-[12px] sm:text-[14px] font-semibold text-black">{trip.originTime}</span>
+                  <span className="text-[10px] sm:text-[12px] text-[#A1A1AA] mt-1 leading-[1.3] font-medium">
                     {trip.originLoc}
                     <br />
                     {trip.originSub}
@@ -181,8 +181,8 @@ export function SteadyDemandAnimation() {
                 </div>
 
                
-                <div className="flex flex-col items-center justify-center flex-1 px-3 relative h-full">
-                  <span className="text-[11px] text-gray-700 mb-[6px] font-medium">Premium</span>
+                <div className="flex flex-col items-center justify-center flex-1 px-2 sm:px-3 relative h-full">
+                  <span className="text-[9px] sm:text-[11px] text-gray-700 mb-[6px] font-medium">Premium</span>
                   
                  
                   <div className="w-full relative h-[4px] flex items-center mb-1.5">

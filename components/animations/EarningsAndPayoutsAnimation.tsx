@@ -67,7 +67,7 @@ export function EarningsAndPayoutsAnimation() {
   if (!isMounted) return null;
 
   return (
-    <div className="absolute right-0 bottom-0 top-6 left-6 bg-[#FAFAFA] rounded-tl-[16px] shadow-sm border-t border-l border-[#F0F0F0] flex overflow-hidden select-none origin-bottom-right">
+    <div className="absolute pt-3 sm:pt-6 pl-3 sm:pl-6 pr-2 sm:pr-4 pb-2 sm:pb-4 right-0 bottom-0 top-3 sm:top-6 left-3 sm:left-6 bg-[#FAFAFA] rounded-tl-[12px] sm:rounded-tl-[16px] shadow-sm border-t border-l border-[#F0F0F0] flex flex-col sm:flex-row overflow-hidden select-none origin-bottom-right">
       
      
       <div className="hidden sm:flex w-[110px] shrink-0 border-r border-[#E5E7EB] bg-white flex-col pt-4 shadow-[1px_0_4px_rgba(0,0,0,0.01)]">
@@ -118,24 +118,25 @@ export function EarningsAndPayoutsAnimation() {
    
       <div className="flex-1 flex flex-col bg-white relative relative overflow-hidden">
         {/* Header Ribbon */}
-        <div className="h-12 bg-white flex items-center justify-between px-5 shrink-0 shadow-[0_2px_4px_rgba(0,0,0,0.01)] border-b border-[#F1F5F9] z-10">
-          <div className="text-[12px] text-gray-500 font-medium flex items-center gap-2">
+        <div className="h-10 sm:h-12 bg-white flex items-center justify-between px-3 sm:px-5 shrink-0 shadow-[0_2px_4px_rgba(0,0,0,0.01)] border-b border-[#F1F5F9] z-10">
+          <div className="text-[10px] sm:text-[12px] text-gray-500 font-medium flex items-center gap-1.5 sm:gap-2">
             <div className="w-3.5 h-3.5 border border-gray-300 rounded-[3px] bg-gray-50" />
             Finance
           </div>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3">
             <div className="w-5 h-5 rounded-full border border-gray-200 flex items-center justify-center text-gray-400">
                <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/><path d="M13.73 21a2 2 0 0 1-3.46 0" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
             </div>
-            <div className="bg-[#49AAC2] text-white px-2.5 py-1.5 rounded-[4px] text-[10px] font-semibold cursor-pointer shadow-[0_2px_8px_rgba(73,170,194,0.3)] hover:bg-[#3d9cb3] flex items-center gap-1.5 transition-colors">
+            <div className="bg-[#49AAC2] text-white px-2 sm:px-2.5 py-1 sm:py-1.5 rounded-[4px] text-[9px] sm:text-[10px] font-semibold cursor-pointer shadow-[0_2px_8px_rgba(73,170,194,0.3)] hover:bg-[#3d9cb3] flex items-center gap-1.5 transition-colors">
               <svg width="10" height="10" viewBox="0 0 24 24" fill="none"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
-              Request Payout
+              <span className="hidden sm:inline">Request Payout</span>
+              <span className="sm:hidden">Withdraw</span>
             </div>
           </div>
         </div>
 
        
-        <div className="p-5 flex flex-col gap-4 overflow-y-auto no-scrollbar relative w-full overflow-x-hidden">
+        <div className="p-3 sm:p-5 flex flex-col gap-3 sm:gap-4 overflow-y-auto no-scrollbar relative w-full overflow-x-hidden">
          
           <motion.div
             layout

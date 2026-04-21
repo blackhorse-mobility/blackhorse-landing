@@ -79,7 +79,7 @@ export default function CorporateSteps() {
   });
 
   return (
-    <section ref={containerRef} className="relative h-[450vh] w-full bg-white font-display">
+    <section id="corporate-how-it-works" ref={containerRef} className="relative h-[450vh] w-full bg-white font-display">
       <div className="sticky top-0 flex h-screen w-full flex-col justify-center overflow-hidden">
         <div className="mx-auto w-full max-w-7xl px-6 md:px-12 py-6 sm:py-12">
 

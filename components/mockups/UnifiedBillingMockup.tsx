@@ -131,39 +131,39 @@ export default function UnifiedBillingMockup() {
       </div>
 
       {/* Main Content Area */}
-      <div className="flex-1 p-6 md:p-8 overflow-hidden relative bg-white flex flex-col gap-8">
+      <div className="flex-1 p-4 sm:p-6 md:p-8 overflow-y-auto no-scrollbar relative bg-white flex flex-col gap-6 sm:gap-8">
         
         {/* Header section */}
         <div className="flex justify-between items-start shrink-0">
           <div>
-            <h1 className="text-[28px] font-medium font-display text-gray-900 mb-1 tracking-tight">Billing</h1>
-            <p className="text-gray-500 text-[13px]">Manage your corporate billing and review payment history.</p>
+            <h1 className="text-[24px] sm:text-[28px] font-medium font-display text-gray-900 mb-1 tracking-tight">Billing</h1>
+            <p className="text-gray-500 text-[12px] sm:text-[13px]">Manage your corporate billing and review payment history.</p>
           </div>
         </div>
 
         {/* Maze-style Card Header */}
-        <div className="bg-cyan-300 rounded-[20px] p-8 w-full max-w-[700px] h-[220px] relative overflow-hidden text-cyan-950 shadow-sm flex flex-col justify-between shrink-0">
+        <div className="bg-cyan-300 rounded-[20px] p-6 sm:p-8 w-full max-w-[700px] min-h-[180px] sm:min-h-[220px] relative overflow-hidden text-cyan-950 shadow-sm flex flex-col justify-between shrink-0 gap-4">
            {/* Decorative dotted globe pattern at bottom right */}
            <div className="absolute -right-8 -bottom-16 opacity-30 pointer-events-none mix-blend-color-burn">
               <Globe size={280} strokeWidth={1.5} strokeDasharray="4 6" className="text-cyan-800" />
            </div>
 
-           <div className="flex justify-between items-start relative z-10">
+           <div className="flex flex-col sm:flex-row sm:justify-between items-start relative z-10 gap-2 sm:gap-4">
               <div>
-                 <h2 className="text-[20px] font-bold tracking-tight">Team balance</h2>
-                 <p className="text-[13px] opacity-80 mt-1 font-medium text-cyan-900/80">Your billing balance.</p>
+                 <h2 className="text-[18px] sm:text-[20px] font-bold tracking-tight">Team balance</h2>
+                 <p className="text-[12px] sm:text-[13px] opacity-80 mt-1 font-medium text-cyan-900/80">Your billing balance.</p>
               </div>
-              <div className="text-[46px] font-display tracking-tighter leading-none flex items-baseline gap-1.5">
-                 <span className="text-[18px] font-semibold text-cyan-900 uppercase tracking-wide">GH₵</span>
+              <div className="text-[34px] sm:text-[46px] font-display tracking-tighter leading-none flex items-baseline gap-1.5">
+                 <span className="text-[14px] sm:text-[18px] font-semibold text-cyan-900 uppercase tracking-wide">GH₵</span>
                  {formattedBalance}
               </div>
            </div>
 
-           <div className="relative z-10 max-w-[280px]">
-              <p className="text-[13px] font-medium leading-relaxed tracking-tight text-cyan-950/90">
+           <div className="relative z-10 w-full sm:max-w-[280px]">
+              <p className="text-[12px] sm:text-[13px] font-medium leading-relaxed tracking-tight text-cyan-950/90">
                 Billing balances are used to seamlessly handle corporate rides and operational bookings.
               </p>
-              <p className="text-[13px] font-bold mt-1 underline underline-offset-2 decoration-2 decoration-cyan-950/30 cursor-pointer hover:decoration-cyan-950/60 transition-colors w-fit">Learn more</p>
+              <p className="text-[12px] sm:text-[13px] font-bold mt-1 underline underline-offset-2 decoration-2 decoration-cyan-950/30 cursor-pointer hover:decoration-cyan-950/60 transition-colors w-fit">Learn more</p>
            </div>
         </div>
 
