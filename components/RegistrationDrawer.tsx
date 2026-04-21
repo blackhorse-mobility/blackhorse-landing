@@ -105,11 +105,21 @@ export default function RegistrationDrawer({
       });
 
       if (!response.ok) {
-        const errorData = await response.json();
+        let errorData;
+        try {
+          errorData = await response.json();
+        } catch {
+          errorData = { error: `Server error: ${response.status} ${response.statusText}` };
+        }
         throw new Error(errorData.error || "Failed to submit form");
       }
 
-      const result = await response.json();
+      let result;
+      try {
+        result = await response.json();
+      } catch {
+        throw new Error("Invalid response from server. Please try again.");
+      }
 
       // Track successful signup
       if (formData.email) {
@@ -273,7 +283,7 @@ export default function RegistrationDrawer({
                         onChange={handleInputChange}
                         onFocus={() => onFormInteraction("registration", "focus", { field: "firstName" })}
                         placeholder="John"
-                        className={`w-full px-4 py-3.5 rounded-xl border border-gray-200 focus:outline-none focus:border-gray-400 focus:ring-1 focus:ring-gray-400 transition-colors text-[15px] placeholder-gray-400 ${manrope.className}`}
+                        className={`w-full px-4 py-3.5 rounded-xl border border-gray-200 focus:outline-none focus:border-gray-400 focus:ring-1 focus:ring-gray-400 transition-colors text-[15px] text-black placeholder-gray-400 ${manrope.className}`}
                       />
                     </div>
                     <div className="flex flex-col gap-2">
@@ -285,7 +295,7 @@ export default function RegistrationDrawer({
                         onChange={handleInputChange}
                         onFocus={() => onFormInteraction("registration", "focus", { field: "lastName" })}
                         placeholder="Doe"
-                        className={`w-full px-4 py-3.5 rounded-xl border border-gray-200 focus:outline-none focus:border-gray-400 focus:ring-1 focus:ring-gray-400 transition-colors text-[15px] placeholder-gray-400 ${manrope.className}`}
+                        className={`w-full px-4 py-3.5 rounded-xl border border-gray-200 focus:outline-none focus:border-gray-400 focus:ring-1 focus:ring-gray-400 transition-colors text-[15px] text-black placeholder-gray-400 ${manrope.className}`}
                       />
                     </div>
                   </div>
@@ -302,7 +312,7 @@ export default function RegistrationDrawer({
                         onFocus={() => onFormInteraction("registration", "focus", { field: "email" })}
                         placeholder="johndoe@acme.inc"
                         required
-                        className={`w-full px-4 py-3.5 rounded-xl border border-gray-200 focus:outline-none focus:border-gray-400 focus:ring-1 focus:ring-gray-400 transition-colors text-[15px] placeholder-gray-400 ${manrope.className}`}
+                        className={`w-full px-4 py-3.5 rounded-xl border border-gray-200 focus:outline-none focus:border-gray-400 focus:ring-1 focus:ring-gray-400 transition-colors text-[15px] text-black  placeholder-gray-400 ${manrope.className}`}
                       />
                     </div>
                     <div className="flex flex-col gap-2">
@@ -314,7 +324,7 @@ export default function RegistrationDrawer({
                         onChange={handleInputChange}
                         onFocus={() => onFormInteraction("registration", "focus", { field: "phone" })}
                         placeholder="02498761234"
-                        className={`w-full px-4 py-3.5 rounded-xl border border-gray-200 focus:outline-none focus:border-gray-400 focus:ring-1 focus:ring-gray-400 transition-colors text-[15px] placeholder-gray-400 ${manrope.className}`}
+                        className={`w-full px-4 py-3.5 rounded-xl border border-gray-200 focus:outline-none focus:border-gray-400 focus:ring-1 focus:ring-gray-400 transition-colors text-[15px] text-black placeholder-gray-400 ${manrope.className}`}
                       />
                     </div>
                   </div>
@@ -332,7 +342,7 @@ export default function RegistrationDrawer({
                         onChange={handleInputChange}
                         onFocus={() => onFormInteraction("registration", "focus", { field: "company" })}
                         placeholder="Acme Inc."
-                        className={`w-full px-4 py-3.5 rounded-xl border border-gray-200 focus:outline-none focus:border-gray-400 focus:ring-1 focus:ring-gray-400 transition-colors text-[15px] placeholder-gray-400 ${manrope.className}`}
+                        className={`w-full px-4 py-3.5 rounded-xl border border-gray-200 focus:outline-none focus:border-gray-400 focus:ring-1 focus:ring-gray-400 transition-colors text-[15px] text-black  placeholder-gray-400 ${manrope.className}`}
                       />
                     </div>
                     <div className="flex flex-col gap-2 sm:col-span-2">
@@ -369,7 +379,7 @@ export default function RegistrationDrawer({
                           onChange={handleInputChange}
                           onFocus={() => onFormInteraction("registration", "focus", { field: "location" })}
                           placeholder="City, region, etc."
-                          className={`w-full px-4 py-3.5 rounded-xl border border-gray-200 focus:outline-none focus:border-gray-400 focus:ring-1 focus:ring-gray-400 transition-colors text-[15px] placeholder-gray-400 ${manrope.className}`}
+                          className={`w-full px-4 py-3.5 rounded-xl border border-gray-200 focus:outline-none focus:border-gray-400 focus:ring-1 focus:ring-gray-400 transition-colors text-[15px] text-black  placeholder-gray-400 ${manrope.className}`}
                         />
                       )}
                     </div>

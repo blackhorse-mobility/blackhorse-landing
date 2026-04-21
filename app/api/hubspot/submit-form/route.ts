@@ -9,7 +9,8 @@ interface FormData {
   email: string;
   phone: string;
   company: string;
-  industry: string;
+  location?:string;
+  industry?: string;
   registrationType: "fleet" | "corporate";
 }
 
@@ -19,92 +20,124 @@ async function submitToHubSpot(data: FormData) {
   }
 
   try {
+    const properties: Record<string, any> = {
+      firstname: data.firstName,
+      lastname: data.lastName,
+      email: data.email,
+      phone: data.phone,
+      company: data.company,
+      lifecyclestage: "lead",
+      hs_lead_status: "NEW",
+    };
+
+   
+    if (data.location) properties.location = data.location;
+    if (data.industry) properties.industry = data.industry;
+    if (data.registrationType) properties.registration_type = data.registrationType;
+
+    
+    const today = new Date().toISOString().split('T')[0];
+    properties.registration_date = today;
+    properties.source = "blackhorse_landing";
+
+    console.log("Submitting to HubSpot with properties:", properties);
+
     const response = await fetch(
-      "https://api.hubapi.com/crm/v3/objects/contacts/upsert",
+      "https://api.hubapi.com/crm/v3/objects/contacts",
       {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${HUBSPOT_API_KEY}`,
         },
-        body: JSON.stringify({
-          inputs: [
-            {
-              idProperty: "email",
-              id: data.email,
-              properties: {
-                firstname: data.firstName,
-                lastname: data.lastName,
-                email: data.email,
-                phone: data.phone,
-                company: data.company,
-                industry: data.industry,
-                lifecyclestage: "lead",
-                hs_lead_status: "NEW",
-                source: "blackhorse_landing",
-                registration_type: data.registrationType,
-                registration_date: new Date().toISOString(),
-              },
-            },
-          ],
-        }),
+        body: JSON.stringify({ properties }),
       }
     );
 
-    if (!response.ok) {
-      const error = await response.json();
-      throw new Error(
-        `HubSpot API error: ${error.message || response.statusText}`
-      );
+    
+    let responseText = "";
+    try {
+      responseText = await response.text();
+    } catch {
+      responseText = response.statusText;
     }
 
-    const result = await response.json();
+    if (!response.ok) {
+      let errorMessage = `HTTP ${response.status}: ${response.statusText}`;
+      
+      try {
+        const errorData = JSON.parse(responseText);
+        errorMessage = errorData.message || errorData.category || errorMessage;
+      } catch {
+        errorMessage = responseText || errorMessage;
+      }
+
+      console.error("HubSpot API Error:", errorMessage);
+      throw new Error(errorMessage);
+    }
+
+    const result = JSON.parse(responseText);
+    console.log("HubSpot response:", result);
     return result;
   } catch (error) {
-    console.error("Error submitting to HubSpot:", error);
+    const message = error instanceof Error ? error.message : String(error);
+    console.error("Error submitting to HubSpot:", message);
     throw error;
   }
 }
 
 export async function POST(request: NextRequest) {
   try {
-    
     if (!HUBSPOT_API_KEY) {
+      console.error("HUBSPOT_PRIVATE_APP_TOKEN is not configured");
       return NextResponse.json(
-        { error: "HubSpot configuration missing" },
+        { error: "HubSpot configuration missing. Please contact support." },
         { status: 500 }
       );
     }
 
-    const data: FormData = await request.json();
-
-    
-    if (!data.email || !data.firstName || !data.lastName || !data.company) {
+    let data: FormData;
+    try {
+      data = await request.json();
+    } catch (error) {
+      console.error("Invalid JSON in request:", error);
       return NextResponse.json(
-        { error: "Missing required fields" },
+        { error: "Invalid request format" },
         { status: 400 }
       );
     }
 
-   
+    // Validate required fields
+    if (!data.email || !data.firstName || !data.lastName || !data.company) {
+      return NextResponse.json(
+        { error: "Missing required fields: firstName, lastName, email, company" },
+        { status: 400 }
+      );
+    }
+
+    // Submit to HubSpot
     const result = await submitToHubSpot(data);
 
     return NextResponse.json(
       {
         success: true,
         message: "Contact submitted to HubSpot successfully",
-        contactId: result.outputs[0]?.id,
+        contactId: result.id,
       },
       { status: 200 }
     );
   } catch (error) {
-    console.error("Form submission error:", error);
+    const isDev = process.env.NODE_ENV !== "production";
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    
+    console.error("Form submission error:", errorMessage);
+    
     return NextResponse.json(
       {
-        error:
-          error instanceof Error
-            ? error.message
-            : "Failed to submit form to HubSpot",
+        error: isDev 
+          ? errorMessage 
+          : "Failed to submit form. Please try again.",
+        details: isDev ? errorMessage : undefined,
       },
       { status: 500 }
     );
