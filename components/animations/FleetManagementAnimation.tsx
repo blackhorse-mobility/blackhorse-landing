@@ -13,8 +13,8 @@ const INITIAL_ROWS = [
     seats: 7,
     status: "Approved",
     active: "Yes",
-    driverInitials: "DS",
-    driverName: "Dominic Sepenu",
+    driverInitials: "DB",
+    driverName: "Dom Brown",
     features: [],
   },
   {
@@ -26,8 +26,8 @@ const INITIAL_ROWS = [
     seats: 5,
     status: "Approved",
     active: "Yes",
-    driverInitials: "GA",
-    driverName: "Gideon Adzigblie",
+    driverInitials: "JD",
+    driverName: "John Doe",
     features: ["USB Charging", "GPS Navigation", "Android Auto", "+3"],
   },
   {
@@ -39,8 +39,8 @@ const INITIAL_ROWS = [
     seats: 5,
     status: "Approved",
     active: "Yes",
-    driverInitials: "SS",
-    driverName: "Selorm Sepenu",
+    driverInitials: "CW",
+    driverName: "Cole White",
     features: ["USB Charging", "Android Auto", "Climate Control", "+2"],
   },
 ];

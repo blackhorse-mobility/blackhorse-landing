@@ -79,8 +79,8 @@ export default function CorporateSteps() {
   });
 
   return (
-    <section id="corporate-how-it-works" ref={containerRef} className="relative h-[450vh] w-full bg-white font-display">
-      <div className="sticky top-0 flex h-screen w-full flex-col justify-center overflow-hidden">
+    <section id="corporate-how-it-works" ref={containerRef} className="relative h-[450vh]  w-full bg-white font-display">
+      <div className="sticky top-0 flex h-screen w-full flex-col justify-center pt-24 md:pt-32 overflow-hidden">
         <div className="mx-auto w-full max-w-7xl px-6 md:px-12 py-6 sm:py-12">
 
           <h2 className="mb-8 md:mb-12 text-[32px] sm:text-[40px] md:text-[56px] lg:text-[72px] font-medium leading-[1.1] tracking-tight">

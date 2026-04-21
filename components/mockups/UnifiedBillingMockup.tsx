@@ -12,7 +12,7 @@ const TRANSACTIONS = [
     paymentStatus: "PAID",
     pickup: "Kotoka International Airp...",
     dropoff: "Boundary Rd, Accra...",
-    employee: "Dominic Sepenu",
+    employee: "Dom Brown",
     amount: "GH₵ 460.00",
     date: "Apr 18 8:00 AM",
   },

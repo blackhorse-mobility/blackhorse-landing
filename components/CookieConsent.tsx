@@ -182,7 +182,7 @@ export default function CookieConsent() {
               >
                 Reject
 
-                Reject
+               
               </button>
               <button
                 onClick={acceptAll}

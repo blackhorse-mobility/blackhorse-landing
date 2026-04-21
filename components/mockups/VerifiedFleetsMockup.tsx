@@ -37,7 +37,7 @@ const vehicles = [
     id: 2,
     name: "Mazda CX-5",
     year: "2021",
-    image: "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&q=80&w=400&h=250",
+    image: "https://images.unsplash.com/photo-1659125298149-85619c53ab22?auto=format&fit=crop&q=80&w=400&h=250",
     type: "SUV",
     quality: "Standard",
     seats: "4 Seater",

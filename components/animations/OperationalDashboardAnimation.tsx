@@ -92,7 +92,7 @@ export function OperationalDashboardAnimation() {
               <div className="flex gap-2.5 items-center">
                 <div className="w-7 h-7 rounded-full bg-gray-200 shrink-0 border border-gray-200"></div>
                 <div className="flex flex-col leading-tight">
-                  <span className="text-[12px] font-bold text-gray-900">Gideon Adzigblie</span>
+                  <span className="text-[12px] font-bold text-gray-900">John Doe</span>
                   <span className="text-[10px] text-[#6B7280] font-medium mt-0.5">sedan • GR 1234-17</span>
                 </div>
               </div>
@@ -124,7 +124,7 @@ export function OperationalDashboardAnimation() {
               <div className="flex gap-2.5 items-center">
                 <div className="w-7 h-7 rounded-full bg-gray-200 shrink-0 border border-gray-200"></div>
                 <div className="flex flex-col leading-tight">
-                  <span className="text-[12px] font-bold text-gray-900">Dominic Sepenu</span>
+                  <span className="text-[12px] font-bold text-gray-900">Dom Brown</span>
                   <span className="text-[10px] text-[#6B7280] font-medium mt-0.5">suv • GR 3443-16</span>
                 </div>
               </div>

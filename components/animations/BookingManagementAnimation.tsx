@@ -173,7 +173,7 @@ export function BookingManagementAnimation() {
     <div className="absolute pt-3 sm:pt-6 pl-3 sm:pl-6 pr-2 sm:pr-4 pb-2 sm:pb-4 right-0 bottom-0 top-3 sm:top-6 left-3 sm:left-6 bg-[#FAFAFA] rounded-tl-[12px] sm:rounded-tl-[16px] shadow-[0_-4px_12px_rgba(0,0,0,0.02)] border-t border-l border-[#F0F0F0] flex flex-col pointer-events-none overflow-hidden origin-bottom-right">
       
       
-      <div className="flex bg-white border-b border-gray-200 text-[9px] sm:text-[10px] font-bold text-gray-500 uppercase tracking-wider overflow-x-auto">
+      <div className="flex bg-white border-b border-gray-200 text-[9px] sm:text-[10px] font-bold text-gray-500 uppercase tracking-wider overflow-hidden">
         <div className="flex-none w-[32px] sm:w-[36px] flex items-center justify-center border-r border-gray-200 py-2 sm:py-3 shrink-0">#</div>
         <div className="flex-1 min-w-[100px] sm:min-w-[120px] max-w-[140px] sm:max-w-[160px] flex items-center border-r border-gray-200 px-2 sm:px-3 py-2 sm:py-3">Reference</div>
         <div className="flex-1 min-w-[75px] sm:min-w-[90px] max-w-[100px] sm:max-w-[110px] flex items-center border-r border-gray-200 px-2 sm:px-3 py-2 sm:py-3">Status</div>
@@ -239,10 +239,10 @@ export function BookingManagementAnimation() {
                 animate={{ scale: 1, opacity: 1, y: 0 }}
                 exit={{ scale: 0.95, opacity: 0, y: 10 }}
                 transition={{ type: "spring", damping: 25, stiffness: 300 }}
-                className="w-full max-w-[340px] bg-white rounded-[16px] shadow-xl overflow-hidden border border-gray-200"
+                className="w-full max-w-[340px] bg-white rounded-[16px] shadow-xl overflow-hidden border border-gray-200 z-50 mb-10"
               >
-                <div className="p-5 border-b border-gray-100">
-                  <div className="flex justify-between items-start mb-3">
+                <div className="p-5 border-b border-gray-100 bg-white">
+                  <div className="flex justify-between items-start mb-3 border-b-0">
                     <div>
                       <h4 className="text-[16px] font-bold text-gray-900 mb-0.5">Booking Request</h4>
                       <p className="text-[12px] text-gray-500 font-medium">{rows[activeIndex].ref}</p>

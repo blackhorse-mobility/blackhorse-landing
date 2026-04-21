@@ -224,7 +224,7 @@ export function DashboardPreview() {
                     <div className="flex gap-2">
                       <div className="w-8 h-8 rounded-full bg-gray-200 shrink-0 border border-gray-300"></div>
                       <div className="flex flex-col leading-tight">
-                        <span className="text-[13px] font-bold text-black">Gideon Adzigblie</span>
+                        <span className="text-[13px] font-bold text-black">John Doe</span>
                         <span className="text-[11px] text-[#6B7280]">sedan • GR 1234-17</span>
                       </div>
                     </div>
@@ -252,7 +252,7 @@ export function DashboardPreview() {
                     <div className="flex gap-2">
                       <div className="w-8 h-8 rounded-full bg-gray-200 shrink-0 border border-gray-300"></div>
                       <div className="flex flex-col leading-tight">
-                        <span className="text-[13px] font-bold text-black">Dominic Sepenu</span>
+                        <span className="text-[13px] font-bold text-black">Dom Brown</span>
                         <span className="text-[11px] text-[#6B7280]">suv • GR 3443-16</span>
                       </div>
                     </div>

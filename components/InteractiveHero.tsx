@@ -65,7 +65,7 @@ export default function InteractiveHero({ viewMode, setViewMode, onPrimaryAction
       subtext:
         "Connect to consistent corporate demand, manage operations with precision, and scale without friction.",
       primaryBtn: "Get started",
-      secondaryBtn: "Talk to sales",
+      secondaryBtn: "Request a demo",
       navCenter: ["Features", "How It Works", "Customers", "FAQs"],
       navRight: "Talk to Support",
     },
@@ -135,7 +135,7 @@ export default function InteractiveHero({ viewMode, setViewMode, onPrimaryAction
           />
 
           {currentContent.navCenter.length > 0 && (
-            <div className="hidden lg:flex items-center gap-6 xl:gap-8 absolute left-1/2 -translate-x-1/2">
+            <div className="hidden lg:flex items-center gap-6 xl:gap-8 absolute left-1/2 -translate-x-1/2 z-50">
               {currentContent.navCenter.map((item) => (
                 <button
                   key={item}

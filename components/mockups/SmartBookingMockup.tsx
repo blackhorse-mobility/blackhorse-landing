@@ -284,7 +284,7 @@ export default function SmartBookingMockup() {
                   <div className="flex items-center justify-between w-full">
                     <div className="flex items-center gap-5">
                       <img 
-                        src="https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&q=80&w=400&h=250" 
+                        src="https://unsplash.com/photos/a-red-car-parked-next-to-a-bush-with-pink-flowers-Ciu9muARg1o?auto=format&fit=crop&q=80&w=400&h=250" 
                         alt="Mazda CX-5" 
                         className="w-28 h-18 object-cover rounded-xl border border-gray-100 shadow-sm"
                       />

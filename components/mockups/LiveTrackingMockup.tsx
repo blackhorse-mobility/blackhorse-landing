@@ -99,7 +99,7 @@ export default function LiveTrackingMockup() {
                       <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&q=80&w=150&h=150" alt="Driver" className="w-full h-full object-cover"/>
                     </div>
                     <div>
-                      <p className="font-semibold text-gray-900 text-[14px] sm:text-[15px]">Dominic Sepenu</p>
+                      <p className="font-semibold text-gray-900 text-[14px] sm:text-[15px]">Dom Brown</p>
                       <p className="text-gray-500 text-[11px] sm:text-[13px] flex items-center gap-1.5 mt-0.5">
                           <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-green-500 shadow-[0_0_0_2px_rgba(34,197,94,0.2)]"></span>
                           Prado • GR 3443-16

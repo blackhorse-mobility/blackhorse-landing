@@ -77,7 +77,7 @@ async function submitToHubSpot(data: FormData) {
     }
 
     const result = JSON.parse(responseText);
-    console.log("HubSpot response:", result);
+    // console.log("HubSpot response:", result);
     return result;
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error);
@@ -89,7 +89,7 @@ async function submitToHubSpot(data: FormData) {
 export async function POST(request: NextRequest) {
   try {
     if (!HUBSPOT_API_KEY) {
-      console.error("HUBSPOT_PRIVATE_APP_TOKEN is not configured");
+      // console.error("HUBSPOT_PRIVATE_APP_TOKEN is not configured");
       return NextResponse.json(
         { error: "HubSpot configuration missing. Please contact support." },
         { status: 500 }
@@ -100,14 +100,14 @@ export async function POST(request: NextRequest) {
     try {
       data = await request.json();
     } catch (error) {
-      console.error("Invalid JSON in request:", error);
+      // console.error("Invalid JSON in request:", error);
       return NextResponse.json(
         { error: "Invalid request format" },
         { status: 400 }
       );
     }
 
-    // Validate required fields
+    
     if (!data.email || !data.firstName || !data.lastName || !data.company) {
       return NextResponse.json(
         { error: "Missing required fields: firstName, lastName, email, company" },
@@ -115,7 +115,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Submit to HubSpot
+    
     const result = await submitToHubSpot(data);
 
     return NextResponse.json(
@@ -130,7 +130,7 @@ export async function POST(request: NextRequest) {
     const isDev = process.env.NODE_ENV !== "production";
     const errorMessage = error instanceof Error ? error.message : String(error);
     
-    console.error("Form submission error:", errorMessage);
+    // console.error("Form submission error:", errorMessage);
     
     return NextResponse.json(
       {

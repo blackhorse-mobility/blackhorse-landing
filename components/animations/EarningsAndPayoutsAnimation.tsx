@@ -285,7 +285,7 @@ export function EarningsAndPayoutsAnimation() {
                     {/* Active Bank Card */}
                     <div className="w-[180px] h-[100px] bg-[#0B132B] rounded-[10px] p-3 relative shadow-[0_4px_12px_rgba(11,19,43,0.15)] text-white overflow-hidden shrink-0">
                       <div className="w-[20px] h-[16px] bg-gradient-to-br from-[#FBBF24] to-[#D97706] rounded-[2px] mb-3 opacity-90 shadow-sm" />
-                      <div className="text-[12px] font-mono tracking-widest mb-2 text-white/90">0547 2298 70</div>
+                      <div className="text-[12px] font-mono tracking-widest mb-2 text-white/90">02XXXXXXXX</div>
                       <div className="flex flex-col">
                         <span className="text-[7px] text-[#94A3B8] font-semibold uppercase tracking-wider">BANK</span>
                         <span className="text-[10px] font-bold">MTN</span>
