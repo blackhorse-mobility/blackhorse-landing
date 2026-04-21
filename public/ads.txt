@@ -1,0 +1,4 @@
+# ads.txt for Blackhorse Mobility
+# This file contains information about ad networks and publishers
+
+google.com, pub-xxxxxxxxxxxxxxxx, DIRECT, f08c47fec0942fa0

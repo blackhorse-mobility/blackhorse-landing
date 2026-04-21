@@ -12,15 +12,64 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: "Blackhorse Mobility | Executive Chauffeur Services",
+  title: "Blackhorse Mobility | Executive Chauffeur Services & Fleet Management",
   description:
-    "Global executive ride and chauffeur mobility platform. Luxury, precision, and privacy for the modern leader.",
-  openGraph: {
-    title: "Blackhorse Mobility | Executive Chauffeur Services",
-    description:
-      "Global executive ride and chauffeur mobility platform. Luxury, precision, and privacy for the modern leader.",
-    type: "website",
+    "Global executive ride and chauffeur mobility platform. Luxury, precision, and privacy for the modern leader. Manage fleets, corporate transportation, and rental services.",
+  keywords: [
+    "executive chauffeur services",
+    "corporate transportation",
+    "fleet management",
+    "ride sharing",
+    "luxury mobility",
+    "executive mobility",
+    "corporate fleet",
+    "chauffeur service",
+    "transportation management",
+    "fleet owner platform",
+  ],
+  authors: [{ name: "Blackhorse Mobility" }],
+  creator: "Blackhorse Mobility",
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
   },
+  openGraph: {
+    title: "Blackhorse Mobility | Corporate Mobility Services & Fleet Management",
+    description:
+      "Global corporate mobility platform. Luxury, precision, and privacy for the modern leader. Manage fleets, corporate transportation, and rental services.",
+    type: "website",
+    url: "https://black-horse.online",
+    siteName: "Blackhorse Mobility",
+    locale: "en_US",
+    images: [
+      {
+        url: "/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Blackhorse Mobility - Corporate Mobility Services",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Blackhorse Mobility | Corporate Mobility Services",
+    description:
+      "Global corporate mobility platform. Luxury, precision, and privacy for the modern leader.",
+    creator: "@BlackhorseMobility",
+    images: ["/og-image.jpg"],
+  },
+  alternates: {
+    canonical: "https://black-horse.online",
+  },
+  viewport: "width=device-width, initial-scale=1, maximum-scale=5",
+  applicationName: "Blackhorse Mobility",
 };
 
 export default function RootLayout({
@@ -28,8 +77,62 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: "Blackhorse Mobility",
+    description:
+      "Global corporate mobility platform providing corporate transportation and fleet management solutions.",
+    url: "https://black-horse.online",
+    logo: "/assets/Primary/BH_Horizontal_DarkBlue.png",
+    sameAs: [
+      "https://www.linkedin.com/company/blackhorse-mobility",
+      "https://twitter.com/BlackhorseMobility",
+      "https://www.instagram.com/blackhorsemobility",
+    ],
+    contactPoint: {
+      "@type": "ContactPoint",
+      contactType: "Customer Support",
+      availableLanguage: "en",
+    },
+    serviceArea: {
+      "@type": "Country",
+      name: "Global",
+    },
+    service: [
+      {
+        "@type": "Service",
+        name: "Corporate Mobility Services",
+        description: "Premium corporate transportation and chauffeur services",
+      },
+      {
+        "@type": "Service",
+        name: "Corporate Fleet Management",
+        description: "Comprehensive fleet management platform for corporate clients",
+      },
+      {
+        "@type": "Service",
+        name: "Rental Vehicle Network",
+        description: "Connection to verified fleet owners and rental partners",
+      },
+    ],
+  };
+
   return (
     <html lang="en">
+      <head>
+        <meta charSet="utf-8" />
+        <link rel="icon" href="/favicon.ico" />
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+        <link rel="manifest" href="/manifest.json" />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+        <meta name="theme-color" content="#1a1a1a" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+      </head>
       <body
         className={`${aeonikPro.variable} bg-obsidian text-white`}
         suppressHydrationWarning

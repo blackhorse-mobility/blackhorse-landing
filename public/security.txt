@@ -1,0 +1,13 @@
+Contact: security@black-horse.online
+Expires: 2025-04-21T00:00:00.000Z
+Preferred-Languages: en
+Canonical: https://black-horse.online/.well-known/security.txt
+Policy: https://black-horse.online/security-policy
+
+# Security Policy
+
+This file is for coordinating the disclosure of security vulnerabilities found in https://black-horse.online.
+
+If you discover a security vulnerability, please email security@black-horse.online instead of using public issue trackers.
+
+We will respond to your report as soon as possible and work with you to resolve the issue.

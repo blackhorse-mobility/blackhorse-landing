@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import dynamic from "next/dynamic";
 import InteractiveHero, { ViewMode } from "@/components/InteractiveHero";
 import CorporateCapabilities from "@/components/CorporateCapabilities";
 import CorporateSteps from "@/components/CorporateSteps";
@@ -8,10 +9,12 @@ import BuiltFor from "@/components/BuiltFor";
 import FleetCapabilities from "@/components/FleetCapabilities";
 import RegistrationDrawer from "@/components/RegistrationDrawer";
 import RentalSteps from "@/components/RentalSteps";
-import FAQ from "@/components/FAQ";
-import CorporateCTA from "@/components/CorporateCTA";
-import RentalCTA from "@/components/RentalCTA";
 import Footer from "@/components/Footer";
+
+// Lazy load components that appear below the fold for better performance
+const FAQ = dynamic(() => import("@/components/FAQ"), { ssr: true });
+const CorporateCTA = dynamic(() => import("@/components/CorporateCTA"), { ssr: true });
+const RentalCTA = dynamic(() => import("@/components/RentalCTA"), { ssr: true });
 
 export default function Home() {
   const [viewMode, setViewMode] = useState<ViewMode>("fleet");
