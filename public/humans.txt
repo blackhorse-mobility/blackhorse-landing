@@ -1,0 +1,23 @@
+/* humans.txt - Tell the world about who built this site */
+
+Team: Blackhorse Mobility
+Site: https://black-horse.online
+
+/* Standards */
+HTML5, CSS3, JavaScript, TypeScript
+React, Next.js, Framer Motion, Tailwind CSS
+
+/* Build Info */
+Frontend Framework: Next.js 14+
+UI Library: React 18+
+Animation: Framer Motion
+Styling: Tailwind CSS
+Database: (Your DB choice)
+Hosting: (Your hosting provider)
+
+/* Contact */
+Email: hello@black-horse.online
+Location: Global
+
+/* Thank you! */
+Thanks for checking our code. We care about clean, semantic HTML and performant web experiences.

@@ -1,237 +1,133 @@
 "use client";
 import Link from "next/link";
 import Image from "next/image";
-import { motion } from "framer-motion";
-import {
-  buttonVariants,
-  headingVariants,
-  subtextVariants,
-  listVariants,
-} from "./animations/Animation";
+import { useEffect, useRef, useState } from "react";
 
 const Footer = () => {
+  const footerRef = useRef<HTMLElement>(null);
+  const [footerHeight, setFooterHeight] = useState(0);
+
+  useEffect(() => {
+    if (!footerRef.current) return;
+
+    const timeoutId = setTimeout(() => {
+      if (footerRef.current) {
+        setFooterHeight(footerRef.current.offsetHeight);
+      }
+    }, 100);
+
+    const resizeObserver = new ResizeObserver((entries) => {
+      for (const entry of entries) {
+        setFooterHeight(entry.borderBoxSize[0]?.blockSize ?? entry.contentRect.height);
+      }
+    });
+
+    resizeObserver.observe(footerRef.current);
+    return () => {
+      clearTimeout(timeoutId);
+      resizeObserver.disconnect();
+    };
+  }, []);
+
   return (
-    <footer className="bg-obsidian  h-auto w-full md:px-10 text-white">
-      <section className="grid grid-cols-1 md:grid-cols-3 place-items-start md:place-items-center items-start gap-10 md:gap-0 mt-24 px-6 md:px-0">
-        <div className="flex flex-col justify-center items-start gap-2">
-          <motion.div
-            variants={headingVariants}
-            initial="hidden"
-            whileInView="visible"
-            custom={0}
-            viewport={{ once: true }}
-          >
-            {/* <Image
-              src="/Logo-White.svg"
-              alt="Forge Studios Logo"
-              width={50}
-              height={40}
-            /> */}
-          </motion.div>
+    <>
 
-          <motion.h5
-            variants={subtextVariants}
-            initial="hidden"
-            whileInView="visible"
-            custom={0}
-            viewport={{ once: true }}
-            className="ds font-semibold text-2xl md:text-3xl text-white tracking-wide mt-2 uppercase"
-          >
-            Black Horse
-          </motion.h5>
-          <motion.p
-            variants={buttonVariants}
-            initial="hidden"
-            whileInView="visible"
-            custom={0}
-            viewport={{ once: true }}
-            className="sub text-sm md:text-base text-white font-light max-w-md"
-          >
-            A platform that aggregates corporate fleet demand and supply all in
-            one place, making it easy for teams to move around in real time and
-            at less cost.
-          </motion.p>
-        </div>
-        <div className="flex flex-col justify-center items-start gap-4">
-          <motion.span
-            variants={listVariants}
-            initial="hidden"
-            whileInView="visible"
-            custom={0}
-            viewport={{ once: true }}
-            className="text-cyan-300 text-sm md:text-base sub font-light"
-          >
-            Quick Links
-          </motion.span>
-          <Link href="/" className="text-black">
-            <motion.span
-              variants={listVariants}
-              initial="hidden"
-              whileInView="visible"
-              custom={1}
-              viewport={{ once: true }}
-              className=" text-sm ds text-white font-light hover:text-cyan-200"
-            >
-              Home ↗
-            </motion.span>{" "}
-          </Link>
-          <Link href="#business" className="text-black">
-            <motion.span
-              variants={listVariants}
-              initial="hidden"
-              whileInView="visible"
-              custom={3}
-              viewport={{ once: true }}
-              className="text-sm ds text-white font-light hover:text-cyan-200"
-            >
-              Businesses ↗
-            </motion.span>{" "}
-          </Link>
-          <Link href="#transport-partners" className="text-black">
-            <motion.span
-              variants={listVariants}
-              initial="hidden"
-              whileInView="visible"
-              custom={5}
-              viewport={{ once: true }}
-              className="text-sm ds text-white font-light hover:text-cyan-200"
-            >
-              Transport Partners
-            </motion.span>{" "}
-          </Link>
-          <Link href="#pricing-and-billing-page" className="text-black">
-            <motion.span
-              variants={listVariants}
-              initial="hidden"
-              whileInView="visible"
-              custom={7}
-              viewport={{ once: true }}
-              className="text-sm ds text-white font-light hover:text-cyan-200"
-            >
-              Pricing & Billing
-            </motion.span>{" "}
-            {/* <span className="text-xs bg-(--primary-color) p-1 text-black ds tracking-wider rounded-sm">
-              Applications Closed
-            </span> */}
-          </Link>
-        </div>
-        <div className="flex flex-col justify-center items-start gap-4">
-          <motion.span
-            variants={listVariants}
-            initial="hidden"
-            whileInView="visible"
-            custom={0}
-            viewport={{ once: true }}
-            className="text-cyan-300 text-sm md:text-base sub font-light"
-          >
-            Get in touch with us
-          </motion.span>
-          <Link href="" className="text-black">
-            <motion.span
-              variants={listVariants}
-              initial="hidden"
-              whileInView="visible"
-              custom={1}
-              viewport={{ once: true }}
-              className=" text-sm ds text-white font-light hover:text-cyan-200"
-            >
-              info@joltride.com
-            </motion.span>{" "}
-          </Link>
-          <Link href="tel:+233509081558" className="text-black">
-            <motion.span
-              variants={listVariants}
-              initial="hidden"
-              whileInView="visible"
-              custom={3}
-              viewport={{ once: true }}
-              className=" text-sm ds text-white font-light hover:text-cyan-200"
-            >
-              (+233) 50 908 1558
-            </motion.span>{" "}
-          </Link>
-        </div>
-      </section>
-      <div className="w-full flex items-center justify-center pb-12 pt-24">
-        <hr className="h-0.5 w-full bg-cyan-300 flex items-center justify-center" />
-      </div>
-      <div className="flex md:flex-row flex-col-reverse gap-5 md:gap-0 justify-between  items-start md:items-center w-full md:px-0 px-6 pb-12">
-        <motion.div
-          variants={listVariants}
-          initial="hidden"
-          whileInView="visible"
-          custom={1}
-          viewport={{ once: true }}
-        >
-          <span className="text-sm ds text-white font-light hover:text-cyan-200 ">
-            © {new Date().getFullYear()} Powered by Dimax Digital Ltd.
-          </span>
-        </motion.div>
+      <div
+        style={{ height: footerHeight ? `${footerHeight}px` : "500px" }}
+        className="w-full pointer-events-none"
+      />
 
-        <div className="flex flex-col md:flex-row justify-center items-start md:items-center gap-4">
-          <Link href="" className="text-text-cyan-950 ">
-            <motion.span
-              variants={listVariants}
-              initial="hidden"
-              whileInView="visible"
-              custom={2}
-              viewport={{ once: true }}
-              className="text-sm ds text-white font-light hover:text-cyan-200"
-            >
-              Linkedin ↗
-            </motion.span>{" "}
-          </Link>
-          <Link href="" className="text-text-cyan-950 ">
-            <motion.span
-              variants={listVariants}
-              initial="hidden"
-              whileInView="visible"
-              custom={3}
-              viewport={{ once: true }}
-              className="text-sm ds text-white font-light hover:text-cyan-200"
-            >
-              Instagram ↗
-            </motion.span>{" "}
-          </Link>
-          <Link href="" className="text-text-cyan-950 ">
-            <motion.span
-              variants={listVariants}
-              initial="hidden"
-              whileInView="visible"
-              custom={4}
-              viewport={{ once: true }}
-              className="text-sm ds text-white font-light hover:text-cyan-200"
-            >
-              Twitter ↗
-            </motion.span>{" "}
-          </Link>
-          <Link href="" className="text-text-cyan-950 ">
-            <motion.span
-              variants={listVariants}
-              initial="hidden"
-              whileInView="visible"
-              custom={5}
-              viewport={{ once: true }}
-              className="text-sm ds text-white font-light hover:text-cyan-200"
-            >
-              Facebook ↗
-            </motion.span>{" "}
-          </Link>
-          <Link href="" className="text-text-cyan-950 ">
-            <motion.span
-              variants={listVariants}
-              initial="hidden"
-              whileInView="visible"
-              custom={5}
-              viewport={{ once: true }}
-              className="text-sm ds text-white font-light hover:text-cyan-2000"
-            >
-              TikTok ↗
-            </motion.span>{" "}
-          </Link>
+
+      <footer
+        ref={footerRef}
+        className="fixed bottom-0 left-0 right-0 z-[0] bg-[#0A1020] w-full text-white pt-24 pb-12 px-8 md:px-16 lg:px-24 border-t border-white/5"
+      >
+        <div className="max-w-[1400px] mx-auto flex flex-col justify-between h-full font-display">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-10 mb-24">
+
+            <div className="lg:col-span-5 flex flex-col items-start">
+              <div className="flex items-center gap-3 mb-6">
+                <Image
+                  src="/assets/icon-dp/BH_icon_White.png"
+                  alt="Blackhorse Logo"
+                  width={34}
+                  height={34}
+                  className="w-[34px] h-[34px] object-contain"
+                />
+                <span className="text-3xl font-medium tracking-tight">Blackhorse</span>
+              </div>
+              <p className="text-[#a1a1aa] font-medium text-[15px] leading-relaxed max-w-sm">
+                Blackhorse. A platform that aggregates corporate fleet demand and supply all in
+                one place, making it easy for teams to move around in real time and
+                at less cost.
+              </p>
+            </div>
+
+
+            <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10 sm:gap-x-8">
+
+
+              <div className="flex flex-col gap-5">
+                <span className="text-[11px] font-bold text-[#666666] tracking-[0.2em] uppercase">
+                  Fleet Partners
+                </span>
+                <Link href="/#transport-partners" className="text-[15px] font-medium text-white/90 hover:text-white transition-colors group flex items-center">
+                  <span>Transport Partners</span>
+                </Link>
+                <Link href="/#how-it-works" className="text-[15px] font-medium text-white/90 hover:text-white transition-colors">
+                  How It Works
+                </Link>
+              </div>
+
+
+              <div className="flex flex-col gap-5">
+                <span className="text-[11px] font-bold text-[#666666] tracking-[0.2em] uppercase">
+                  Corporate Companies
+                </span>
+                <Link href="/#business" className="text-[15px] font-medium text-white/90 hover:text-white transition-colors">
+                  Business
+                </Link>
+                <Link href="/#how-it-works" className="text-[15px] font-medium text-white/90 hover:text-white transition-colors">
+                  How It Works
+                </Link>
+              </div>
+
+
+              <div className="flex flex-col gap-5">
+                <span className="text-[11px] font-bold text-[#666666] tracking-[0.2em] uppercase">
+                  Follow
+                </span>
+                <Link href="#" className="text-[15px] font-medium text-white/90 hover:text-white transition-colors flex items-center gap-2">
+                  X
+                </Link>
+                <Link href="https://www.instagram.com/blackhorsemobility?igsh=Y3NoNzg5ZHhyMTZh" className="text-[15px] font-medium text-white/90 hover:text-white transition-colors flex items-center gap-2">
+                  Instagram
+                </Link>
+                <Link href="#" className="text-[15px] font-medium text-white/90 hover:text-white transition-colors flex items-center gap-2">
+                  LinkedIn
+                </Link>
+              </div>
+
+            </div>
+          </div>
+
+
+          <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+            <span className="text-xs font-medium text-[#777777]">
+              © {new Date().getFullYear()} Blackhorse. All rights reserved.
+            </span>
+            <div className="flex flex-wrap gap-6 md:gap-8 text-xs font-medium text-[#777777]">
+              <Link href="/privacy" className="hover:text-white transition-colors">Privacy</Link>
+              <Link href="/terms" className="hover:text-white transition-colors">Terms</Link>
+              <span className="text-white/30 hidden sm:inline">|</span>
+              <span className="flex items-center gap-1.5 opacity-60 hover:opacity-100 transition-opacity">
+                Powered by Blackhorse Engineering
+              </span>
+            </div>
+          </div>
         </div>
-      </div>
-    </footer>
+      </footer>
+    </>
   );
 };
 
