@@ -121,8 +121,8 @@ export default function InteractiveHero({ viewMode, setViewMode, onPrimaryAction
       <div className={`fixed top-0 left-0 right-0 z-50 flex justify-center transition-all duration-500 ${scrolled ? "md:px-4 md:pt-4 md:sm:pt-6" : "px-0 pt-0"}`}>
         <div
           className={`w-full flex items-center justify-between transition-all duration-500 ${scrolled
-              ? "md:max-w-5xl bg-white/90 backdrop-blur-md shadow-[0_8px_30px_rgb(0,0,0,0.04)] border-b md:border border-gray-200 md:rounded-full py-4 sm:py-4 md:py-2.5 px-4 sm:px-6 md:px-6 mx-auto"
-              : "bg-transparent py-4 sm:py-6 md:py-8 px-4 sm:px-6 md:px-12 max-w-7xl mx-auto border-b border-transparent"
+            ? "md:max-w-5xl bg-white/90 backdrop-blur-md shadow-[0_8px_30px_rgb(0,0,0,0.04)] border-b md:border border-gray-200 md:rounded-full py-4 sm:py-4 md:py-2.5 px-4 sm:px-6 md:px-6 mx-auto"
+            : "bg-transparent py-4 sm:py-6 md:py-8 px-4 sm:px-6 md:px-12 max-w-7xl mx-auto border-b border-transparent"
             }`}
         >
 
@@ -153,8 +153,8 @@ export default function InteractiveHero({ viewMode, setViewMode, onPrimaryAction
             <button
               onClick={() => onClickButton("nav_talk_to_support", "navbar")}
               className={`text-[12px] sm:text-[13px] md:text-[14px] font-medium text-black transition-colors whitespace-nowrap relative z-50 px-4 py-2 sm:px-5 sm:py-2.5 rounded-full border ${scrolled
-                  ? "border-gray-200 hover:bg-gray-50 no-underline"
-                  : "border-transparent underline hover:text-gray-700 hover:bg-black/5"
+                ? "border-gray-200 hover:bg-gray-50 no-underline"
+                : "border-transparent underline hover:text-gray-700 hover:bg-black/5"
                 }`}
             >
               {currentContent.navRight}
@@ -166,6 +166,26 @@ export default function InteractiveHero({ viewMode, setViewMode, onPrimaryAction
       <div className="relative z-10 mx-auto flex max-w-5xl flex-col items-center px-4 sm:px-6 md:px-8 lg:px-6 pt-24 sm:pt-28 md:pt-32 lg:pt-36">
 
         <div className="mb-8 sm:mb-10 md:mb-12 inline-flex items-center gap-1 sm:gap-0 rounded-full bg-gray-50 p-1 shadow-sm ring-1 ring-gray-100">
+          <button
+            onClick={() => {
+              if (viewMode !== "corporate") {
+                onViewModeChange(viewMode, "corporate");
+              }
+              setViewMode("corporate");
+            }}
+            className={`relative rounded-full px-2.5 sm:px-5 md:px-6 py-1.5 sm:py-2.5 text-[10px] sm:text-xs md:text-[13px] font-medium tracking-wide transition-all whitespace-nowrap ${viewMode === "corporate" ? "text-black" : "text-gray-500 hover:text-black"
+              }`}
+          >
+            {viewMode === "corporate" && (
+              <motion.div
+                layoutId="active-pill"
+                className="absolute inset-0 rounded-full bg-white shadow-sm"
+                transition={{ type: "spring", stiffness: 400, damping: 30 }}
+              />
+            )}
+            <span className="relative z-10">Corporate</span>
+            <span className="relative z-10 hidden sm:inline">&nbsp;Businesses</span>
+          </button>
           <button
             onClick={() => {
               if (viewMode !== "fleet") {
@@ -187,26 +207,7 @@ export default function InteractiveHero({ viewMode, setViewMode, onPrimaryAction
             <span className="relative z-10 hidden sm:inline">&nbsp;& Rental</span>
           </button>
 
-          <button
-            onClick={() => {
-              if (viewMode !== "corporate") {
-                onViewModeChange(viewMode, "corporate");
-              }
-              setViewMode("corporate");
-            }}
-            className={`relative rounded-full px-2.5 sm:px-5 md:px-6 py-1.5 sm:py-2.5 text-[10px] sm:text-xs md:text-[13px] font-medium tracking-wide transition-all whitespace-nowrap ${viewMode === "corporate" ? "text-black" : "text-gray-500 hover:text-black"
-              }`}
-          >
-            {viewMode === "corporate" && (
-              <motion.div
-                layoutId="active-pill"
-                className="absolute inset-0 rounded-full bg-white shadow-sm"
-                transition={{ type: "spring", stiffness: 400, damping: 30 }}
-              />
-            )}
-            <span className="relative z-10">Corporate</span>
-            <span className="relative z-10 hidden sm:inline">&nbsp;Businesses</span>
-          </button>
+
         </div>
 
 

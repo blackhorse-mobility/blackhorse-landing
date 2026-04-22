@@ -17,7 +17,7 @@ const CorporateCTA = dynamic(() => import("@/components/CorporateCTA"), { ssr: t
 const RentalCTA = dynamic(() => import("@/components/RentalCTA"), { ssr: true });
 
 export default function Home() {
-  const [viewMode, setViewMode] = useState<ViewMode>("fleet");
+  const [viewMode, setViewMode] = useState<ViewMode>("corporate");
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   return (
@@ -54,7 +54,7 @@ export default function Home() {
           initialMode={viewMode}
         />
       </main>
-      
+
       <Footer />
     </div>
   );
