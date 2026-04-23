@@ -136,19 +136,7 @@ export default function RegistrationDrawer({
       // Show success state
       setSubmitSuccess(true);
 
-      // Reset form after 2 seconds and close
-      setTimeout(() => {
-        setFormData({
-          firstName: "",
-          lastName: "",
-          email: "",
-          phone: "",
-          company: "",
-          industry: "",
-        });
-        setSubmitSuccess(false);
-        onClose();
-      }, 2000);
+      // Reset is handled by the user clicking "Back to Home"
     } catch (error) {
       const errorMessage =
         error instanceof Error ? error.message : "Unknown error occurred";
@@ -193,13 +181,70 @@ export default function RegistrationDrawer({
           `}} />
 
 
-          <motion.div
-            initial={{ y: "100%", opacity: 1 }}
-            animate={{ y: 0, opacity: 1 }}
-            exit={{ y: "100%", opacity: 1 }}
-            transition={{ type: "spring", damping: 28, stiffness: 220 }}
-            className="relative w-full h-max max-h-[90vh] lg:max-h-[90vh] bg-white rounded-t-[20px] overflow-hidden flex flex-col sm:flex-row shadow-[0_-10px_40px_rgba(0,0,0,0.1)] z-10"
-          >
+          {submitSuccess ? (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              transition={{ duration: 0.4, ease: "easeOut" }}
+              className="fixed inset-0 z-[200] bg-white flex flex-col items-center justify-center p-6 text-center"
+            >
+              <motion.div
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                transition={{ type: "spring", damping: 20, stiffness: 200, delay: 0.1 }}
+                className="w-24 h-24 sm:w-32 sm:h-32 rounded-full bg-green-50 flex items-center justify-center mb-8"
+              >
+                <svg className="w-12 h-12 sm:w-16 sm:h-16 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 13l4 4L19 7" />
+                </svg>
+              </motion.div>
+              
+              <motion.p 
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2 }}
+                className="text-[18px] sm:text-[22px] md:text-[24px] text-gray-800 font-medium max-w-xl mb-12 leading-relaxed flex flex-wrap items-center justify-center gap-x-2 gap-y-1"
+              >
+                <span>a member of the Blackhorse team</span>
+                <span className="inline-flex items-center justify-center translate-y-[2px]">
+                  <Image src="/assets/Primary/BH_Horizontal_DarkBlue.png" alt="Blackhorse Logo" width={100} height={20} className="h-[1.2em] w-auto object-contain" />
+                </span>
+                <span>will be with you shortly</span>
+              </motion.p>
+
+              <motion.button
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3 }}
+                onClick={() => {
+                  setSubmitSuccess(false);
+                  onClose();
+                  setFormData({
+                    firstName: "",
+                    lastName: "",
+                    email: "",
+                    phone: "",
+                    company: "",
+                    industry: "",
+                  });
+                }}
+                className="px-8 py-4 bg-gray-100 hover:bg-gray-200 text-black rounded-full font-semibold transition-colors flex items-center gap-2"
+              >
+                <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg>
+                Back to Home
+              </motion.button>
+            </motion.div>
+          ) : (
+            <motion.div
+              initial={{ y: "100%", opacity: 1 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: "100%", opacity: 1 }}
+              transition={{ type: "spring", damping: 28, stiffness: 220 }}
+              className="relative w-full h-max max-h-[90vh] lg:max-h-[90vh] bg-white rounded-t-[20px] overflow-hidden flex flex-col sm:flex-row shadow-[0_-10px_40px_rgba(0,0,0,0.1)] z-10"
+            >
 
             <div className="hidden sm:block relative w-[40%] xl:w-[35%] bg-[#0A1020] overflow-hidden">
               <Image
@@ -458,7 +503,8 @@ export default function RegistrationDrawer({
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
               </svg>
             </button>
-          </motion.div>
+            </motion.div>
+          )}
         </div>
       )}
     </AnimatePresence>

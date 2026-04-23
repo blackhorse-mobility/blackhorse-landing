@@ -29,10 +29,15 @@ export default function CorporateCTA() {
           <p className={`text-[#8C98A4] text-[16px] md:text-[18px] leading-relaxed max-w-[420px] mb-10 ${manrope.className}`}>
             Join forward-thinking teams simplifying how their people move with Blackhorse.
           </p>
-          <button className="flex min-w-[160px] cursor-pointer items-center justify-center rounded-[10px] bg-white px-8 py-[18px] text-[15px] font-semibold text-black transition-transform hover:scale-[1.02] active:scale-[0.98]">
+          <a
+            href="https://calendly.com/dominic-dimaxdigital/30min"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex min-w-[160px] w-fit cursor-pointer items-center justify-center rounded-[10px] bg-white px-8 py-[18px] text-[15px] font-semibold text-black transition-transform hover:scale-[1.02] active:scale-[0.98]"
+          >
             See a demo
             <ChevronRight size={15} />
-          </button>
+          </a>
         </div>
 
 
