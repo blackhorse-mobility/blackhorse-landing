@@ -2,55 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
-/* AeonikPro Trial Font Face Definitions */
-@font-face {
-  font-family: "AeonikPro";
-  src: url("/fonts/AeonikPro-Trial/AeonikProTRIAL-Light.otf") format("opentype");
-  font-weight: 300;
-  font-style: normal;
-  font-display: swap;
+.cyan-scrollbar::-webkit-scrollbar {
+    width: 4px;
 }
 
-@font-face {
-  font-family: "AeonikPro";
-  src: url("/fonts/AeonikPro-Trial/AeonikProTRIAL-LightItalic.otf")
-    format("opentype");
-  font-weight: 300;
-  font-style: italic;
-  font-display: swap;
+.cyan-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
 }
 
-@font-face {
-  font-family: "AeonikPro";
-  src: url("/fonts/AeonikPro-Trial/AeonikProTRIAL-Regular.otf") format("opentype");
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
+.cyan-scrollbar::-webkit-scrollbar-thumb {
+    background: #5dcbfe;
+    border-radius: 10px;
 }
-
-@font-face {
-  font-family: "AeonikPro";
-  src: url("/fonts/AeonikPro-Trial/AeonikProTRIAL-RegularItalic.otf")
-    format("opentype");
-  font-weight: 400;
-  font-style: italic;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "AeonikPro";
-  src: url("/fonts/AeonikPro-Trial/AeonikProTRIAL-Bold.otf") format("opentype");
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "AeonikPro";
-  src: url("/fonts/AeonikPro-Trial/AeonikProTRIAL-BoldItalic.otf")
-    format("opentype");
-  font-weight: 700;
-  font-style: italic;
-  font-display: swap;
-}
-
