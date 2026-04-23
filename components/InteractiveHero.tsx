@@ -14,6 +14,34 @@ const manrope = Manrope({
   variable: "--font-manrope",
 });
 
+const CORPORATE_HERO_VIDEO_URL =
+  process.env.NEXT_PUBLIC_CORPORATE_HERO_VIDEO_URL ||
+  "https://res.cloudinary.com/dviigplcx/video/upload/v1776948685/8344925-uhd_3840_2160_25fps_tleqte.mp4";
+const FLEET_HERO_VIDEO_URL =
+  process.env.NEXT_PUBLIC_FLEET_HERO_VIDEO_URL ||
+  "https://res.cloudinary.com/dviigplcx/video/upload/v1776951384/5982894-uhd_3840_2160_30fps_1_hf9qne.mp4";
+
+function getOptimizedCloudinaryVideoUrl(url: string) {
+  if (!url.includes("/video/upload/")) return url;
+
+  return url.replace(
+    "/video/upload/",
+    "/video/upload/q_auto:good,f_mp4,vc_auto,w_1920,c_limit,ac_none/",
+  );
+}
+
+function getCloudinaryPosterUrl(url: string) {
+  if (!url.includes("/video/upload/")) return null;
+
+  const [baseUrl] = url.split("?");
+  const posterUrl = baseUrl.replace(
+    "/video/upload/",
+    "/video/upload/so_0,q_auto,w_1600,c_limit/",
+  );
+
+  return posterUrl.replace(/\.(mp4|mov|webm)$/i, ".jpg");
+}
+
 export type ViewMode = "fleet" | "corporate";
 
 interface InteractiveHeroProps {
@@ -72,6 +100,7 @@ export default function InteractiveHero({
 
   const currentContent = content[viewMode];
   const [scrolled, setScrolled] = useState(false);
+  const [isVideoReady, setIsVideoReady] = useState(false);
 
   // Navigation mapping for smooth scroll
   const navSectionMap = {
@@ -108,25 +137,46 @@ export default function InteractiveHero({
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const currentHeroMediaUrl =
+    viewMode === "corporate" ? CORPORATE_HERO_VIDEO_URL : FLEET_HERO_VIDEO_URL;
+  const optimizedHeroMediaUrl =
+    getOptimizedCloudinaryVideoUrl(currentHeroMediaUrl);
+  const currentHeroPosterUrl = getCloudinaryPosterUrl(currentHeroMediaUrl);
+
+  useEffect(() => {
+    setIsVideoReady(false);
+  }, [viewMode]);
+
   return (
     <section className="relative w-full min-h-screen bg-black text-white overflow-hidden font-display selection:bg-cyan-200">
-      <video
-        key={viewMode}
-        autoPlay
-        loop
-        muted
-        playsInline
-        className="absolute inset-0 w-full h-full object-cover z-0"
-      >
-        <source
-          src={
-            viewMode === "corporate"
-              ? "/assets/corporate-hero-bg.mp4"
-              : "/assets/fleet-hero-bg.mp4"
-          }
-          type="video/mp4"
+      {currentHeroPosterUrl ? (
+        <div
+          className={`absolute inset-0 z-0 bg-cover bg-center transition-opacity duration-500 ${
+            isVideoReady ? "opacity-0" : "opacity-100"
+          }`}
+          style={{ backgroundImage: `url(${currentHeroPosterUrl})` }}
+          aria-hidden="true"
         />
-      </video>
+      ) : null}
+
+      {optimizedHeroMediaUrl ? (
+        <video
+          key={viewMode}
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="auto"
+          poster={currentHeroPosterUrl || undefined}
+          onLoadedData={() => setIsVideoReady(true)}
+          onCanPlay={() => setIsVideoReady(true)}
+          className={`absolute inset-0 w-full h-full object-cover z-0 transition-opacity duration-700 ${
+            isVideoReady ? "opacity-100" : "opacity-0"
+          }`}
+        >
+          <source src={optimizedHeroMediaUrl} type="video/mp4" />
+        </video>
+      ) : null}
       <div className="absolute inset-0 bg-black/40 z-0" />
 
       <motion.div
