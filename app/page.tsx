@@ -13,8 +13,12 @@ import Footer from "@/components/Footer";
 
 // Lazy load components that appear below the fold for better performance
 const FAQ = dynamic(() => import("@/components/FAQ"), { ssr: true });
-const CorporateCTA = dynamic(() => import("@/components/CorporateCTA"), { ssr: true });
-const RentalCTA = dynamic(() => import("@/components/RentalCTA"), { ssr: true });
+const CorporateCTA = dynamic(() => import("@/components/CorporateCTA"), {
+  ssr: true,
+});
+const RentalCTA = dynamic(() => import("@/components/RentalCTA"), {
+  ssr: true,
+});
 
 export default function Home() {
   const [viewMode, setViewMode] = useState<ViewMode>("corporate");
@@ -44,7 +48,7 @@ export default function Home() {
             <FleetCapabilities />
             <RentalSteps />
             <FAQ viewMode="fleet" />
-            <RentalCTA />
+            <RentalCTA onGetStarted={() => setIsDrawerOpen(true)} />
           </>
         )}
 
