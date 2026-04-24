@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Manrope } from "next/font/google";
+import Link from "next/link";
 
 const manrope = Manrope({
   subsets: ["latin"],
@@ -143,12 +144,12 @@ export default function FAQ({ viewMode }: FAQProps) {
           <div className="mt-16 pt-4">
             <p className="text-[18px] md:text-[20px] font-medium text-black">
               Can’t find your answers here ?{" "}
-              <a
+              <Link
                 href="mailto:nanaama@black-horse.io"
                 className="underline decoration-[1.5px] underline-offset-[6px] hover:text-[#5DCBFE] transition-colors"
               >
                 Get in touch
-              </a>
+              </Link>
             </p>
           </div>
         </div>
