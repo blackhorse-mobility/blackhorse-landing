@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import dynamic from "next/dynamic";
-import InteractiveHero, { ViewMode } from "@/components/InteractiveHero";
+import InteractiveHero, { type ViewMode } from "@/components/InteractiveHero";
 import CorporateCapabilities from "@/components/CorporateCapabilities";
 import CorporateSteps from "@/components/CorporateSteps";
 import BuiltFor from "@/components/BuiltFor";
