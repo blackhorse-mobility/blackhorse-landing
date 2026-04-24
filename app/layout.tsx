@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Playfair_Display } from "next/font/google";
 import { aeonikPro } from "@/lib/fonts";
+import { SITE_URL, getSiteUrl } from "@/lib/site";
 import { HubSpotProvider } from "@/components/HubSpotProvider";
 import CookieConsent from "@/components/CookieConsent";
 import "./globals.css";
@@ -12,7 +13,9 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: "Blackhorse Mobility | Executive Chauffeur Services & Fleet Management",
+  metadataBase: new URL(SITE_URL),
+  title:
+    "Blackhorse Mobility | Executive Chauffeur Services & Fleet Management",
   description:
     "Global executive ride and chauffeur mobility platform. Luxury, precision, and privacy for the modern leader. Manage fleets, corporate transportation, and rental services.",
   keywords: [
@@ -41,11 +44,12 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: "Blackhorse Mobility | Corporate Mobility Services & Fleet Management",
+    title:
+      "Blackhorse Mobility | Corporate Mobility Services & Fleet Management",
     description:
       "Global corporate mobility platform. Luxury, precision, and privacy for the modern leader. Manage fleets, corporate transportation, and rental services.",
     type: "website",
-    url: "https://black-horse.online",
+    url: SITE_URL,
     siteName: "Blackhorse Mobility",
     locale: "en_US",
     images: [
@@ -66,9 +70,8 @@ export const metadata: Metadata = {
     images: ["/og-image.jpg"],
   },
   alternates: {
-    canonical: "https://black-horse.online",
+    canonical: SITE_URL,
   },
-  viewport: "width=device-width, initial-scale=1, maximum-scale=5",
   applicationName: "Blackhorse Mobility",
 };
 
@@ -83,8 +86,8 @@ export default function RootLayout({
     name: "Blackhorse Mobility",
     description:
       "Global corporate mobility platform providing corporate transportation and fleet management solutions.",
-    url: "https://black-horse.online",
-    logo: "/assets/Primary/BH_Horizontal_DarkBlue.png",
+    url: SITE_URL,
+    logo: getSiteUrl("/assets/Primary/BH_Horizontal_DarkBlue.png"),
     sameAs: [
       "https://www.linkedin.com/company/blackhorse-mobility",
       "https://twitter.com/BlackhorseMobility",
@@ -108,7 +111,8 @@ export default function RootLayout({
       {
         "@type": "Service",
         name: "Corporate Fleet Management",
-        description: "Comprehensive fleet management platform for corporate clients",
+        description:
+          "Comprehensive fleet management platform for corporate clients",
       },
       {
         "@type": "Service",
@@ -125,13 +129,21 @@ export default function RootLayout({
         <link rel="icon" href="/favicon.ico" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
         <link rel="manifest" href="/manifest.json" />
+        <link
+          rel="preconnect"
+          href="https://res.cloudinary.com"
+          crossOrigin=""
+        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
         <meta name="theme-color" content="#1a1a1a" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
-        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+        <meta
+          name="apple-mobile-web-app-status-bar-style"
+          content="black-translucent"
+        />
       </head>
       <body
         className={`${aeonikPro.variable} bg-obsidian text-white`}
