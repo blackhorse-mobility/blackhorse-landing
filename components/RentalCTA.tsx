@@ -39,7 +39,6 @@ export default function RentalCTA({ onGetStarted }: RentalCTAProps) {
           <button
             type="button"
             onClick={onGetStarted}
-            onClick={onGetStarted}
             className="flex min-w-[160px] cursor-pointer items-center justify-center rounded-[10px] bg-white px-8 py-[18px] text-[15px] font-semibold text-black transition-transform hover:scale-[1.02] active:scale-[0.98]"
           >
             Get started
