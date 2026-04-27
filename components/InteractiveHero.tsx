@@ -7,6 +7,7 @@ import Image from "next/image";
 import { DashboardPreview } from "./DashboardPreview";
 import CorporateDashboardMockup from "./mockups/CorporateDashboardMockup";
 import { useHubSpotTracking } from "@/hooks/useHubSpotTracking";
+import { NEXT_WHATSAPP_SUPPORT } from "@/lib/constants";
 
 const manrope = Manrope({
   subsets: ["latin"],
@@ -106,7 +107,7 @@ export default function InteractiveHero({
   const navSectionMap = {
     fleet: {
       Benefits: "fleet-benefits",
-      "Product (Features)": "fleet-features",
+      Features: "fleet-features",
       FAQs: "fleet-faqs",
     },
     corporate: {
@@ -224,7 +225,10 @@ export default function InteractiveHero({
           )}
 
           {currentContent.navRight && (
-            <button
+            <a
+              href={NEXT_WHATSAPP_SUPPORT}
+              target="_blank"
+              rel="noopener noreferrer"
               onClick={() => onClickButton("nav_talk_to_support", "navbar")}
               className={`text-[12px] sm:text-[13px] md:text-[14px] font-medium transition-colors whitespace-nowrap relative z-50 px-4 py-2 sm:px-5 sm:py-2.5 rounded-full border ${
                 scrolled
@@ -233,7 +237,7 @@ export default function InteractiveHero({
               }`}
             >
               {currentContent.navRight}
-            </button>
+            </a>
           )}
         </div>
       </div>

@@ -48,7 +48,7 @@ export default function Home() {
             <FleetCapabilities />
             <RentalSteps />
             <FAQ viewMode="fleet" />
-            <RentalCTA />
+            <RentalCTA onGetStarted={() => setIsDrawerOpen(true)} />
           </>
         )}
 
