@@ -81,8 +81,7 @@ export default function InteractiveHero({
   const content = {
     fleet: {
       headline: "Turn your fleet into a revenue engine",
-      subtext:
-        "Connect to consistent corporate demand, manage operations with precision, and scale without friction.",
+      subtext: "Add your fleet. Get booked. Get paid",
       primaryBtn: "Get started",
       secondaryBtn: "Request A Demo",
       navCenter: ["Benefits", "Product (Features)", "FAQs"],
@@ -91,7 +90,7 @@ export default function InteractiveHero({
     corporate: {
       headline: "Move teams without the operational overhead",
       subtext:
-        "Connect to consistent corporate demand, manage operations with precision, and scale without friction.",
+        "Book rides for your team, track every trip, and pay from one place.",
       primaryBtn: "Get started",
       secondaryBtn: "Request a demo",
       navCenter: ["Features", "How It Works", "Customers", "FAQs"],
