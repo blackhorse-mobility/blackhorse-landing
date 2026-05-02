@@ -24,7 +24,7 @@ const steps = [
   {
     num: "02",
     title: "Booking Management",
-    desc: "Receive, accept, and manage vehicles bookings with full visibility and control.",
+    desc: "Receive, accept, and manage vehicle bookings with full visibility and control.",
   },
   {
     num: "03",
