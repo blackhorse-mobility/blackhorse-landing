@@ -43,6 +43,12 @@ const faqs = {
       answer:
         "Absolutely. Our platform provides a real-time tracking dashboard where you can monitor all active trips, vehicle locations, and driver statuses for your team members.",
     },
+    {
+      question:
+        "Can the platform be used for longer-term trips or extended bookings?",
+      answer:
+        "Yes. Whether you need a vehicle for a few hours or several days, you can set the duration at the time of booking.",
+    },
   ],
   fleet: [
     {
