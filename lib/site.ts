@@ -1,4 +1,4 @@
-const FALLBACK_SITE_URL = "https://black-horse.online";
+const FALLBACK_SITE_URL = "https://black-horse.io";
 
 function normalizeSiteUrl(url: string) {
   return url.replace(/\/+$/, "");
