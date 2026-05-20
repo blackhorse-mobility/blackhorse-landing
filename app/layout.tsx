@@ -3,6 +3,7 @@ import { Inter, Playfair_Display } from "next/font/google";
 import { aeonikPro } from "@/lib/fonts";
 import { SITE_URL, getSiteUrl } from "@/lib/site";
 import { HubSpotProvider } from "@/components/HubSpotProvider";
+import { MetaPixelProvider } from "@/components/MetaPixelProvider";
 import CookieConsent from "@/components/CookieConsent";
 import "./globals.css";
 
@@ -150,8 +151,10 @@ export default function RootLayout({
         suppressHydrationWarning
       >
         <HubSpotProvider>
-          {children}
-          <CookieConsent />
+          <MetaPixelProvider>
+            {children}
+            <CookieConsent />
+          </MetaPixelProvider>
         </HubSpotProvider>
       </body>
     </html>
