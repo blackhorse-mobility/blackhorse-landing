@@ -4,6 +4,7 @@ import { aeonikPro } from "@/lib/fonts";
 import { SITE_URL, getSiteUrl } from "@/lib/site";
 import { HubSpotProvider } from "@/components/HubSpotProvider";
 import { MetaPixelProvider } from "@/components/MetaPixelProvider";
+import { LinkedInInsightProvider } from "@/components/LinkedInInsightProvider";
 import CookieConsent from "@/components/CookieConsent";
 import "./globals.css";
 
@@ -152,8 +153,10 @@ export default function RootLayout({
       >
         <HubSpotProvider>
           <MetaPixelProvider>
-            {children}
-            <CookieConsent />
+            <LinkedInInsightProvider>
+              {children}
+              <CookieConsent />
+            </LinkedInInsightProvider>
           </MetaPixelProvider>
         </HubSpotProvider>
       </body>
