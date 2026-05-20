@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, Playfair_Display } from "next/font/google";
+import { Suspense } from "react";
 import { aeonikPro } from "@/lib/fonts";
 import { SITE_URL, getSiteUrl } from "@/lib/site";
 import { HubSpotProvider } from "@/components/HubSpotProvider";
@@ -152,12 +153,14 @@ export default function RootLayout({
         suppressHydrationWarning
       >
         <HubSpotProvider>
-          <MetaPixelProvider>
-            <LinkedInInsightProvider>
-              {children}
-              <CookieConsent />
-            </LinkedInInsightProvider>
-          </MetaPixelProvider>
+          <Suspense fallback={null}>
+            <MetaPixelProvider>
+              <LinkedInInsightProvider>
+                {children}
+                <CookieConsent />
+              </LinkedInInsightProvider>
+            </MetaPixelProvider>
+          </Suspense>
         </HubSpotProvider>
       </body>
     </html>
