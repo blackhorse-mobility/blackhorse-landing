@@ -6,7 +6,7 @@ import { useCookieConsent } from "@/hooks/useCookieConsent";
 
 declare global {
   interface Window {
-    lintrk: ((action: string, ...args: unknown[]) => void) & { q?: unknown[] };
+    lintrk: ((action: string, ...args: unknown[]) => void) & { q?: unknown[]; loaded?: boolean };
     _linkedin_data_partner_ids: string[];
   }
 }
