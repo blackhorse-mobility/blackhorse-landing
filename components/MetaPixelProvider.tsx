@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { usePathname, useSearchParams } from "next/navigation";
 import { useCookieConsent } from "@/hooks/useCookieConsent";
 
 interface FacebookPixel {
@@ -23,6 +24,8 @@ const PIXEL_ID = process.env.NEXT_PUBLIC_META_PIXEL_ID;
 
 export function MetaPixelProvider({ children }: { children: React.ReactNode }) {
   const { hasConsented, canUseMarketing } = useCookieConsent();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
 
   useEffect(() => {
     if (!hasConsented) return;
@@ -52,18 +55,16 @@ export function MetaPixelProvider({ children }: { children: React.ReactNode }) {
     document.head.appendChild(script);
 
     window.fbq("init", PIXEL_ID);
-    window.fbq("track", "PageView");
-
-    const handleRouteChange = () => {
-      window.fbq("track", "PageView");
-    };
-
-    window.addEventListener("popstate", handleRouteChange);
-
-    return () => {
-      window.removeEventListener("popstate", handleRouteChange);
-    };
   }, [hasConsented, canUseMarketing]);
+
+  useEffect(() => {
+    if (!hasConsented) return;
+    if (!canUseMarketing()) return;
+    if (!PIXEL_ID) return;
+    if (!window.fbq) return;
+
+    window.fbq("track", "PageView");
+  }, [hasConsented, canUseMarketing, pathname, searchParams]);
 
   return (
     <>
