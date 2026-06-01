@@ -1,7 +1,7 @@
 /* humans.txt - Tell the world about who built this site */
 
 Team: Blackhorse Mobility
-Site: https://black-horse.online
+Site: https://black-horse.io
 
 /* Standards */
 HTML5, CSS3, JavaScript, TypeScript
@@ -16,7 +16,7 @@ Database: (Your DB choice)
 Hosting: (Your hosting provider)
 
 /* Contact */
-Email: hello@black-horse.online
+Email: hello@black-horse.io
 Location: Global
 
 /* Thank you! */

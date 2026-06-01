@@ -1,7 +1,9 @@
+import { checkRateLimit } from "@vercel/firewall";
 import { NextRequest, NextResponse } from "next/server";
 
 const HUBSPOT_API_KEY = process.env.HUBSPOT_PRIVATE_APP_TOKEN;
-const HUBSPOT_PORTAL_ID = process.env.NEXT_PUBLIC_HUBSPOT_PORTAL_ID;
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const HUBSPOT_RATE_LIMIT_ID = "hubspot-submit-form";
 
 interface FormData {
   firstName: string;
@@ -9,9 +11,56 @@ interface FormData {
   email: string;
   phone: string;
   company: string;
-  location?:string;
+  location?: string;
   industry?: string;
   registrationType: "fleet" | "corporate";
+}
+
+const isNonEmptyString = (value: unknown): value is string =>
+  typeof value === "string" && value.trim().length > 0;
+
+const isValidEmail = (email: string) => EMAIL_REGEX.test(email.trim());
+
+const isRegistrationType = (
+  value: unknown,
+): value is FormData["registrationType"] =>
+  value === "fleet" || value === "corporate";
+
+function normalizeFormData(payload: unknown): FormData | null {
+  if (!payload || typeof payload !== "object") {
+    return null;
+  }
+
+  const candidate = payload as Record<string, unknown>;
+
+  if (
+    !isNonEmptyString(candidate.firstName) ||
+    !isNonEmptyString(candidate.lastName) ||
+    !isNonEmptyString(candidate.email) ||
+    !isNonEmptyString(candidate.company) ||
+    !isRegistrationType(candidate.registrationType)
+  ) {
+    return null;
+  }
+
+  const normalized: FormData = {
+    firstName: candidate.firstName.trim(),
+    lastName: candidate.lastName.trim(),
+    email: candidate.email.trim().toLowerCase(),
+    phone: isNonEmptyString(candidate.phone) ? candidate.phone.trim() : "",
+    company: candidate.company.trim(),
+    registrationType: candidate.registrationType,
+  };
+
+  if (isNonEmptyString(candidate.location)) {
+    normalized.location = candidate.location.trim();
+  }
+
+  if (isNonEmptyString(candidate.industry)) {
+    normalized.industry = candidate.industry.trim();
+  }
+
+  return normalized;
 }
 
 async function submitToHubSpot(data: FormData) {
@@ -30,17 +79,14 @@ async function submitToHubSpot(data: FormData) {
       hs_lead_status: "NEW",
     };
 
-   
     if (data.location) properties.location = data.location;
     if (data.industry) properties.industry = data.industry;
-    if (data.registrationType) properties.registration_type = data.registrationType;
+    if (data.registrationType)
+      properties.registration_type = data.registrationType;
 
-    
-    const today = new Date().toISOString().split('T')[0];
+    const today = new Date().toISOString().split("T")[0];
     properties.registration_date = today;
     properties.source = "blackhorse_landing";
-
-    console.log("Submitting to HubSpot with properties:", properties);
 
     const response = await fetch(
       "https://api.hubapi.com/crm/v3/objects/contacts",
@@ -51,10 +97,9 @@ async function submitToHubSpot(data: FormData) {
           Authorization: `Bearer ${HUBSPOT_API_KEY}`,
         },
         body: JSON.stringify({ properties }),
-      }
+      },
     );
 
-    
     let responseText = "";
     try {
       responseText = await response.text();
@@ -64,7 +109,7 @@ async function submitToHubSpot(data: FormData) {
 
     if (!response.ok) {
       let errorMessage = `HTTP ${response.status}: ${response.statusText}`;
-      
+
       try {
         const errorData = JSON.parse(responseText);
         errorMessage = errorData.message || errorData.category || errorMessage;
@@ -89,33 +134,56 @@ async function submitToHubSpot(data: FormData) {
 export async function POST(request: NextRequest) {
   try {
     if (!HUBSPOT_API_KEY) {
-      // console.error("HUBSPOT_PRIVATE_APP_TOKEN is not configured");
       return NextResponse.json(
         { error: "HubSpot configuration missing. Please contact support." },
-        { status: 500 }
+        { status: 500 },
       );
     }
 
-    let data: FormData;
     try {
-      data = await request.json();
+      const { rateLimited } = await checkRateLimit(HUBSPOT_RATE_LIMIT_ID, {
+        request,
+      });
+
+      if (rateLimited) {
+        return NextResponse.json(
+          { error: "Too many requests. Please try again later." },
+          { status: 429, headers: { "Retry-After": "60" } },
+        );
+      }
     } catch (error) {
-      // console.error("Invalid JSON in request:", error);
+      console.warn("Rate limit check unavailable:", error);
+    }
+
+    let payload: unknown;
+    try {
+      payload = await request.json();
+    } catch {
       return NextResponse.json(
         { error: "Invalid request format" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
-    
-    if (!data.email || !data.firstName || !data.lastName || !data.company) {
+    const data = normalizeFormData(payload);
+
+    if (!data) {
       return NextResponse.json(
-        { error: "Missing required fields: firstName, lastName, email, company" },
-        { status: 400 }
+        {
+          error:
+            "Missing or invalid required fields: firstName, lastName, email, company, registrationType",
+        },
+        { status: 400 },
       );
     }
 
-    
+    if (!isValidEmail(data.email)) {
+      return NextResponse.json(
+        { error: "Invalid email address" },
+        { status: 400 },
+      );
+    }
+
     const result = await submitToHubSpot(data);
 
     return NextResponse.json(
@@ -124,22 +192,20 @@ export async function POST(request: NextRequest) {
         message: "Contact submitted to HubSpot successfully",
         contactId: result.id,
       },
-      { status: 200 }
+      { status: 200 },
     );
   } catch (error) {
     const isDev = process.env.NODE_ENV !== "production";
     const errorMessage = error instanceof Error ? error.message : String(error);
-    
-    // console.error("Form submission error:", errorMessage);
-    
+
     return NextResponse.json(
       {
-        error: isDev 
-          ? errorMessage 
+        error: isDev
+          ? errorMessage
           : "Failed to submit form. Please try again.",
         details: isDev ? errorMessage : undefined,
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

@@ -11,12 +11,16 @@ export interface CookieConsent {
 
 const COOKIE_STORAGE_KEY = "bh-cookie-consent";
 const COOKIE_EXPIRY_DAYS = 365;
+const COOKIE_EXPIRY_MS = COOKIE_EXPIRY_DAYS * 24 * 60 * 60 * 1000;
+
+const isConsentExpired = (timestamp: number) => {
+  return Date.now() - timestamp > COOKIE_EXPIRY_MS;
+};
 
 export function useCookieConsent() {
   const [consent, setConsent] = useState<CookieConsent | null>(null);
   const [hasConsented, setHasConsented] = useState(false);
 
- 
   useEffect(() => {
     if (typeof window === "undefined") return;
 
@@ -24,6 +28,17 @@ export function useCookieConsent() {
       const stored = localStorage.getItem(COOKIE_STORAGE_KEY);
       if (stored) {
         const parsed = JSON.parse(stored) as CookieConsent;
+
+        if (
+          typeof parsed.timestamp !== "number" ||
+          isConsentExpired(parsed.timestamp)
+        ) {
+          localStorage.removeItem(COOKIE_STORAGE_KEY);
+          setConsent(null);
+          setHasConsented(false);
+          return;
+        }
+
         setConsent(parsed);
         setHasConsented(true);
       }
@@ -34,9 +49,9 @@ export function useCookieConsent() {
 
   const saveConsent = (categories: Partial<CookieConsent>) => {
     const newConsent: CookieConsent = {
-      essential: true, 
-      analytics: categories.analytics || false,
-      marketing: categories.marketing || false,
+      essential: true,
+      analytics: categories.analytics ?? consent?.analytics ?? false,
+      marketing: categories.marketing ?? consent?.marketing ?? false,
       timestamp: Date.now(),
     };
 
