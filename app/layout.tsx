@@ -7,6 +7,7 @@ import { HubSpotProvider } from "@/components/HubSpotProvider";
 import { MetaPixelProvider } from "@/components/MetaPixelProvider";
 import { LinkedInInsightProvider } from "@/components/LinkedInInsightProvider";
 import CookieConsent from "@/components/CookieConsent";
+import GoogleAnalytics from "@/components/GoogleAnalytics";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
@@ -152,6 +153,7 @@ export default function RootLayout({
         className={`${aeonikPro.variable} bg-obsidian text-white`}
         suppressHydrationWarning
       >
+        <GoogleAnalytics />
         <HubSpotProvider>
           <Suspense fallback={null}>
             <MetaPixelProvider>
