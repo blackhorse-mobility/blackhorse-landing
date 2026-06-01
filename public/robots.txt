@@ -13,7 +13,7 @@ User-agent: Bingbot
 Allow: /
 
 # Sitemap location
-Sitemap: https://black-horse.online/sitemap.xml
+Sitemap: https://black-horse.io/sitemap.xml
 
 # Crawl delay
 Crawl-delay: 1

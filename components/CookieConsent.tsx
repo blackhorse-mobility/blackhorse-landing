@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 import { aeonikPro } from "@/lib/fonts";
 import { useCookieConsent } from "@/hooks/useCookieConsent";
 
@@ -28,10 +29,10 @@ export default function CookieConsent() {
         transition={{ duration: 0.3 }}
         className="fixed bottom-0 right-0 z-50 p-4 sm:p-6"
       >
-        <div className={`w-full max-w-md bg-white rounded-[16px] shadow-[0_10px_40px_rgba(0,0,0,0.15)] overflow-hidden border border-gray-100 ${aeonikPro.className}`}>
-
+        <div
+          className={`w-full max-w-md bg-white rounded-[16px] shadow-[0_10px_40px_rgba(0,0,0,0.15)] overflow-hidden border border-gray-100 ${aeonikPro.className}`}
+        >
           <div className="p-6 space-y-4">
-
             <div className="flex items-start justify-between gap-4">
               <div className="flex items-center gap-2">
                 <Image
@@ -44,7 +45,6 @@ export default function CookieConsent() {
               </div>
             </div>
 
-
             <div className="space-y-2">
               <h3 className="text-[16px] font-semibold text-black">
                 Cookie Settings
@@ -52,16 +52,15 @@ export default function CookieConsent() {
               <p className="text-[14px] text-gray-600 leading-relaxed">
                 We use cookies to enhance your experience, analyze traffic, and
                 enable personalized marketing. Review our{" "}
-                <a
-                  href="#"
+                <Link
+                  href="/privacy"
                   className="text-blue-600 hover:underline font-medium"
                 >
                   privacy policy
-                </a>
+                </Link>
                 .
               </p>
             </div>
-
 
             <AnimatePresence>
               {showDetails && (
@@ -73,7 +72,6 @@ export default function CookieConsent() {
                   className="space-y-3 pt-2 border-t border-gray-100"
                 >
                   <div className="space-y-2">
-
                     <div className="flex items-start gap-3">
                       <div className="flex items-center h-5">
                         <input
@@ -100,7 +98,6 @@ export default function CookieConsent() {
                       </span>
                     </div>
 
-
                     <div className="flex items-start gap-3">
                       <div className="flex items-center h-5">
                         <input
@@ -121,14 +118,11 @@ export default function CookieConsent() {
                         >
                           Analytics Cookies
                         </label>
-                        <p className="text-[12px] text-gray-500 mt-0.5"
-                        >
+                        <p className="text-[12px] text-gray-500 mt-0.5">
                           Help us understand how you use the site
                         </p>
                       </div>
                     </div>
-
-
 
                     <div className="flex items-start gap-3">
                       <div className="flex items-center h-5">
@@ -148,7 +142,6 @@ export default function CookieConsent() {
                           className="text-[13px] font-medium text-gray-900 block cursor-pointer"
                           style={{ fontFamily: "var(--font-manrope)" }}
                         >
-
                           Marketing Cookies
                         </label>
                         <p className="text-[12px] text-gray-500 mt-0.5">
@@ -161,18 +154,17 @@ export default function CookieConsent() {
               )}
             </AnimatePresence>
 
-
             <button
               onClick={() => setShowDetails(!showDetails)}
               className="w-full flex items-center justify-between text-[12px] font-medium text-gray-600 hover:text-gray-900 transition-colors py-2"
               style={{ fontFamily: "var(--font-manrope)" }}
             >
               <ChevronDown
-                className={`w-4 h-4 transition-transform ${showDetails ? "rotate-180" : ""
-                  }`}
+                className={`w-4 h-4 transition-transform ${
+                  showDetails ? "rotate-180" : ""
+                }`}
               />
             </button>
-
 
             <div className="flex gap-2 pt-2">
               <button
@@ -181,12 +173,11 @@ export default function CookieConsent() {
                 style={{ fontFamily: "var(--font-manrope)" }}
               >
                 Reject
-
-               
               </button>
               <button
                 onClick={acceptAll}
-                className="flex-1 px-4 py-2.5 text-[13px] font-medium text-white bg-[#0A1020] hover:bg-black rounded-lg transition-colors">
+                className="flex-1 px-4 py-2.5 text-[13px] font-medium text-white bg-[#0A1020] hover:bg-black rounded-lg transition-colors"
+              >
                 Accept All
               </button>
             </div>

@@ -17,7 +17,6 @@ export function useCookieConsent() {
   const [consent, setConsent] = useState<CookieConsent | null>(null);
   const [hasConsented, setHasConsented] = useState(false);
 
- 
   useEffect(() => {
     if (typeof window === "undefined") return;
 
@@ -59,9 +58,9 @@ export function useCookieConsent() {
 
   const saveConsent = (categories: Partial<CookieConsent>) => {
     const newConsent: CookieConsent = {
-      essential: true, 
-      analytics: categories.analytics || false,
-      marketing: categories.marketing || false,
+      essential: true,
+      analytics: categories.analytics ?? consent?.analytics ?? false,
+      marketing: categories.marketing ?? consent?.marketing ?? false,
       timestamp: Date.now(),
     };
 
