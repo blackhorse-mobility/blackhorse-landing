@@ -3,6 +3,7 @@ import { Inter, Playfair_Display } from "next/font/google";
 import { aeonikPro } from "@/lib/fonts";
 import { HubSpotProvider } from "@/components/HubSpotProvider";
 import CookieConsent from "@/components/CookieConsent";
+import GoogleAnalytics from "@/components/GoogleAnalytics";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
@@ -137,6 +138,7 @@ export default function RootLayout({
         className={`${aeonikPro.variable} bg-obsidian text-white`}
         suppressHydrationWarning
       >
+        <GoogleAnalytics />
         <HubSpotProvider>
           {children}
           <CookieConsent />
