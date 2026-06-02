@@ -36,6 +36,9 @@ export default function GoogleAnalytics() {
 
     if (canUseAnalytics()) {
       grantAnalyticsConsent();
+      // The initial pageview was sent under "denied" consent, so re-send it
+      // now that analytics_storage is granted.
+      pageview(window.location.pathname + window.location.search);
     } else {
       denyAnalyticsConsent();
     }
