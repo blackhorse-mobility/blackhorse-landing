@@ -48,12 +48,14 @@ export type ViewMode = "fleet" | "corporate";
 interface InteractiveHeroProps {
   viewMode: ViewMode;
   setViewMode: (mode: ViewMode) => void;
+  onSectionNavigate?: (sectionId: string) => void;
   onPrimaryAction: () => void;
 }
 
 export default function InteractiveHero({
   viewMode,
   setViewMode,
+  onSectionNavigate,
   onPrimaryAction,
 }: InteractiveHeroProps) {
   const { onClickButton, onViewModeChange } = useHubSpotTracking();
@@ -106,6 +108,7 @@ export default function InteractiveHero({
   const navSectionMap = {
     fleet: {
       Benefits: "fleet-benefits",
+      "Product (Features)": "fleet-features",
       Features: "fleet-features",
       FAQs: "fleet-faqs",
     },
@@ -123,9 +126,10 @@ export default function InteractiveHero({
         item as keyof (typeof navSectionMap)[typeof viewMode]
       ];
     if (sectionId) {
-      const element = document.getElementById(sectionId);
-      if (element) {
-        element.scrollIntoView({ behavior: "smooth" });
+      if (onSectionNavigate) {
+        onSectionNavigate(sectionId);
+      } else {
+        document.getElementById(sectionId)?.scrollIntoView({ behavior: "smooth" });
       }
     }
     onClickButton(`nav_${item.toLowerCase()}`, "navbar");

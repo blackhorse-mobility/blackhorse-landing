@@ -11,9 +11,10 @@ interface FormData {
   email: string;
   phone: string;
   company: string;
+  jobTitle?: string;
   location?: string;
   industry?: string;
-  registrationType: "fleet" | "corporate";
+  registrationType: "fleet" | "corporate" | "lead";
 }
 
 const isNonEmptyString = (value: unknown): value is string =>
@@ -24,7 +25,7 @@ const isValidEmail = (email: string) => EMAIL_REGEX.test(email.trim());
 const isRegistrationType = (
   value: unknown,
 ): value is FormData["registrationType"] =>
-  value === "fleet" || value === "corporate";
+  value === "fleet" || value === "corporate" || value === "lead";
 
 function normalizeFormData(payload: unknown): FormData | null {
   if (!payload || typeof payload !== "object") {
@@ -43,6 +44,13 @@ function normalizeFormData(payload: unknown): FormData | null {
     return null;
   }
 
+  if (
+    candidate.registrationType === "lead" &&
+    !isNonEmptyString(candidate.jobTitle)
+  ) {
+    return null;
+  }
+
   const normalized: FormData = {
     firstName: candidate.firstName.trim(),
     lastName: candidate.lastName.trim(),
@@ -51,6 +59,10 @@ function normalizeFormData(payload: unknown): FormData | null {
     company: candidate.company.trim(),
     registrationType: candidate.registrationType,
   };
+
+  if (isNonEmptyString(candidate.jobTitle)) {
+    normalized.jobTitle = candidate.jobTitle.trim();
+  }
 
   if (isNonEmptyString(candidate.location)) {
     normalized.location = candidate.location.trim();
@@ -79,6 +91,7 @@ async function submitToHubSpot(data: FormData) {
       hs_lead_status: "NEW",
     };
 
+    if (data.jobTitle) properties.jobtitle = data.jobTitle;
     if (data.location) properties.location = data.location;
     if (data.industry) properties.industry = data.industry;
     if (data.registrationType)
@@ -86,7 +99,8 @@ async function submitToHubSpot(data: FormData) {
 
     const today = new Date().toISOString().split("T")[0];
     properties.registration_date = today;
-    properties.source = "blackhorse_landing";
+    properties.source =
+      data.registrationType === "lead" ? "blackhorse_leads" : "blackhorse_landing";
 
     const response = await fetch(
       "https://api.hubapi.com/crm/v3/objects/contacts",
@@ -171,7 +185,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json(
         {
           error:
-            "Missing or invalid required fields: firstName, lastName, email, company, registrationType",
+            "Missing or invalid required fields: firstName, lastName, email, company, registrationType (jobTitle required for leads)",
         },
         { status: 400 },
       );
