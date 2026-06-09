@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import dynamic from "next/dynamic";
-import InteractiveHero, { type ViewMode } from "@/components/InteractiveHero";
+import InteractiveHero from "@/components/InteractiveHero";
+import { useLandingPageUrl } from "@/hooks/useLandingPageUrl";
 import CorporateCapabilities from "@/components/CorporateCapabilities";
 import CorporateSteps from "@/components/CorporateSteps";
 import BuiltFor from "@/components/BuiltFor";
@@ -21,7 +22,7 @@ const RentalCTA = dynamic(() => import("@/components/RentalCTA"), {
 });
 
 export default function Home() {
-  const [viewMode, setViewMode] = useState<ViewMode>("corporate");
+  const { viewMode, setViewMode, navigateToSection } = useLandingPageUrl();
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   return (
@@ -30,6 +31,7 @@ export default function Home() {
         <InteractiveHero
           viewMode={viewMode}
           setViewMode={setViewMode}
+          onSectionNavigate={navigateToSection}
           onPrimaryAction={() => setIsDrawerOpen(true)}
         />
 
