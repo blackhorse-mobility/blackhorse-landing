@@ -10,8 +10,12 @@ import {
   DEFAULT_COUNTRY_ISO,
   formatPhoneNumber,
 } from "@/lib/country-codes";
-
-const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+import {
+  type FieldErrors,
+  parseSubmitErrorResponse,
+  scrollToFirstFieldError,
+  validateRegistrationForm,
+} from "@/lib/form-errors";
 
 const manrope = Manrope({
   subsets: ["latin"],
@@ -20,6 +24,20 @@ const manrope = Manrope({
 });
 
 export type DrawerMode = "fleet" | "corporate";
+
+function FieldError({
+  message,
+  className = "",
+}: {
+  message?: string;
+  className?: string;
+}) {
+  if (!message) return null;
+
+  return (
+    <p className={`text-[13px] text-red-600 ${className}`}>{message}</p>
+  );
+}
 
 interface RegistrationDrawerProps {
   isOpen: boolean;
@@ -123,7 +141,7 @@ export default function RegistrationDrawer({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [submitSuccess, setSubmitSuccess] = useState(false);
-  const [emailError, setEmailError] = useState<string | null>(null);
+  const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
   const [countryIso, setCountryIso] = useState(DEFAULT_COUNTRY_ISO);
   const [formData, setFormData] = useState({
     firstName: "",
@@ -158,31 +176,22 @@ export default function RegistrationDrawer({
 
   const isCorporate = internalMode === "corporate";
 
+  const clearFieldError = (field: string) => {
+    setFieldErrors((prev) => {
+      if (!prev[field]) return prev;
+      const next = { ...prev };
+      delete next[field];
+      return next;
+    });
+  };
+
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
-
-    if (name === "email" && emailError) {
-      setEmailError(null);
-    }
-  };
-
-  const validateEmail = (email: string) => EMAIL_REGEX.test(email.trim());
-
-  const handleEmailBlur = () => {
-    if (!formData.email.trim()) {
-      setEmailError("Email address is required.");
-      return;
-    }
-
-    if (!validateEmail(formData.email)) {
-      setEmailError("Please enter a valid email address.");
-      return;
-    }
-
-    setEmailError(null);
+    clearFieldError(name);
+    setSubmitError(null);
   };
 
   const handleModeChange = (newMode: DrawerMode) => {
@@ -191,6 +200,8 @@ export default function RegistrationDrawer({
       to_mode: newMode,
     });
     setInternalMode(newMode);
+    setFieldErrors({});
+    setSubmitError(null);
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -198,12 +209,15 @@ export default function RegistrationDrawer({
     setSubmitError(null);
     setSubmitSuccess(false);
 
-    if (!validateEmail(formData.email)) {
-      setEmailError("Please enter a valid email address.");
+    const validationErrors = validateRegistrationForm(formData, internalMode);
+    if (Object.keys(validationErrors).length > 0) {
+      setFieldErrors(validationErrors);
+      setSubmitError("Please fix the highlighted fields below and try again.");
+      scrollToFirstFieldError(validationErrors);
       return;
     }
 
-    setEmailError(null);
+    setFieldErrors({});
     setIsSubmitting(true);
 
     try {
@@ -234,15 +248,12 @@ export default function RegistrationDrawer({
       });
 
       if (!response.ok) {
-        let errorData;
-        try {
-          errorData = await response.json();
-        } catch {
-          errorData = {
-            error: `Server error: ${response.status} ${response.statusText}`,
-          };
+        const friendlyError = await parseSubmitErrorResponse(response);
+        if (friendlyError.fieldErrors) {
+          setFieldErrors(friendlyError.fieldErrors);
+          scrollToFirstFieldError(friendlyError.fieldErrors);
         }
-        throw new Error(errorData.error || "Failed to submit form");
+        throw new Error(friendlyError.message);
       }
 
       let result;
@@ -420,6 +431,7 @@ export default function RegistrationDrawer({
                           First Name
                         </label>
                         <input
+                          id="firstName"
                           type="text"
                           name="firstName"
                           value={formData.firstName}
@@ -430,7 +442,12 @@ export default function RegistrationDrawer({
                             })
                           }
                           placeholder="John"
-                          className={`w-full px-4 py-3.5 rounded-xl border border-gray-200 focus:outline-none focus:border-gray-400 focus:ring-1 focus:ring-gray-400 transition-colors text-[15px] text-black placeholder-gray-400 ${manrope.className}`}
+                          aria-invalid={Boolean(fieldErrors.firstName)}
+                          className={`w-full px-4 py-3.5 rounded-xl border transition-colors text-[15px] text-black placeholder-gray-400 focus:outline-none focus:ring-1 ${fieldErrors.firstName ? "border-red-400 focus:border-red-500 focus:ring-red-500" : "border-gray-200 focus:border-gray-400 focus:ring-gray-400"} ${manrope.className}`}
+                        />
+                        <FieldError
+                          message={fieldErrors.firstName}
+                          className={manrope.className}
                         />
                       </div>
                       <div className="flex flex-col gap-2">
@@ -440,6 +457,7 @@ export default function RegistrationDrawer({
                           Last Name
                         </label>
                         <input
+                          id="lastName"
                           type="text"
                           name="lastName"
                           value={formData.lastName}
@@ -450,7 +468,12 @@ export default function RegistrationDrawer({
                             })
                           }
                           placeholder="Doe"
-                          className={`w-full px-4 py-3.5 rounded-xl border border-gray-200 focus:outline-none focus:border-gray-400 focus:ring-1 focus:ring-gray-400 transition-colors text-[15px] text-black placeholder-gray-400 ${manrope.className}`}
+                          aria-invalid={Boolean(fieldErrors.lastName)}
+                          className={`w-full px-4 py-3.5 rounded-xl border transition-colors text-[15px] text-black placeholder-gray-400 focus:outline-none focus:ring-1 ${fieldErrors.lastName ? "border-red-400 focus:border-red-500 focus:ring-red-500" : "border-gray-200 focus:border-gray-400 focus:ring-gray-400"} ${manrope.className}`}
+                        />
+                        <FieldError
+                          message={fieldErrors.lastName}
+                          className={manrope.className}
                         />
                       </div>
                     </div>
@@ -463,32 +486,24 @@ export default function RegistrationDrawer({
                           Work E-mail
                         </label>
                         <input
+                          id="email"
                           type="email"
                           name="email"
                           value={formData.email}
                           onChange={handleInputChange}
-                          onBlur={handleEmailBlur}
                           onFocus={() =>
                             onFormInteraction("registration", "focus", {
                               field: "email",
                             })
                           }
                           placeholder="johndoe@acme.inc"
-                          required
-                          aria-invalid={Boolean(emailError)}
-                          aria-describedby={
-                            emailError ? "registration-email-error" : undefined
-                          }
-                          className={`w-full px-4 py-3.5 rounded-xl border transition-colors text-[15px] text-black placeholder-gray-400 focus:outline-none focus:ring-1 ${emailError ? "border-red-400 focus:border-red-500 focus:ring-red-500" : "border-gray-200 focus:border-gray-400 focus:ring-gray-400"} ${manrope.className}`}
+                          aria-invalid={Boolean(fieldErrors.email)}
+                          className={`w-full px-4 py-3.5 rounded-xl border transition-colors text-[15px] text-black placeholder-gray-400 focus:outline-none focus:ring-1 ${fieldErrors.email ? "border-red-400 focus:border-red-500 focus:ring-red-500" : "border-gray-200 focus:border-gray-400 focus:ring-gray-400"} ${manrope.className}`}
                         />
-                        {emailError && (
-                          <p
-                            id="registration-email-error"
-                            className={`text-[13px] text-red-600 ${manrope.className}`}
-                          >
-                            {emailError}
-                          </p>
-                        )}
+                        <FieldError
+                          message={fieldErrors.email}
+                          className={manrope.className}
+                        />
                       </div>
                       <div className="flex flex-col gap-2">
                         <label
@@ -524,6 +539,7 @@ export default function RegistrationDrawer({
                           {isCorporate ? "Company Name" : "Rental Company Name"}
                         </label>
                         <input
+                          id="company"
                           type="text"
                           name="company"
                           value={formData.company}
@@ -534,7 +550,12 @@ export default function RegistrationDrawer({
                             })
                           }
                           placeholder="Acme Inc."
-                          className={`w-full px-4 py-3.5 rounded-xl border border-gray-200 focus:outline-none focus:border-gray-400 focus:ring-1 focus:ring-gray-400 transition-colors text-[15px] text-black  placeholder-gray-400 ${manrope.className}`}
+                          aria-invalid={Boolean(fieldErrors.company)}
+                          className={`w-full px-4 py-3.5 rounded-xl border transition-colors text-[15px] text-black placeholder-gray-400 focus:outline-none focus:ring-1 ${fieldErrors.company ? "border-red-400 focus:border-red-500 focus:ring-red-500" : "border-gray-200 focus:border-gray-400 focus:ring-gray-400"} ${manrope.className}`}
+                        />
+                        <FieldError
+                          message={fieldErrors.company}
+                          className={manrope.className}
                         />
                       </div>
                       <div className="flex flex-col gap-2 sm:col-span-2">
@@ -546,6 +567,7 @@ export default function RegistrationDrawer({
                         {isCorporate ? (
                           <div className="relative">
                             <select
+                              id="industry"
                               name="industry"
                               value={formData.industry}
                               onChange={handleInputChange}
@@ -554,8 +576,8 @@ export default function RegistrationDrawer({
                                   field: "industry",
                                 })
                               }
-                              defaultValue=""
-                              className={`w-full px-4 py-3.5 rounded-xl border border-gray-200 focus:outline-none focus:border-gray-400 focus:ring-1 focus:ring-gray-400 transition-colors text-[15px] appearance-none bg-white cursor-pointer ${manrope.className} text-gray-800`}
+                              aria-invalid={Boolean(fieldErrors.industry)}
+                              className={`w-full px-4 py-3.5 rounded-xl border transition-colors text-[15px] appearance-none bg-white cursor-pointer focus:outline-none focus:ring-1 ${fieldErrors.industry ? "border-red-400 focus:border-red-500 focus:ring-red-500" : "border-gray-200 focus:border-gray-400 focus:ring-gray-400"} ${manrope.className} text-gray-800`}
                             >
                               <option
                                 value=""
@@ -577,6 +599,7 @@ export default function RegistrationDrawer({
                           </div>
                         ) : (
                           <input
+                            id="industry"
                             type="text"
                             name="industry"
                             value={formData.industry}
@@ -587,9 +610,14 @@ export default function RegistrationDrawer({
                               })
                             }
                             placeholder="City, region, etc."
-                            className={`w-full px-4 py-3.5 rounded-xl border border-gray-200 focus:outline-none focus:border-gray-400 focus:ring-1 focus:ring-gray-400 transition-colors text-[15px] text-black  placeholder-gray-400 ${manrope.className}`}
+                            aria-invalid={Boolean(fieldErrors.industry)}
+                            className={`w-full px-4 py-3.5 rounded-xl border transition-colors text-[15px] text-black placeholder-gray-400 focus:outline-none focus:ring-1 ${fieldErrors.industry ? "border-red-400 focus:border-red-500 focus:ring-red-500" : "border-gray-200 focus:border-gray-400 focus:ring-gray-400"} ${manrope.className}`}
                           />
                         )}
+                        <FieldError
+                          message={fieldErrors.industry}
+                          className={manrope.className}
+                        />
                       </div>
                     </div>
 

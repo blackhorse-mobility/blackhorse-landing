@@ -1,8 +1,12 @@
 import { checkRateLimit } from "@vercel/firewall";
 import { NextRequest, NextResponse } from "next/server";
+import {
+  getFriendlySubmitError,
+  getValidationErrorsFromPayload,
+  isValidEmail,
+} from "@/lib/form-errors";
 
 const HUBSPOT_API_KEY = process.env.HUBSPOT_PRIVATE_APP_TOKEN;
-const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const HUBSPOT_RATE_LIMIT_ID = "hubspot-submit-form";
 
 interface FormData {
@@ -19,8 +23,6 @@ interface FormData {
 
 const isNonEmptyString = (value: unknown): value is string =>
   typeof value === "string" && value.trim().length > 0;
-
-const isValidEmail = (email: string) => EMAIL_REGEX.test(email.trim());
 
 const isRegistrationType = (
   value: unknown,
@@ -183,13 +185,39 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    const candidate =
+      payload && typeof payload === "object"
+        ? (payload as Record<string, unknown>)
+        : null;
+
+    if (!candidate) {
+      return NextResponse.json(
+        {
+          error:
+            "We couldn't read your submission. Please refresh the page and try again.",
+        },
+        { status: 400 },
+      );
+    }
+
+    const fieldErrors = getValidationErrorsFromPayload(candidate);
+    if (Object.keys(fieldErrors).length > 0) {
+      return NextResponse.json(
+        {
+          error: "Please fix the highlighted fields below and try again.",
+          fieldErrors,
+        },
+        { status: 400 },
+      );
+    }
+
     const data = normalizeFormData(payload);
 
     if (!data) {
       return NextResponse.json(
         {
           error:
-            "Missing or invalid required fields: firstName, lastName, email, company, registrationType (jobTitle required for leads)",
+            "Some required information is missing. Please review the form and try again.",
         },
         { status: 400 },
       );
@@ -197,7 +225,14 @@ export async function POST(request: NextRequest) {
 
     if (!isValidEmail(data.email)) {
       return NextResponse.json(
-        { error: "Invalid email address" },
+        {
+          error:
+            "That email address doesn't look valid. Please check it and try again.",
+          fieldErrors: {
+            email:
+              "Please enter a valid email address (e.g. name@company.com).",
+          },
+        },
         { status: 400 },
       );
     }
@@ -213,17 +248,9 @@ export async function POST(request: NextRequest) {
       { status: 200 },
     );
   } catch (error) {
-    const isDev = process.env.NODE_ENV !== "production";
     const errorMessage = error instanceof Error ? error.message : String(error);
+    const friendly = getFriendlySubmitError(500, { error: errorMessage });
 
-    return NextResponse.json(
-      {
-        error: isDev
-          ? errorMessage
-          : "Failed to submit form. Please try again.",
-        details: isDev ? errorMessage : undefined,
-      },
-      { status: 500 },
-    );
+    return NextResponse.json(friendly, { status: 500 });
   }
 }

@@ -11,8 +11,12 @@ import {
   DEFAULT_COUNTRY_ISO,
   formatPhoneNumber,
 } from "@/lib/country-codes";
-
-const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+import {
+  type FieldErrors,
+  parseSubmitErrorResponse,
+  scrollToFirstFieldError,
+  validateLeadsForm,
+} from "@/lib/form-errors";
 
 const manrope = Manrope({
   subsets: ["latin"],
@@ -33,6 +37,16 @@ const inputClass = (hasError = false) =>
   `w-full px-4 py-3.5 rounded-xl border transition-colors text-[14px] text-black placeholder-gray-400 focus:outline-none focus:ring-1 ${hasError ? "border-red-400 focus:border-red-500 focus:ring-red-500" : "border-gray-200 focus:border-gray-400 focus:ring-gray-400"} ${manrope.className}`;
 
 const labelClass = `text-[13px] text-gray-600 font-medium mb-1.5 ${manrope.className}`;
+
+function FieldError({ message }: { message?: string }) {
+  if (!message) return null;
+
+  return (
+    <p className={`text-[12px] text-red-600 mt-1.5 ${manrope.className}`}>
+      {message}
+    </p>
+  );
+}
 
 function LeadsFormShell({ children }: { children: React.ReactNode }) {
   return (
@@ -131,7 +145,7 @@ export default function LeadsForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [submitSuccess, setSubmitSuccess] = useState(false);
-  const [emailError, setEmailError] = useState<string | null>(null);
+  const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
   const [countryIso, setCountryIso] = useState(DEFAULT_COUNTRY_ISO);
   const [formData, setFormData] = useState<LeadsFormData>({
     firstName: "",
@@ -143,41 +157,35 @@ export default function LeadsForm() {
   });
   const { onClickButton, onFormInteraction, onSignup } = useHubSpotTracking();
 
+  const clearFieldError = (field: string) => {
+    setFieldErrors((prev) => {
+      if (!prev[field]) return prev;
+      const next = { ...prev };
+      delete next[field];
+      return next;
+    });
+  };
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
-
-    if (name === "email" && emailError) {
-      setEmailError(null);
-    }
-  };
-
-  const validateEmail = (email: string) => EMAIL_REGEX.test(email.trim());
-
-  const handleEmailBlur = () => {
-    if (!formData.email.trim()) {
-      setEmailError("Email address is required.");
-      return;
-    }
-
-    if (!validateEmail(formData.email)) {
-      setEmailError("Please enter a valid email address.");
-      return;
-    }
-
-    setEmailError(null);
+    clearFieldError(name);
+    setSubmitError(null);
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setSubmitError(null);
 
-    if (!validateEmail(formData.email)) {
-      setEmailError("Please enter a valid email address.");
+    const validationErrors = validateLeadsForm(formData);
+    if (Object.keys(validationErrors).length > 0) {
+      setFieldErrors(validationErrors);
+      setSubmitError("Please fix the highlighted fields below and try again.");
+      scrollToFirstFieldError(validationErrors);
       return;
     }
 
-    setEmailError(null);
+    setFieldErrors({});
     setIsSubmitting(true);
 
     try {
@@ -206,15 +214,12 @@ export default function LeadsForm() {
       });
 
       if (!response.ok) {
-        let errorData;
-        try {
-          errorData = await response.json();
-        } catch {
-          errorData = {
-            error: `Server error: ${response.status} ${response.statusText}`,
-          };
+        const friendlyError = await parseSubmitErrorResponse(response);
+        if (friendlyError.fieldErrors) {
+          setFieldErrors(friendlyError.fieldErrors);
+          scrollToFirstFieldError(friendlyError.fieldErrors);
         }
-        throw new Error(errorData.error || "Failed to submit form");
+        throw new Error(friendlyError.message);
       }
 
       let result;
@@ -308,9 +313,10 @@ export default function LeadsForm() {
                 onFormInteraction("leads", "focus", { field: "firstName" })
               }
               placeholder="John"
-              required
-              className={inputClass()}
+              aria-invalid={Boolean(fieldErrors.firstName)}
+              className={inputClass(Boolean(fieldErrors.firstName))}
             />
+            <FieldError message={fieldErrors.firstName} />
           </div>
           <div className="flex flex-col">
             <label htmlFor="lastName" className={labelClass}>
@@ -326,9 +332,10 @@ export default function LeadsForm() {
                 onFormInteraction("leads", "focus", { field: "lastName" })
               }
               placeholder="Doe"
-              required
-              className={inputClass()}
+              aria-invalid={Boolean(fieldErrors.lastName)}
+              className={inputClass(Boolean(fieldErrors.lastName))}
             />
+            <FieldError message={fieldErrors.lastName} />
           </div>
         </div>
 
@@ -346,9 +353,10 @@ export default function LeadsForm() {
               onFormInteraction("leads", "focus", { field: "jobTitle" })
             }
             placeholder="Operations Manager"
-            required
-            className={inputClass()}
+            aria-invalid={Boolean(fieldErrors.jobTitle)}
+            className={inputClass(Boolean(fieldErrors.jobTitle))}
           />
+          <FieldError message={fieldErrors.jobTitle} />
         </div>
 
         <div className="flex flex-col">
@@ -365,9 +373,10 @@ export default function LeadsForm() {
               onFormInteraction("leads", "focus", { field: "company" })
             }
             placeholder="Acme Inc."
-            required
-            className={inputClass()}
+            aria-invalid={Boolean(fieldErrors.company)}
+            className={inputClass(Boolean(fieldErrors.company))}
           />
+          <FieldError message={fieldErrors.company} />
         </div>
 
         <div className="flex flex-col">
@@ -380,24 +389,15 @@ export default function LeadsForm() {
             name="email"
             value={formData.email}
             onChange={handleInputChange}
-            onBlur={handleEmailBlur}
             onFocus={() =>
               onFormInteraction("leads", "focus", { field: "email" })
             }
             placeholder="johndoe@acme.inc"
-            required
-            aria-invalid={Boolean(emailError)}
-            aria-describedby={emailError ? "leads-email-error" : undefined}
-            className={inputClass(Boolean(emailError))}
+            aria-invalid={Boolean(fieldErrors.email)}
+            aria-describedby={fieldErrors.email ? "leads-email-error" : undefined}
+            className={inputClass(Boolean(fieldErrors.email))}
           />
-          {emailError && (
-            <p
-              id="leads-email-error"
-              className={`text-[12px] text-red-600 mt-1.5 ${manrope.className}`}
-            >
-              {emailError}
-            </p>
-          )}
+          <FieldError message={fieldErrors.email} />
         </div>
 
         <div className="flex flex-col">
