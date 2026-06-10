@@ -94,8 +94,12 @@ async function submitToHubSpot(data: FormData) {
     if (data.jobTitle) properties.jobtitle = data.jobTitle;
     if (data.location) properties.location = data.location;
     if (data.industry) properties.industry = data.industry;
-    if (data.registrationType)
+
+    // HubSpot's registration_type property only allows "fleet" | "corporate".
+    // Leads from /leads are tagged via source instead.
+    if (data.registrationType === "fleet" || data.registrationType === "corporate") {
       properties.registration_type = data.registrationType;
+    }
 
     const today = new Date().toISOString().split("T")[0];
     properties.registration_date = today;
