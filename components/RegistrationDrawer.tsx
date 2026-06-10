@@ -4,7 +4,12 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Manrope } from "next/font/google";
 import Image from "next/image";
 import { ChevronsUpDown } from "lucide-react";
+import PhoneInput from "@/components/PhoneInput";
 import { useHubSpotTracking } from "@/hooks/useHubSpotTracking";
+import {
+  DEFAULT_COUNTRY_ISO,
+  formatPhoneNumber,
+} from "@/lib/country-codes";
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -119,6 +124,7 @@ export default function RegistrationDrawer({
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const [emailError, setEmailError] = useState<string | null>(null);
+  const [countryIso, setCountryIso] = useState(DEFAULT_COUNTRY_ISO);
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -201,9 +207,13 @@ export default function RegistrationDrawer({
     setIsSubmitting(true);
 
     try {
+      const formattedPhone = formatPhoneNumber(countryIso, formData.phone);
+
       onFormInteraction("registration", "submit", {
         mode: internalMode,
-        fields_filled: Object.values(formData).filter((v) => v).length,
+        fields_filled:
+          Object.values(formData).filter((v) => v).length +
+          (formattedPhone ? 1 : 0),
       });
 
       // Submit to HubSpot CRM via API route
@@ -216,7 +226,7 @@ export default function RegistrationDrawer({
           firstName: formData.firstName,
           lastName: formData.lastName,
           email: formData.email,
-          phone: formData.phone,
+          phone: formattedPhone,
           company: formData.company,
           industry: formData.industry,
           registrationType: internalMode,
@@ -249,7 +259,7 @@ export default function RegistrationDrawer({
           company: formData.company,
           first_name: formData.firstName,
           last_name: formData.lastName,
-          phone: formData.phone,
+          phone: formattedPhone,
           hubspot_contact_id: result.contactId,
         });
       }
@@ -290,6 +300,7 @@ export default function RegistrationDrawer({
               onBackToHome={() => {
                 setSubmitSuccess(false);
                 onClose();
+                setCountryIso(DEFAULT_COUNTRY_ISO);
                 setFormData({
                   firstName: "",
                   lastName: "",
@@ -485,18 +496,22 @@ export default function RegistrationDrawer({
                         >
                           Phone Number
                         </label>
-                        <input
-                          type="tel"
-                          name="phone"
-                          value={formData.phone}
-                          onChange={handleInputChange}
+                        <PhoneInput
+                          id="registration-phone"
+                          countryIso={countryIso}
+                          phone={formData.phone}
+                          onCountryIsoChange={setCountryIso}
+                          onPhoneChange={(phone) =>
+                            setFormData((prev) => ({ ...prev, phone }))
+                          }
                           onFocus={() =>
                             onFormInteraction("registration", "focus", {
                               field: "phone",
                             })
                           }
-                          placeholder="02498761234"
-                          className={`w-full px-4 py-3.5 rounded-xl border border-gray-200 focus:outline-none focus:border-gray-400 focus:ring-1 focus:ring-gray-400 transition-colors text-[15px] text-black placeholder-gray-400 ${manrope.className}`}
+                          inputClassName={`px-4 py-3.5 rounded-xl border border-gray-200 focus:outline-none focus:border-gray-400 focus:ring-1 focus:ring-gray-400 transition-colors text-[15px] text-black placeholder-gray-400 ${manrope.className}`}
+                          selectClassName={manrope.className}
+                          placeholder="Phone number"
                         />
                       </div>
                     </div>

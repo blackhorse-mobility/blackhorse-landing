@@ -5,7 +5,12 @@ import { motion } from "framer-motion";
 import { Manrope } from "next/font/google";
 import Image from "next/image";
 import Link from "next/link";
+import PhoneInput from "@/components/PhoneInput";
 import { useHubSpotTracking } from "@/hooks/useHubSpotTracking";
+import {
+  DEFAULT_COUNTRY_ISO,
+  formatPhoneNumber,
+} from "@/lib/country-codes";
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -127,6 +132,7 @@ export default function LeadsForm() {
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const [emailError, setEmailError] = useState<string | null>(null);
+  const [countryIso, setCountryIso] = useState(DEFAULT_COUNTRY_ISO);
   const [formData, setFormData] = useState<LeadsFormData>({
     firstName: "",
     lastName: "",
@@ -175,8 +181,12 @@ export default function LeadsForm() {
     setIsSubmitting(true);
 
     try {
+      const formattedPhone = formatPhoneNumber(countryIso, formData.phone);
+
       onFormInteraction("leads", "submit", {
-        fields_filled: Object.values(formData).filter((v) => v).length,
+        fields_filled:
+          Object.values(formData).filter((v) => v).length +
+          (formattedPhone ? 1 : 0),
       });
 
       const response = await fetch("/api/hubspot/submit-form", {
@@ -189,7 +199,7 @@ export default function LeadsForm() {
           lastName: formData.lastName,
           jobTitle: formData.jobTitle,
           email: formData.email,
-          phone: formData.phone,
+          phone: formattedPhone,
           company: formData.company,
           registrationType: "lead",
         }),
@@ -221,7 +231,7 @@ export default function LeadsForm() {
           job_title: formData.jobTitle,
           first_name: formData.firstName,
           last_name: formData.lastName,
-          phone: formData.phone,
+          phone: formattedPhone,
           hubspot_contact_id: result.contactId,
         });
       }
@@ -394,17 +404,19 @@ export default function LeadsForm() {
           <label htmlFor="phone" className={labelClass}>
             Phone Number
           </label>
-          <input
+          <PhoneInput
             id="phone"
-            type="tel"
-            name="phone"
-            value={formData.phone}
-            onChange={handleInputChange}
+            countryIso={countryIso}
+            phone={formData.phone}
+            onCountryIsoChange={setCountryIso}
+            onPhoneChange={(phone) =>
+              setFormData((prev) => ({ ...prev, phone }))
+            }
             onFocus={() =>
               onFormInteraction("leads", "focus", { field: "phone" })
             }
-            placeholder="02498761234"
-            className={inputClass()}
+            inputClassName={inputClass()}
+            placeholder="Phone number"
           />
         </div>
 
