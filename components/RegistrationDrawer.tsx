@@ -12,6 +12,7 @@ import {
 } from "@/lib/country-codes";
 import {
   type FieldErrors,
+  applySubmitError,
   parseSubmitErrorResponse,
   scrollToFirstFieldError,
   validateRegistrationForm,
@@ -249,11 +250,12 @@ export default function RegistrationDrawer({
 
       if (!response.ok) {
         const friendlyError = await parseSubmitErrorResponse(response);
-        if (friendlyError.fieldErrors) {
-          setFieldErrors(friendlyError.fieldErrors);
-          scrollToFirstFieldError(friendlyError.fieldErrors);
-        }
-        throw new Error(friendlyError.message);
+        applySubmitError(friendlyError, setFieldErrors, setSubmitError);
+        onFormInteraction("registration", "error", {
+          error_message: friendlyError.message,
+          mode: internalMode,
+        });
+        return;
       }
 
       let result;
@@ -281,9 +283,10 @@ export default function RegistrationDrawer({
       // Reset is handled by the user clicking "Back to Home"
     } catch (error) {
       const errorMessage =
-        error instanceof Error ? error.message : "Unknown error occurred";
+        error instanceof Error
+          ? error.message
+          : "We couldn't submit your details. Please check your connection and try again.";
       setSubmitError(errorMessage);
-
       onFormInteraction("registration", "error", {
         error_message: errorMessage,
         mode: internalMode,

@@ -13,6 +13,7 @@ import {
 } from "@/lib/country-codes";
 import {
   type FieldErrors,
+  applySubmitError,
   parseSubmitErrorResponse,
   scrollToFirstFieldError,
   validateLeadsForm,
@@ -215,11 +216,11 @@ export default function LeadsForm() {
 
       if (!response.ok) {
         const friendlyError = await parseSubmitErrorResponse(response);
-        if (friendlyError.fieldErrors) {
-          setFieldErrors(friendlyError.fieldErrors);
-          scrollToFirstFieldError(friendlyError.fieldErrors);
-        }
-        throw new Error(friendlyError.message);
+        applySubmitError(friendlyError, setFieldErrors, setSubmitError);
+        onFormInteraction("leads", "error", {
+          error_message: friendlyError.message,
+        });
+        return;
       }
 
       let result;
@@ -244,9 +245,10 @@ export default function LeadsForm() {
       setSubmitSuccess(true);
     } catch (error) {
       const errorMessage =
-        error instanceof Error ? error.message : "Unknown error occurred";
+        error instanceof Error
+          ? error.message
+          : "We couldn't submit your details. Please check your connection and try again.";
       setSubmitError(errorMessage);
-
       onFormInteraction("leads", "error", {
         error_message: errorMessage,
       });

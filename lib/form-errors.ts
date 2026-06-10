@@ -164,19 +164,26 @@ function parseHubSpotPropertyError(raw: string) {
   }
 }
 
+type SubmitErrorBody = {
+  error?: string;
+  message?: string;
+  fieldErrors?: FieldErrors;
+};
+
 export function getFriendlySubmitError(
   status: number,
-  body: { error?: string; fieldErrors?: FieldErrors } = {},
+  body: SubmitErrorBody = {},
 ) {
+  const raw = body.message || body.error || "";
+  const lower = raw.toLowerCase();
+
   if (body.fieldErrors && Object.keys(body.fieldErrors).length > 0) {
     return {
-      message: "Please fix the highlighted fields below and try again.",
+      message:
+        raw || "Please fix the highlighted fields below and try again.",
       fieldErrors: body.fieldErrors,
     };
   }
-
-  const raw = body.error || "";
-  const lower = raw.toLowerCase();
 
   if (status === 429) {
     return {
@@ -244,7 +251,7 @@ export function getFriendlySubmitError(
 }
 
 export async function parseSubmitErrorResponse(response: Response) {
-  let body: { error?: string; fieldErrors?: FieldErrors } = {};
+  let body: SubmitErrorBody = {};
 
   try {
     body = await response.json();
@@ -252,7 +259,28 @@ export async function parseSubmitErrorResponse(response: Response) {
     body = {};
   }
 
+  // Our API already returns user-friendly `message` + optional `fieldErrors`.
+  if (body.message) {
+    return {
+      message: body.message,
+      fieldErrors: body.fieldErrors,
+    };
+  }
+
   return getFriendlySubmitError(response.status, body);
+}
+
+export function applySubmitError(
+  friendlyError: { message: string; fieldErrors?: FieldErrors },
+  setFieldErrors: (errors: FieldErrors) => void,
+  setSubmitError: (message: string) => void,
+) {
+  if (friendlyError.fieldErrors) {
+    setFieldErrors(friendlyError.fieldErrors);
+    scrollToFirstFieldError(friendlyError.fieldErrors);
+  }
+
+  setSubmitError(friendlyError.message);
 }
 
 export function scrollToFirstFieldError(errors: FieldErrors) {

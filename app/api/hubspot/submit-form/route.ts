@@ -155,7 +155,10 @@ export async function POST(request: NextRequest) {
   try {
     if (!HUBSPOT_API_KEY) {
       return NextResponse.json(
-        { error: "HubSpot configuration missing. Please contact support." },
+        {
+          message:
+            "We're unable to process your request right now. Please try again later or contact support.",
+        },
         { status: 500 },
       );
     }
@@ -167,7 +170,10 @@ export async function POST(request: NextRequest) {
 
       if (rateLimited) {
         return NextResponse.json(
-          { error: "Too many requests. Please try again later." },
+          {
+            message:
+              "You've submitted too many requests. Please wait a minute and try again.",
+          },
           { status: 429, headers: { "Retry-After": "60" } },
         );
       }
@@ -180,7 +186,10 @@ export async function POST(request: NextRequest) {
       payload = await request.json();
     } catch {
       return NextResponse.json(
-        { error: "Invalid request format" },
+        {
+          message:
+            "We couldn't read your submission. Please refresh the page and try again.",
+        },
         { status: 400 },
       );
     }
@@ -193,7 +202,7 @@ export async function POST(request: NextRequest) {
     if (!candidate) {
       return NextResponse.json(
         {
-          error:
+          message:
             "We couldn't read your submission. Please refresh the page and try again.",
         },
         { status: 400 },
@@ -204,7 +213,7 @@ export async function POST(request: NextRequest) {
     if (Object.keys(fieldErrors).length > 0) {
       return NextResponse.json(
         {
-          error: "Please fix the highlighted fields below and try again.",
+          message: "Please fix the highlighted fields below and try again.",
           fieldErrors,
         },
         { status: 400 },
@@ -216,7 +225,7 @@ export async function POST(request: NextRequest) {
     if (!data) {
       return NextResponse.json(
         {
-          error:
+          message:
             "Some required information is missing. Please review the form and try again.",
         },
         { status: 400 },
@@ -226,7 +235,7 @@ export async function POST(request: NextRequest) {
     if (!isValidEmail(data.email)) {
       return NextResponse.json(
         {
-          error:
+          message:
             "That email address doesn't look valid. Please check it and try again.",
           fieldErrors: {
             email:
