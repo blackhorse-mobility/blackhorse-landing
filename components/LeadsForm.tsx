@@ -116,23 +116,51 @@ function LeadsSuccessView() {
           </svg>
         </motion.div>
 
-        <motion.p
+        <motion.h2
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="text-[19px] text-gray-800 font-medium max-w-sm mb-8 leading-relaxed"
+          className="text-[24px] text-[#0A1020] font-semibold mb-3"
         >
-          A member of the Blackhorse team will be with you shortly.
+          Thanks for your enquiry!
+        </motion.h2>
+
+        <motion.p
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.25 }}
+          className={`text-[15px] text-gray-600 max-w-sm mb-8 leading-relaxed ${manrope.className}`}
+        >
+          A member of the team will be in touch. In the meantime, please learn
+          more about us at{" "}
+          <a
+            href="https://black-horse.io"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-[#0A1020] font-medium underline underline-offset-2 hover:text-black"
+          >
+            black-horse.io
+          </a>{" "}
+          or book a demo below.
         </motion.p>
 
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
+          className="flex flex-col sm:flex-row items-center gap-3"
         >
+          <a
+            href="https://calendly.com/black-horse/30min"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="px-8 py-3.5 bg-[#0A1020] hover:bg-black text-white rounded-xl text-[15px] font-medium transition-colors inline-flex items-center gap-2"
+          >
+            Book a Demo
+          </a>
           <Link
             href="/"
-            className="px-8 py-3.5 bg-[#0A1020] hover:bg-black text-white rounded-xl text-[15px] font-medium transition-colors inline-flex items-center gap-2"
+            className="px-8 py-3.5 bg-gray-100 hover:bg-gray-200 text-[#0A1020] rounded-xl text-[15px] font-medium transition-colors inline-flex items-center gap-2"
           >
             Back to Home
           </Link>
