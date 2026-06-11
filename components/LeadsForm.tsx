@@ -158,12 +158,6 @@ function LeadsSuccessView() {
           >
             Book a Demo
           </a>
-          <Link
-            href="/"
-            className="px-8 py-3.5 bg-gray-100 hover:bg-gray-200 text-[#0A1020] rounded-xl text-[15px] font-medium transition-colors inline-flex items-center gap-2"
-          >
-            Back to Home
-          </Link>
         </motion.div>
       </div>
     </LeadsFormShell>
